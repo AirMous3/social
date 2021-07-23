@@ -2,7 +2,8 @@ import Avatar1 from "../components/Profile/MyPosts/AvatarImg/Avatar1.jpg";
 import Avatar2 from "../components/Profile/MyPosts/AvatarImg/Avatar2.jpg";
 import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
-import {useState} from "react";
+import {renderTree} from "../render";
+
 
 
 export type DialogsDataType = {
@@ -71,6 +72,7 @@ let state: RootStateType = {
 export let addPost = ( postMessage: string ) => {
     const newPost: PostDataType  = {id: new Date().getTime(), post: postMessage, likeCounts: 0, avatar: Avatar1}
     state.profilePage.postData.push(newPost)
+    renderTree(state)
 }
 
 export default state
