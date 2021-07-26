@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import  {addPost, RootStateType} from "./redux/state";
+import {addPost, newPostText, RootStateType} from "./redux/state";
 import {BrowserRouter} from "react-router-dom";
 
 
 export const renderTree = (state: RootStateType) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App appState={state} addPost={addPost}/>
+            <App appState={state} addPost={addPost} newPostText={newPostText}/>
         </BrowserRouter>,
         document.getElementById('root')
     );
