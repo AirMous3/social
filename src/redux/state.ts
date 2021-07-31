@@ -4,8 +4,6 @@ import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
 
 
-
-
 export type DialogsDataType = {
     name: string
     id: number
@@ -38,16 +36,17 @@ export type RootStateType = {
 
 
 
-let renderTree = (props: RootStateType) => {
-
+export type StoreType = {
+    _state: RootStateType
+    newPostText: (newText: string) => void
+    addPost: (postText:string) => void
+    onChange: (callback: () => void ) => void
+    _renderTree: () => void
+    getState: () => RootStateType
 }
 
-export const onChange = (callback: (props: RootStateType) => void) => {
-    renderTree = callback
-}
-
-
-let state: RootStateType = {
+const store: StoreType = {
+    _state: {
     profilePage: {
         postData: [
             {id: 1, post: "today i'l gonna be billionare", likeCounts: 12, avatar: Avatar1},
@@ -77,21 +76,34 @@ let state: RootStateType = {
         ],
     }
 
+},
+    newPostText(newText: string) {
+        debugger
+        this._state.profilePage.newPost = newText
+        this._renderTree()
+    },
+    addPost(postText: string) {
+        const newPost: PostDataType = {
+            id: new Date().getTime(),
+            post: postText,
+            likeCounts: 0,
+            avatar: Avatar1
+        }
+        this._state.profilePage.postData.push(newPost)
+        this._state.profilePage.newPost = ""
+        this._renderTree()
+    },
+    _renderTree (){
+        console.log("state changed")
+    },
+    onChange(callback){
+        this._renderTree = callback
+    },
+    getState(){
+        return this._state
+    }
+
 }
 
 
-export const addPost = (  ) => {
-    const newPost: PostDataType  = {id: new Date().getTime(), post: state.profilePage.newPost, likeCounts: 0, avatar: Avatar1}
-    state.profilePage.postData.push(newPost)
-    state.profilePage.newPost = ""
-    renderTree(state)
-}
-
-export const newPostText = (newText: string) => {
-    state.profilePage.newPost = newText
-    renderTree(state)
-}
-
-
-
-export default state
+export default store
