@@ -2,7 +2,7 @@ import Avatar1 from "../components/Profile/MyPosts/AvatarImg/Avatar1.jpg";
 import Avatar2 from "../components/Profile/MyPosts/AvatarImg/Avatar2.jpg";
 import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
-import {renderTree} from "../render";
+
 
 
 
@@ -38,6 +38,15 @@ export type RootStateType = {
 
 
 
+let renderTree = (props: RootStateType) => {
+
+}
+
+export const onChange = (callback: (props: RootStateType) => void) => {
+    renderTree = callback
+}
+
+
 let state: RootStateType = {
     profilePage: {
         postData: [
@@ -71,7 +80,7 @@ let state: RootStateType = {
 }
 
 
-export let addPost = (  ) => {
+export const addPost = (  ) => {
     const newPost: PostDataType  = {id: new Date().getTime(), post: state.profilePage.newPost, likeCounts: 0, avatar: Avatar1}
     state.profilePage.postData.push(newPost)
     state.profilePage.newPost = ""
@@ -82,5 +91,7 @@ export const newPostText = (newText: string) => {
     state.profilePage.newPost = newText
     renderTree(state)
 }
+
+
 
 export default state
