@@ -34,51 +34,62 @@ export type RootStateType = {
 }
 
 
-
-
 export type StoreType = {
     _state: RootStateType
     newPostText: (newText: string) => void
-    addPost: (postText:string) => void
-    onChange: (callback: () => void ) => void
+    addPost: (postText: string) => void
+    onChange: (callback: () => void) => void
     _renderTree: () => void
     getState: () => RootStateType
+    dispatch: (action: AddPostActionType | NewPostTextActionType ) => void
+}
+
+export type AddPostActionType = {
+    type: "ADD-POST"
+    postText: string
+}
+
+export type NewPostTextActionType = {
+    type: "NEW-POST-TEXT"
+    newText: string
 }
 
 const store: StoreType = {
     _state: {
-    profilePage: {
-        postData: [
-            {id: 1, post: "today i'l gonna be billionare", likeCounts: 12, avatar: Avatar1},
-            {id: 2, post: "khmm, nice ", likeCounts: 24, avatar: Avatar2},
-            {id: 3, post: "me too", likeCounts: 8, avatar: Avatar3},
-            {id: 4, post: "balabol", likeCounts: 36, avatar: Avatar4},
-        ],
-        newPost: "",
+        profilePage: {
+            postData: [
+                {id: 1, post: "today i'l gonna be billionare", likeCounts: 12, avatar: Avatar1},
+                {id: 2, post: "khmm, nice ", likeCounts: 24, avatar: Avatar2},
+                {id: 3, post: "me too", likeCounts: 8, avatar: Avatar3},
+                {id: 4, post: "balabol", likeCounts: 36, avatar: Avatar4},
+            ],
+            newPost: "",
 
+
+        },
+        dialogsPage: {
+            messagesData: [
+                {id: 1, message: "YO"},
+                {id: 2, message: "Privet"},
+                {id: 3, message: "Kak tvoi dela?"},
+                {id: 4, message: "dab dab dab "},
+                {id: 5, message: "hotline miami"},
+            ],
+            dialogsData: [
+
+                {id: 1, name: "Ilya"},
+                {id: 2, name: "Sasha"},
+                {id: 3, name: "Dasha"},
+                {id: 4, name: "Masha"},
+                {id: 5, name: "Lesha"},
+            ],
+        }
 
     },
-    dialogsPage: {
-        messagesData: [
-            {id: 1, message: "YO"},
-            {id: 2, message: "Privet"},
-            {id: 3, message: "Kak tvoi dela?"},
-            {id: 4, message: "dab dab dab "},
-            {id: 5, message: "hotline miami"},
-        ],
-        dialogsData: [
-
-            {id: 1, name: "Ilya"},
-            {id: 2, name: "Sasha"},
-            {id: 3, name: "Dasha"},
-            {id: 4, name: "Masha"},
-            {id: 5, name: "Lesha"},
-        ],
-    }
-
-},
+    _renderTree() {
+        console.log("state changed")
+    },
     newPostText(newText: string) {
-        debugger
         this._state.profilePage.newPost = newText
         this._renderTree()
     },
@@ -93,14 +104,27 @@ const store: StoreType = {
         this._state.profilePage.newPost = ""
         this._renderTree()
     },
-    _renderTree (){
-        console.log("state changed")
-    },
-    onChange(callback){
+    onChange(callback) {
         this._renderTree = callback
     },
-    getState(){
+    getState() {
         return this._state
+    },
+    dispatch(action) { // { type: "ADD-POST"}
+        if (action.type === "ADD-POST") {
+            const newPost: PostDataType = {
+                id: new Date().getTime(),
+                post: action.postText,
+                likeCounts: 0,
+                avatar: Avatar1
+            }
+            this._state.profilePage.postData.push(newPost)
+            this._state.profilePage.newPost = ""
+            this._renderTree()
+        } else if (action.type === "NEW-POST-TEXT") {
+            this._state.profilePage.newPost = action.newText
+            this._renderTree()
+        }
     }
 
 }

@@ -8,14 +8,12 @@ import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import  {StoreType} from "./redux/state";
-
+import {AddPostActionType, NewPostTextActionType, StoreType} from "./redux/state";
 
 
 type AppPropsType = {
     store: StoreType
-    addPost: (message: string) => void
-    newPostText: (text: string) => void
+    dispatch: (action: AddPostActionType | NewPostTextActionType) => void
 
 }
 
@@ -25,23 +23,23 @@ function App(props: AppPropsType) {
 
     return (
 
-            <div className={'app-wrapper'}>
-                <Header/>
-                <NavBar/>
-                <div className={'app-wrapper-content'}>
-                    <Route path={"/dialogs"}
-                           render={() => <Dialogs
-                               state={state.dialogsPage}/>}/>
-                    <Route path={"/profile"}
-                           render={() => <Profile addPost={props.addPost}
-                               profilePageState={state.profilePage} newPostText={props.newPostText}/>}/>
-                    <Route path={"/news"} render={() => <News/>}/>
-                    <Route path={"/music"} render={() => <Music/>}/>
-                    <Route path={"/settings"} render={() => <Settings/>}/>
-                </div>
-
-
+        <div className={'app-wrapper'}>
+            <Header/>
+            <NavBar/>
+            <div className={'app-wrapper-content'}>
+                <Route path={"/dialogs"}
+                       render={() => <Dialogs
+                           state={state.dialogsPage}/>}/>
+                <Route path={"/profile"}
+                       render={() => <Profile dispatch={props.dispatch}
+                                              profilePageState={state.profilePage}/>}/>
+                <Route path={"/news"} render={() => <News/>}/>
+                <Route path={"/music"} render={() => <Music/>}/>
+                <Route path={"/settings"} render={() => <Settings/>}/>
             </div>
+
+
+        </div>
 
     );
 }
