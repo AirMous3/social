@@ -8,12 +8,12 @@ import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {AddPostActionType, NewPostTextActionType, StoreType} from "./redux/state";
+import {ActionsType,  StoreType} from "./redux/state";
 
 
 type AppPropsType = {
     store: StoreType
-    dispatch: (action: AddPostActionType | NewPostTextActionType) => void
+    dispatch: (action: ActionsType) => void
 
 }
 

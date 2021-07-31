@@ -36,23 +36,23 @@ export type RootStateType = {
 
 export type StoreType = {
     _state: RootStateType
-    newPostText: (newText: string) => void
-    addPost: (postText: string) => void
     onChange: (callback: () => void) => void
     _renderTree: () => void
     getState: () => RootStateType
-    dispatch: (action: AddPostActionType | NewPostTextActionType ) => void
+    dispatch: (action: ActionsType) => void
 }
 
-export type AddPostActionType = {
+ type AddPostActionType = {
     type: "ADD-POST"
     postText: string
 }
 
-export type NewPostTextActionType = {
+ type NewPostTextActionType = {
     type: "NEW-POST-TEXT"
     newText: string
 }
+export type ActionsType = AddPostActionType | NewPostTextActionType
+
 
 const store: StoreType = {
     _state: {
@@ -89,24 +89,10 @@ const store: StoreType = {
     _renderTree() {
         console.log("state changed")
     },
-    newPostText(newText: string) {
-        this._state.profilePage.newPost = newText
-        this._renderTree()
-    },
-    addPost(postText: string) {
-        const newPost: PostDataType = {
-            id: new Date().getTime(),
-            post: postText,
-            likeCounts: 0,
-            avatar: Avatar1
-        }
-        this._state.profilePage.postData.push(newPost)
-        this._state.profilePage.newPost = ""
-        this._renderTree()
-    },
     onChange(callback) {
         this._renderTree = callback
     },
+
     getState() {
         return this._state
     },
