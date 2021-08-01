@@ -2,6 +2,8 @@ import Avatar1 from "../components/Profile/MyPosts/AvatarImg/Avatar1.jpg";
 import Avatar2 from "../components/Profile/MyPosts/AvatarImg/Avatar2.jpg";
 import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
+import dialogsReducer from "./dialogsReducer";
+import profileReducer from "./profileReducer";
 
 
 export type DialogsDataType = {
@@ -92,7 +94,8 @@ const store: StoreType = {
                 {id: 4, name: "Masha"},
                 {id: 5, name: "Lesha"},
             ],
-        }
+        },
+
 
     },
     _renderTree() {
@@ -106,31 +109,11 @@ const store: StoreType = {
         return this._state
     },
     dispatch(action) { // { type: "ADD-POST"}
-        if (action.type === "ADD-POST") {
-            const newPost: PostDataType = {
-                id: new Date().getTime(),
-                post: action.postText,
-                likeCounts: 0,
-                avatar: Avatar1
-            }
-            this._state.profilePage.postData.push(newPost)
-            this._state.profilePage.newPost = ""
-            this._renderTree()
-        } else if (action.type === "NEW-POST-TEXT") {
-            this._state.profilePage.newPost = action.newText
-            this._renderTree()
-        } else if (action.type === "ADD-NEW-MESSAGE") {
-            const newMessage: MessageDataType = {
-                id: new Date().getTime(),
-                message: action.newMessage
-            }
-            this._state.dialogsPage.messagesData.push(newMessage)
-            this._state.dialogsPage.newDialogMessage = ""
-            this._renderTree()
-        } else if (action.type === "NEW-MESSAGE-TEXT") {
-            this._state.dialogsPage.newDialogMessage = action.newMessageText
-            this._renderTree()
-        }
+
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage,action)
+        this._state.profilePage = profileReducer(this._state.profilePage,action)
+        this._renderTree()
+
     }
 
 }
