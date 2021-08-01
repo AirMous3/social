@@ -2,8 +2,8 @@ import Avatar1 from "../components/Profile/MyPosts/AvatarImg/Avatar1.jpg";
 import Avatar2 from "../components/Profile/MyPosts/AvatarImg/Avatar2.jpg";
 import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
-import dialogsReducer from "./dialogsReducer";
-import profileReducer from "./profileReducer";
+import dialogsReducer, {addNewMessageActionCreator, newMessageTextActionCreator} from "./dialogsReducer";
+import profileReducer, {addPostActionCreator, newPostTextActionCreator} from "./profileReducer";
 
 
 export type DialogsDataType = {
@@ -52,16 +52,8 @@ export type ActionsType =
     | ReturnType<typeof addNewMessageActionCreator>
     | ReturnType<typeof newMessageTextActionCreator>
 
-export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText: postText}) as const
-export const newPostTextActionCreator = (newText: string) => ({type: "NEW-POST-TEXT", newText: newText}) as const
-export const addNewMessageActionCreator = (messageText: string) => ({
-    type: "ADD-NEW-MESSAGE",
-    newMessage: messageText
-}) as const
-export const newMessageTextActionCreator = (newMessageText: string) => ({
-    type: "NEW-MESSAGE-TEXT",
-    newMessageText
-}) as const
+
+
 
 const store: StoreType = {
     _state: {

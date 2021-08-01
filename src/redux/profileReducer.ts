@@ -2,6 +2,9 @@ import Avatar1 from "../components/Profile/MyPosts/AvatarImg/Avatar1.jpg";
 import {ActionsType, PostDataType, ProfilePageType} from "./state";
 
 
+export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText: postText}) as const
+export const newPostTextActionCreator = (newText: string) => ({type: "NEW-POST-TEXT", newText: newText}) as const
+
 const profileReducer = (state: ProfilePageType, action: ActionsType) => {
 
     switch (action.type) {
