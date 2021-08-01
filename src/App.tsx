@@ -8,11 +8,12 @@ import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {ActionsType, StoreType,} from "./redux/store";
+import {ActionsType} from "./redux/store";
+import {appStoreType} from "./redux/reduxStore";
 
 
 type AppPropsType = {
-    store: StoreType
+    store: appStoreType
     dispatch: (action: ActionsType) => void
 
 }

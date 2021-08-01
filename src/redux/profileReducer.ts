@@ -8,17 +8,23 @@ import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
 export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText: postText}) as const
 export const newPostTextActionCreator = (newText: string) => ({type: "NEW-POST-TEXT", newText: newText}) as const
 
-let initialState = {
+type initialStateType = {
+    postData: Array<PostDataType>
+    newPost: string
+}
+
+let initialState: initialStateType = {
     postData: [
         {id: 1, post: "today i'l gonna be billionare", likeCounts: 12, avatar: Avatar1},
-        {id: 2, post: "khmm, nice ", likeCounts: 24, avatar: Avatar2},
+        {id: 2, post: "lmao, nice ", likeCounts: 24, avatar: Avatar2},
         {id: 3, post: "me too", likeCounts: 8, avatar: Avatar3},
-        {id: 4, post: "balabol", likeCounts: 36, avatar: Avatar4},
+        {id: 4, post: "zzzzz", likeCounts: 36, avatar: Avatar4},
     ],
     newPost: "",
 }
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
+
+const profileReducer = (state: ProfilePageType = initialState, action: ActionsType): initialStateType => {
 
     switch (action.type) {
         case "ADD-POST":
