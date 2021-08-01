@@ -48,13 +48,18 @@ export type ActionsType =
     ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof newPostTextActionCreator>
     | ReturnType<typeof addNewMessageActionCreator>
-    |
-    ReturnType<typeof newMessageTextActionCreator>
+    | ReturnType<typeof newMessageTextActionCreator>
 
 export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText: postText}) as const
 export const newPostTextActionCreator = (newText: string) => ({type: "NEW-POST-TEXT", newText: newText}) as const
-export const addNewMessageActionCreator = (messageText: string) => ({type: "ADD-NEW-MESSAGE", newMessage: messageText }) as const
-export const newMessageTextActionCreator = (newMessageText: string) => ({type: "NEW-MESSAGE-TEXT", newMessageText }) as const
+export const addNewMessageActionCreator = (messageText: string) => ({
+    type: "ADD-NEW-MESSAGE",
+    newMessage: messageText
+}) as const
+export const newMessageTextActionCreator = (newMessageText: string) => ({
+    type: "NEW-MESSAGE-TEXT",
+    newMessageText
+}) as const
 
 const store: StoreType = {
     _state: {
@@ -77,7 +82,7 @@ const store: StoreType = {
                 {id: 4, message: "dab dab dab "},
                 {id: 5, message: "hotline miami"},
             ],
-            newDialogMessage: "hahah",
+            newDialogMessage: "",
 
             dialogsData: [
 
