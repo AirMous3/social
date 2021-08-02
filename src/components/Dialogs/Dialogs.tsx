@@ -2,28 +2,34 @@ import React, {ChangeEvent} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import s from "./Dialogs.module.css"
 import Message from "./Messages/Message";
-import {ActionsType, StoreType} from "../../redux/store";
+
 import {addNewMessageActionCreator, newMessageTextActionCreator} from "../../redux/dialogsReducer";
+import {Dispatch} from "redux";
+import {DialogsPageType} from "../../redux/store";
+
 
 
 type DialogsPropsType = {
 
-    store: StoreType
-    dispatch: (action: ActionsType) => void
+    store: DialogsPageType
+    dispatch: Dispatch
 
 }
 
 
 function Dialogs(props: DialogsPropsType) {
 
-    let state = props.store.getState().dialogsPage
+    //
+    // let state = props.store
 
-    let dialogsElements = state.dialogsData.map(d => <DialogItem id={d.id} name={d.name}/>)
-    let messagesElements = state.messagesData.map(message => <Message message={message.message}/>)
-    let newMessageText = state.newDialogMessage
+    //let _state = props.store.getState().dialogsPage
+
+    let dialogsElements = props.store.dialogsData.map((d:any) => <DialogItem id={d.id} name={d.name}/>)
+    let messagesElements = props.store.messagesData.map((message: any) => <Message message={message.message}/>)
+    let newMessageText = props.store.newDialogMessage
 
     let sendNewDialogMessage = () => {
-        props.dispatch(addNewMessageActionCreator(state.newDialogMessage))
+       props.dispatch(addNewMessageActionCreator(props.store.newDialogMessage))
     }
 
     let onMessageTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
