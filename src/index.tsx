@@ -3,25 +3,25 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
-import store, {appStoreType} from "./redux/reduxStore";
-import {Store} from "redux";
+import store from "./redux/reduxStore";
 
 
- let renderTree = (state:Store & appStoreType) => {
+
+ let renderTree = () => {
 
     ReactDOM.render(
         <BrowserRouter>
-            <App state={state}   store={store}/>
+            <App  store={store}/>
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
-renderTree(store.getState())
+renderTree()
 
 store.subscribe( () => {
-    let state = store.getState()
-    renderTree(state)
+
+    renderTree()
 })
 
 

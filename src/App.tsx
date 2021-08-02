@@ -13,7 +13,7 @@ import { Store} from "redux";
 
 
 type AppPropsType = {
-    state: appStoreType
+
     store: Store<appStoreType>
 
 
@@ -32,10 +32,10 @@ function App(props: AppPropsType) {
             <div className={'app-wrapper-content'}>
                 <Route path={"/dialogs"}
                        render={() => <Dialogs
-                           store={props.store.getState().dialogsPage} dispatch={props.store.dispatch} />
+                           store={props.store}  />
                        }/>
                 <Route path={"/profile"}
-                       render={() => <Profile store={props.store} dispatch={props.store.dispatch}/>
+                       render={() => <Profile store={props.store} />
                        }/>
                 <Route path={"/news"} render={() => <News/>}/>
                 <Route path={"/music"} render={() => <Music/>}/>

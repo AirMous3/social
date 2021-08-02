@@ -4,12 +4,12 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {Dispatch, Store} from "redux";
+import { Store} from "redux";
 import {appStoreType} from "../../redux/reduxStore";
 
 type ProfilePropsType = {
     store: Store<appStoreType>
-    dispatch: Dispatch
+
 
 }
 

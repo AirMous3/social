@@ -16,7 +16,7 @@ let reducers = combineReducers(
 
 export type appStoreType = ReturnType<typeof reducers>
 
-const store: Store & appStoreType = createStore(reducers)
+const store: Store<appStoreType> = createStore(reducers)
 
 
 export default store
