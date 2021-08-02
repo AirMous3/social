@@ -1,4 +1,5 @@
-import {ActionsType, DialogsDataType, DialogsPageType, MessageDataType} from "./store";
+import {ActionsType} from "./ActionsTypes";
+
 
 export const addNewMessageActionCreator = (messageText: string) => ({
     type: "ADD-NEW-MESSAGE",
@@ -8,6 +9,21 @@ export const newMessageTextActionCreator = (newMessageText: string) => ({
     type: "NEW-MESSAGE-TEXT",
     newMessageText
 }) as const
+
+
+export type DialogsDataType = {
+    name: string
+    id: number
+}
+export type MessageDataType = {
+    message: string
+    id: number
+}
+export type DialogsPageType = {
+    messagesData: Array<MessageDataType>
+    dialogsData: Array<DialogsDataType>
+    newDialogMessage: string
+}
 
 type initialStateType = {
     messagesData: Array<MessageDataType>

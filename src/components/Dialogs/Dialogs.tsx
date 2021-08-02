@@ -2,10 +2,9 @@ import React, {ChangeEvent} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import s from "./Dialogs.module.css"
 import Message from "./Messages/Message";
-
-import {addNewMessageActionCreator, newMessageTextActionCreator} from "../../redux/dialogsReducer";
+import {addNewMessageActionCreator, DialogsPageType, newMessageTextActionCreator} from "../../redux/dialogsReducer";
 import {Dispatch} from "redux";
-import {DialogsPageType} from "../../redux/store";
+
 
 
 
@@ -17,9 +16,10 @@ type DialogsPropsType = {
 }
 
 
+
 function Dialogs(props: DialogsPropsType) {
 
-    //
+
     // let state = props.store
 
     //let _state = props.store.getState().dialogsPage

@@ -1,12 +1,25 @@
 import Avatar1 from "../components/Profile/MyPosts/AvatarImg/Avatar1.jpg";
-import {ActionsType, PostDataType, ProfilePageType} from "./store";
 import Avatar2 from "../components/Profile/MyPosts/AvatarImg/Avatar2.jpg";
 import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
+import {ActionsType} from "./ActionsTypes";
 
 
 export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText: postText}) as const
 export const newPostTextActionCreator = (newText: string) => ({type: "NEW-POST-TEXT", newText: newText}) as const
+
+export type PostDataType = {
+    id: number
+    post: string
+    likeCounts: number
+    avatar: string
+
+}
+export type ProfilePageType = {
+    postData: Array<PostDataType>
+    newPost: string
+
+}
 
 type initialStateType = {
     postData: Array<PostDataType>
