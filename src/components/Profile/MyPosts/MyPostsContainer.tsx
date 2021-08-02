@@ -12,12 +12,12 @@ import {appStoreType} from "../../../redux/reduxStore";
 
 
 
-type MyPostsPropsType = {
+type MyPostsContainerPropsType = {
     store:  Store<appStoreType>
 }
 
 
-function MyPostsContainer(props: MyPostsPropsType) {
+function MyPostsContainer(props: MyPostsContainerPropsType) {
 
 
 

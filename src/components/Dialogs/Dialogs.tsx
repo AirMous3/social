@@ -2,39 +2,38 @@ import React, {ChangeEvent} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import s from "./Dialogs.module.css"
 import Message from "./Messages/Message";
-import {addNewMessageActionCreator,  newMessageTextActionCreator} from "../../redux/dialogsReducer";
-import { Store} from "redux";
-import {appStoreType} from "../../redux/reduxStore";
-
-
+import {
+    DialogsDataType,
+    MessageDataType,
+} from "../../redux/dialogsReducer";
 
 
 type DialogsPropsType = {
 
-    store: Store<appStoreType>
+
+    onMessageText: (text: string) => void
+    sendNewDialogMessage: () => void
+    dialogsData: Array<DialogsDataType>
+    newMessageText: string
+    messagesData: Array<MessageDataType>
 
 
 }
 
 
-
 function Dialogs(props: DialogsPropsType) {
 
 
-     let state = props.store.getState()
-
-    //let _state = props.store.getState().dialogsPage
-
-    let dialogsElements = state.dialogsPage.dialogsData.map((d) => <DialogItem id={d.id} name={d.name}/>)
-    let messagesElements = state.dialogsPage.messagesData.map((message) => <Message message={message.message}/>)
-    let newMessageText = state.dialogsPage.newDialogMessage
+    let dialogsElements = props.dialogsData.map((d) => <DialogItem id={d.id} name={d.name}/>)
+    let messagesElements = props.messagesData.map((message) => <Message message={message.message}/>)
+    let newMessageText = props.newMessageText
 
     let sendNewDialogMessage = () => {
-       props.store.dispatch(addNewMessageActionCreator(state.dialogsPage.newDialogMessage))
+        props.sendNewDialogMessage()
     }
 
     let onMessageTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.store.dispatch(newMessageTextActionCreator(e.currentTarget.value))
+        props.onMessageText(e.currentTarget.value)
     }
 
     return (<div className={s.dialogs}>
