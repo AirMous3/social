@@ -7,21 +7,10 @@ import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {appStoreType} from "./redux/reduxStore";
-import { Store} from "redux";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
-type AppPropsType = {
-
-    store: Store<appStoreType>
-
-
-}
-
-
-function App(props: AppPropsType) {
-
+function App() {
 
 
     return (
@@ -31,11 +20,10 @@ function App(props: AppPropsType) {
             <NavBar/>
             <div className={'app-wrapper-content'}>
                 <Route path={"/dialogs"}
-                       render={() => <DialogsContainer
-                           store={props.store}  />
+                       render={() => <DialogsContainer/>
                        }/>
                 <Route path={"/profile"}
-                       render={() => <Profile store={props.store} />
+                       render={() => <Profile/>
                        }/>
                 <Route path={"/news"} render={() => <News/>}/>
                 <Route path={"/music"} render={() => <Music/>}/>

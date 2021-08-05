@@ -2,38 +2,30 @@ import React, {ChangeEvent} from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import s from "./Dialogs.module.css"
 import Message from "./Messages/Message";
-import {
-    DialogsDataType,
-    MessageDataType,
-} from "../../redux/dialogsReducer";
+import {DialogsPageType} from "../../redux/dialogsReducer";
 
 
 type DialogsPropsType = {
-
-
-    onMessageText: (text: string) => void
-    sendNewDialogMessage: () => void
-    dialogsData: Array<DialogsDataType>
-    newMessageText: string
-    messagesData: Array<MessageDataType>
-
-
+    onNewMessageText: (text: string) => void
+    sendNewDialogMessage: (text: string) => void
+    dialogsPage: DialogsPageType
 }
 
 
 function Dialogs(props: DialogsPropsType) {
 
+    let state = props.dialogsPage
 
-    let dialogsElements = props.dialogsData.map((d) => <DialogItem id={d.id} name={d.name}/>)
-    let messagesElements = props.messagesData.map((message) => <Message message={message.message}/>)
-    let newMessageText = props.newMessageText
+    let dialogsElements = state.dialogsData.map((d) => <DialogItem id={d.id} name={d.name}/>)
+    let messagesElements = state.messagesData.map((message) => <Message message={message.message}/>)
+    let newMessageText = state.newDialogMessage
 
     let sendNewDialogMessage = () => {
-        props.sendNewDialogMessage()
+        props.sendNewDialogMessage(newMessageText)
     }
 
     let onMessageTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onMessageText(e.currentTarget.value)
+        props.onNewMessageText(e.currentTarget.value)
     }
 
     return (<div className={s.dialogs}>

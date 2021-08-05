@@ -1,31 +1,32 @@
 import s from "./MyPosts.module.css"
 import React, {ChangeEvent} from "react";
 import Post from "./Post/Post";
-import {PostDataType} from "../../../redux/profileReducer";
-
+import {ProfilePageType} from "../../../redux/profileReducer";
 
 
 type MyPostsPropsType = {
-    posts: Array<PostDataType>
-    updateNewPostText: (text: string) => void
-    addPost: () => void
-    newPost: string
+    profilePage: ProfilePageType
+    onPostTextChangeHandler: (text: string) => void
+    addPost: (text: string) => void
+
 }
 
 
 function MyPosts(props: MyPostsPropsType) {
 
+    let state = props.profilePage
+    let newPostText = state.newPost
 
-    let postsElements = props.posts.map(post => <Post message={post.post} likeCounts={post.likeCounts}
-                                                         avatar={post.avatar}/>)
+    let postsElements = state.postData.map(post => <Post message={post.post} likeCounts={post.likeCounts}
+                                                                     avatar={post.avatar}/>)
 
 
     let addPost = () => {
-        props.addPost()
+        props.addPost(newPostText)
     }
 
     let onPostTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
+        props.onPostTextChangeHandler(e.currentTarget.value)
     }
 
     return (
@@ -33,7 +34,8 @@ function MyPosts(props: MyPostsPropsType) {
             <h3> My Posts </h3>
             <div>
                 <div>
-                    <textarea onChange={onPostTextChangeHandler} value={props.newPost} placeholder={"Что нового ?"}/>
+                    <textarea onChange={onPostTextChangeHandler} value={state.newPost}
+                              placeholder={"Что нового ?"}/>
                 </div>
                 <div>
                     <button onClick={addPost}>add post</button>

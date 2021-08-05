@@ -6,7 +6,7 @@ import profileReducer from "./profileReducer";
 
 
 
-let reducers = combineReducers(
+let rootReducer = combineReducers(
     {
        dialogsPage: dialogsReducer,
        profilePage: profileReducer
@@ -14,9 +14,9 @@ let reducers = combineReducers(
 )
 
 
-export type appStoreType = ReturnType<typeof reducers>
+export type AppStoreType = ReturnType<typeof rootReducer>
 
-const store: Store<appStoreType> = createStore(reducers)
+const store: Store<AppStoreType> = createStore(rootReducer)
 
 
 export default store
