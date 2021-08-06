@@ -43,24 +43,27 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
     let copyState: initialStateType = {...state, postData: [...state.postData]}
 
     switch (action.type) {
-        case "ADD-POST":
+        case "ADD-POST": {
             const newPost: PostDataType = {
                 id: v1(),
                 post: action.postText,
                 likeCounts: 0,
                 avatar: Avatar1
             }
+            copyState = { postData: [...state.postData, newPost], newPost: ""}
 
-            copyState.postData.push(newPost)
-            copyState.newPost = ""
             return copyState
+        }
 
-        case "NEW-POST-TEXT":
+        case "NEW-POST-TEXT": {
+
             copyState.newPost = action.newText
             return copyState
+        }
 
         default:
             return state
+
     }
 
 }

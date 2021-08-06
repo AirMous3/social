@@ -55,22 +55,20 @@ let initialState: initialStateType = {
 
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): initialStateType => {
 
-    let copyState: initialStateType = {...state, messagesData: [...state.messagesData] }
+    let copyState: initialStateType = {...state, messagesData: [...state.messagesData]}
 
     switch (action.type) {
-        case "ADD-NEW-MESSAGE":
-            const newMessage: MessageDataType = {
-                id: v1(),
-                message: action.newMessage
-            }
-            copyState.messagesData.push(newMessage)
-            copyState.newDialogMessage = ""
+        case "ADD-NEW-MESSAGE": {
+            const newMessage: MessageDataType = {id: v1(), message: action.newMessage}
+            copyState = {...state, messagesData: [...state.messagesData, newMessage ], newDialogMessage: ""}
             return copyState
+        }
 
-        case "NEW-MESSAGE-TEXT":
+        case "NEW-MESSAGE-TEXT": {
 
             copyState.newDialogMessage = action.newMessageText
             return copyState
+        }
 
         default:
             return state
