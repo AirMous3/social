@@ -10,7 +10,7 @@ function DialogItem(props: DialogItemPropsType) {
 
  type DialogItemPropsType = {
     name: string
-    id: number
+    id: string
 }
 
 export default DialogItem

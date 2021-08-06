@@ -11,7 +11,7 @@ function MyPosts(props: MyPostsPropsType) {
     let state = props.profilePage
     let newPostText = state.newPost
 
-    let postsElements = state.postData.map(post => <Post message={post.post} likeCounts={post.likeCounts}
+    let postsElements = state.postData.map(post => <Post key={post.id} message={post.post} likeCounts={post.likeCounts}
                                                                      avatar={post.avatar}/>)
 
 

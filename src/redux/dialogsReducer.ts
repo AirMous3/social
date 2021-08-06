@@ -1,4 +1,5 @@
 import {ActionsType} from "./ActionsTypes";
+import {v1} from "uuid";
 
 
 export const addNewMessageActionCreator = (messageText: string) => ({
@@ -13,11 +14,11 @@ export const newMessageTextActionCreator = (newMessageText: string) => ({
 
 export type DialogsDataType = {
     name: string
-    id: number
+    id: string
 }
 export type MessageDataType = {
     message: string
-    id: number
+    id: string
 }
 export type DialogsPageType = {
     messagesData: Array<MessageDataType>
@@ -34,42 +35,43 @@ type initialStateType = {
 let initialState: initialStateType = {
 
     messagesData: [
-        {id: 1, message: "YO"},
-        {id: 2, message: "Privet"},
-        {id: 3, message: "Kak tvoi dela?"},
-        {id: 4, message: "dab dab dab "},
-        {id: 5, message: "hotline miami"},
+        {id: v1(), message: "YO"},
+        {id: v1(), message: "Privet"},
+        {id: v1(), message: "Kak tvoi dela?"},
+        {id: v1(), message: "dab dab dab "},
+        {id: v1(), message: "hotline miami"},
     ],
     newDialogMessage: "",
 
     dialogsData: [
 
-        {id: 1, name: "Ilya"},
-        {id: 2, name: "Sasha"},
-        {id: 3, name: "Dasha"},
-        {id: 4, name: "Masha"},
-        {id: 5, name: "Lesha"},
+        {id: v1(), name: "Ilya"},
+        {id: v1(), name: "Sasha"},
+        {id: v1(), name: "Dasha"},
+        {id: v1(), name: "Masha"},
+        {id: v1(), name: "Lesha"},
     ],
 }
 
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): initialStateType => {
 
+    let copyState: initialStateType = {...state, messagesData: [...state.messagesData] }
+
     switch (action.type) {
-        case "ADD-NEW-MESSAGE": {
+        case "ADD-NEW-MESSAGE":
             const newMessage: MessageDataType = {
-                id: new Date().getTime(),
+                id: v1(),
                 message: action.newMessage
             }
-            let copyState: initialStateType = {...state, messagesData: [...state.messagesData]}
             copyState.messagesData.push(newMessage)
             copyState.newDialogMessage = ""
             return copyState
-        }
-        case "NEW-MESSAGE-TEXT": {
-            let copyState: initialStateType = {...state}
+
+        case "NEW-MESSAGE-TEXT":
+
             copyState.newDialogMessage = action.newMessageText
             return copyState
-        }
+
         default:
             return state
     }
