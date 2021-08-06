@@ -5,7 +5,7 @@ import {AppStoreType} from "../../redux/reduxStore";
 import {Dispatch} from "redux";
 
 
-export type mapDialogsStateType = {
+ type mapDialogsStateType = {
     dialogsPage: DialogsPageType
 }
 
@@ -13,6 +13,8 @@ type mapDialogsDispatchType = {
     sendNewDialogMessage: (text: string) => void
     onNewMessageText: (text: string) => void
 }
+
+export type DialogsPropsType = mapDialogsStateType &  mapDialogsDispatchType
 
 const mapStateToProps = (state: AppStoreType): mapDialogsStateType => {
     return {

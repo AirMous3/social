@@ -1,15 +1,9 @@
 import s from "./MyPosts.module.css"
 import React, {ChangeEvent} from "react";
 import Post from "./Post/Post";
-import {ProfilePageType} from "../../../redux/profileReducer";
+import {MyPostsPropsType} from "./MyPostsContainer";
 
 
-type MyPostsPropsType = {
-    profilePage: ProfilePageType
-    onPostTextChangeHandler: (text: string) => void
-    addPost: (text: string) => void
-
-}
 
 
 function MyPosts(props: MyPostsPropsType) {

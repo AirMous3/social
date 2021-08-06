@@ -9,11 +9,12 @@ import {Dispatch} from "redux";
 type mapStateType = {
     profilePage: ProfilePageType
 }
-
 type mapDispatchType = {
     addPost: (text: string) => void
     onPostTextChangeHandler: (text: string) => void
 }
+export type MyPostsPropsType = mapStateType & mapDispatchType
+
 const mapStateToProps = (state: AppStoreType): mapStateType => {
     return {
         profilePage: state.profilePage
