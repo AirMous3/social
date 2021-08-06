@@ -9,7 +9,7 @@ import {MyPostsPropsType} from "./MyPostsContainer";
 function MyPosts(props: MyPostsPropsType) {
 
     let state = props.profilePage
-    let newPostText = state.newPost
+    let newPostText = state.newPostText
 
     let postsElements = state.postData.map(post => <Post key={post.id} message={post.post} likeCounts={post.likeCounts}
                                                                      avatar={post.avatar}/>)
@@ -28,7 +28,7 @@ function MyPosts(props: MyPostsPropsType) {
             <h3> My Posts </h3>
             <div>
                 <div>
-                    <textarea onChange={onPostTextChangeHandler} value={state.newPost}
+                    <textarea onChange={onPostTextChangeHandler} value={state.newPostText}
                               placeholder={"Что нового ?"}/>
                 </div>
                 <div>

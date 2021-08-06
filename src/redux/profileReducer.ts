@@ -18,13 +18,13 @@ export type PostDataType = {
 }
 export type ProfilePageType = {
     postData: Array<PostDataType>
-    newPost: string
+    newPostText: string
 
 }
 
 type initialStateType = {
     postData: Array<PostDataType>
-    newPost: string
+    newPostText: string
 }
 
 let initialState: initialStateType = {
@@ -34,32 +34,23 @@ let initialState: initialStateType = {
         {id: v1(), post: "me too", likeCounts: 8, avatar: Avatar3},
         {id: v1(), post: "zzzzz", likeCounts: 36, avatar: Avatar4},
     ],
-    newPost: "",
+    newPostText: "",
 }
 
 
 const profileReducer = (state: ProfilePageType = initialState, action: ActionsType): initialStateType => {
 
-    let copyState: initialStateType = {...state, postData: [...state.postData]}
 
     switch (action.type) {
-        case "ADD-POST": {
-            const newPost: PostDataType = {
-                id: v1(),
-                post: action.postText,
-                likeCounts: 0,
-                avatar: Avatar1
-            }
-            copyState = { postData: [...state.postData, newPost], newPost: ""}
+        case "ADD-POST":
+            const newPost: PostDataType = {id: v1(), post: action.postText, likeCounts: 0, avatar: Avatar1}
+            return {postData: [...state.postData, newPost], newPostText: ""}
 
-            return copyState
-        }
 
-        case "NEW-POST-TEXT": {
+        case "NEW-POST-TEXT":
 
-            copyState.newPost = action.newText
-            return copyState
-        }
+            return {...state, newPostText: action.newText}
+
 
         default:
             return state
