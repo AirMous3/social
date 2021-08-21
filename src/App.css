@@ -7,10 +7,10 @@
     "header header "
     "nav content ";
 
-    grid-template-rows: 60px 1fr ;
-    grid-template-columns: 300px 10fr ;
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 300px 10fr;
     /*grid-gap: 10px;*/
-    font-family: "Microsoft JhengHei Light";
+
 
 }
 
@@ -22,6 +22,12 @@
 }
 
 
+textarea {
+    outline: none;
+}
 
+body {
+    font-family: "Microsoft JhengHei Light";
+}
 
 
