@@ -9,9 +9,9 @@ import userPhoto from "../images/user.png"
 export const Users = (props: UsersPropsType) => {
 
     if (props.users.length === 0) {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response  => {
-            debugger
-            props.setUser(response.data.items)
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response  => {  /* делаем get запрос на серва по url*/
+
+            props.setUser(response.data.items)  /*Сетаем юзерсвов которые нам приходят на отрисовку */
         })
 
     }
