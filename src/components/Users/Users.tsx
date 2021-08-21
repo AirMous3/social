@@ -16,13 +16,11 @@ interface UsersCProps {
 
 class Users extends React.Component<UsersCProps> {
 
-    constructor(props: UsersCProps) {
-        super(props);
+    componentDidMount() {
         axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {  /* делаем get запрос на серва по url*/
 
             this.props.setUser(response.data.items)  /*Сетаем юзерсвов которые нам приходят на отрисовку */
         })
-
     }
 
     render() {

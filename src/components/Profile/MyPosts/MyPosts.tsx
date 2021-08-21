@@ -24,11 +24,11 @@ function MyPosts(props: MyPostsPropsType) {
     }
 
     return (
-        <div>
+        <div className={s.container}>
             <h3> My Posts </h3>
             <div>
-                <div>
-                    <textarea onChange={onPostTextChangeHandler} value={state.newPostText}
+                <div >
+                    <textarea className={s.textarea} onChange={onPostTextChangeHandler} value={state.newPostText}
                               placeholder={"Что нового ?"}/>
                 </div>
                 <div>

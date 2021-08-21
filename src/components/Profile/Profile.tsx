@@ -3,10 +3,11 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 
+
 function Profile() {
 
     return <div>
-        <ProfileInfo/>
+        <ProfileInfo />
         <MyPostsContainer/>
 
     </div>

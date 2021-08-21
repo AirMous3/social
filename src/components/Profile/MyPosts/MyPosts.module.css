@@ -1,3 +1,16 @@
+.container{
+    margin-left: 30px;
+}
+
 .posts {
     margin-top: 10px;
+}
+
+
+.textarea{
+   outline: none;
+    resize: none;
+    width: 400px;
+    height: 70px;
+
 }
