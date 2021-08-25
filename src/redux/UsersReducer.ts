@@ -7,14 +7,11 @@ export const unfollowAC = (userID: string) => ({type: "UNFOLLOW", userID}) as co
 export const setUsersAC = (users: Array<UserType>) => ({type: "SET-USERS", users }) as const
 export const setCurrentPageAC = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage}) as const
 export const setTotalUsersCountAC = (totalUsers: number) => ({type: "SET-TOTAL-USERS-COUNT", totalUsers}) as const
+export const toggleInProgressAC = (progress: boolean) => ({type: "TOGGLE-IS-IN-PROGRESS", progress}) as const
 
 
-export type initialStateType = {
-    users: Array<UserType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-}
+export type initialStateType = typeof initialState
+
 export type UserType = {
     id: string
     photos: PhotosType
@@ -22,8 +19,6 @@ export type UserType = {
     name: string
     status: string
     location: LocationType
-
-
 
 }
 export type PhotosType ={
@@ -35,11 +30,12 @@ export type LocationType = {
     country: string
 }
 
-let initialState: initialStateType = {
-    users: [],
+let initialState = {
+    users: [] as Array<UserType>,
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isInProgress: false
 
 }
 
@@ -58,6 +54,8 @@ export const UsersReducer = (state:initialStateType = initialState, action: Acti
             return { ...state , currentPage: action.currentPage }
         case "SET-TOTAL-USERS-COUNT":
             return { ...state , totalUsersCount: action.totalUsers}
+        case "TOGGLE-IS-IN-PROGRESS":
+            return {...state, isInProgress: action.progress}
         default:
             return state
     }
