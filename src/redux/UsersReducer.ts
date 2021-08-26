@@ -1,13 +1,18 @@
+export type ActionsUsersReducerType =
+     ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleInProgress>
 
-import {ActionsType} from "./ActionsTypes";
 
-
-export const followAC = (userID: string) => ({type: "FOLLOW", userID}) as const
-export const unfollowAC = (userID: string) => ({type: "UNFOLLOW", userID}) as const
-export const setUsersAC = (users: Array<UserType>) => ({type: "SET-USERS", users }) as const
-export const setCurrentPageAC = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage}) as const
-export const setTotalUsersCountAC = (totalUsers: number) => ({type: "SET-TOTAL-USERS-COUNT", totalUsers}) as const
-export const toggleInProgressAC = (progress: boolean) => ({type: "TOGGLE-IS-IN-PROGRESS", progress}) as const
+export const follow = (userID: string) => ({type: "FOLLOW", userID}) as const
+export const unfollow = (userID: string) => ({type: "UNFOLLOW", userID}) as const
+export const setUsers = (users: Array<UserType>) => ({type: "SET-USERS", users}) as const
+export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage}) as const
+export const setTotalUsersCount = (totalUsers: number) => ({type: "SET-TOTAL-USERS-COUNT", totalUsers}) as const
+export const toggleInProgress = (progress: boolean) => ({type: "TOGGLE-IS-IN-PROGRESS", progress}) as const
 
 
 export type initialStateType = typeof initialState
@@ -21,7 +26,7 @@ export type UserType = {
     location: LocationType
 
 }
-export type PhotosType ={
+export type PhotosType = {
     small: string
     large: string
 }
@@ -40,20 +45,18 @@ let initialState = {
 }
 
 
-export const UsersReducer = (state:initialStateType = initialState, action: ActionsType): initialStateType => {
+export const UsersReducer = (state: initialStateType = initialState, action: ActionsUsersReducerType): initialStateType => {
     switch (action.type) {
         case "FOLLOW":
-
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, follow: true} : u)}
-
         case "UNFOLLOW":
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, follow: false} : u)}
         case "SET-USERS":
-            return { ...state , users: [...action.users ] }
+            return {...state, users: [...action.users]}
         case "SET-CURRENT-PAGE":
-            return { ...state , currentPage: action.currentPage }
+            return {...state, currentPage: action.currentPage}
         case "SET-TOTAL-USERS-COUNT":
-            return { ...state , totalUsersCount: action.totalUsers}
+            return {...state, totalUsersCount: action.totalUsers}
         case "TOGGLE-IS-IN-PROGRESS":
             return {...state, isInProgress: action.progress}
         default:

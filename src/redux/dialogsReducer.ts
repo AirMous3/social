@@ -1,6 +1,9 @@
-import {ActionsType} from "./ActionsTypes";
 import {v1} from "uuid";
 
+
+type ActionsDialogsReducerType =
+    | ReturnType<typeof addNewMessageActionCreator>
+    | ReturnType<typeof newMessageTextActionCreator>
 
 export const addNewMessageActionCreator = (messageText: string) => ({
     type: "ADD-NEW-MESSAGE",
@@ -53,7 +56,7 @@ let initialState: initialStateType = {
     ],
 }
 
-const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): initialStateType => {
+const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsDialogsReducerType): initialStateType => {
 
 
     switch (action.type) {

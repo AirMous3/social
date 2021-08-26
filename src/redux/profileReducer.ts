@@ -2,9 +2,11 @@ import Avatar1 from "../components/Profile/MyPosts/AvatarImg/Avatar1.jpg";
 import Avatar2 from "../components/Profile/MyPosts/AvatarImg/Avatar2.jpg";
 import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
-import {ActionsType} from "./ActionsTypes";
 import {v1} from "uuid";
 
+type ActionsProfileReducerType =
+    | ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof newPostTextActionCreator>
 
 export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText: postText}) as const
 export const newPostTextActionCreator = (newText: string) => ({type: "NEW-POST-TEXT", newText: newText}) as const
@@ -38,7 +40,7 @@ let initialState: initialStateType = {
 }
 
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsType): initialStateType => {
+const profileReducer = (state: ProfilePageType = initialState, action: ActionsProfileReducerType): initialStateType => {
 
 
     switch (action.type) {
