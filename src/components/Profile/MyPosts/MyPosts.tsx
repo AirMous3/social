@@ -6,6 +6,7 @@ import {MyPostsPropsType} from "./MyPostsContainer";
 
 
 
+
 function MyPosts(props: MyPostsPropsType) {
 
     let state = props.profilePage
@@ -20,7 +21,7 @@ function MyPosts(props: MyPostsPropsType) {
     }
 
     let onPostTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onPostTextChangeHandler(e.currentTarget.value)
+        props.newPostText(e.currentTarget.value)
     }
 
     return (

@@ -5,11 +5,13 @@ import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
 import {v1} from "uuid";
 
 type ActionsProfileReducerType =
-    | ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof newPostTextActionCreator>
+    | ReturnType<typeof addPost>
+    | ReturnType<typeof newPostText>
+    | ReturnType<typeof setUserProfile>
 
-export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText: postText}) as const
-export const newPostTextActionCreator = (newText: string) => ({type: "NEW-POST-TEXT", newText: newText}) as const
+export const addPost = (postText: string) => ({type: "ADD-POST", postText: postText}) as const
+export const newPostText = (newText: string) => ({type: "NEW-POST-TEXT", newText: newText}) as const
+export const setUserProfile = (profile: ProfileType) => ({type: "SET-USER-PROFILE", profile}) as const
 
 export type PostDataType = {
     id: string
@@ -18,15 +20,13 @@ export type PostDataType = {
     avatar: string
 
 }
-export type ProfilePageType = {
-    postData: Array<PostDataType>
-    newPostText: string
 
-}
+
 
 type initialStateType = {
     postData: Array<PostDataType>
     newPostText: string
+    profile: ProfileType
 }
 
 let initialState: initialStateType = {
@@ -37,23 +37,41 @@ let initialState: initialStateType = {
         {id: v1(), post: "zzzzz", likeCounts: 36, avatar: Avatar4},
     ],
     newPostText: "",
+    profile: {} as ProfileType
 }
 
+export type ProfileType = {
+    aboutMe: string
+    contacts: {
+        facebook: string
+        website: string
+        vk: string
+        twitter: string
+        instagram: string
+        youtube: string
+        github: string
+        mainLink: string
+    }
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: {
+        small: string
+        large: string
+    }
+}
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsProfileReducerType): initialStateType => {
-
+const profileReducer = (state:initialStateType = initialState, action: ActionsProfileReducerType): initialStateType => {
 
     switch (action.type) {
         case "ADD-POST":
             const newPost: PostDataType = {id: v1(), post: action.postText, likeCounts: 0, avatar: Avatar1}
-            return {postData: [...state.postData, newPost], newPostText: ""}
-
-
+            return {...state,postData: [...state.postData, newPost], newPostText: ""}
         case "NEW-POST-TEXT":
-
             return {...state, newPostText: action.newText}
-
-
+        case "SET-USER-PROFILE":
+            return {...state, profile: action.profile}
         default:
             return state
 

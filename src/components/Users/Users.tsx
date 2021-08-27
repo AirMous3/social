@@ -2,6 +2,7 @@ import React from "react";
 import s from "./Users.module.css";
 import userPhoto from "../../images/user.png";
 import {UserType} from "../../redux/UsersReducer";
+import {NavLink} from "react-router-dom";
 
 
 type UsersPropsType = {
@@ -14,7 +15,7 @@ type UsersPropsType = {
     unfollow: (UserID: string) => void
 }
 
-export const Users = (props: UsersPropsType ) => {
+export const Users = (props: UsersPropsType) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize) // Делим Количество юзеров на количество юзеров доступных на странице
     let pages = [] // Создали пустой массив
@@ -32,7 +33,9 @@ export const Users = (props: UsersPropsType ) => {
             {props.users.map(u => <div key={u.id}> {/*Отрисовываем пришедших нам с сервера юзеров*/}
                 <span>
                     <div>
+                        <NavLink to={"/profile/" + u.id}>
                         <img className={s.avatar} src={u.photos.small == null ? userPhoto : u.photos.small}/>
+                            </NavLink>
                     </div>
                     <div>
                         {u.follow ? <button onClick={() => props.unfollow(u.id)}>unfollow</button> :
