@@ -78,27 +78,5 @@ const mapUsersStateToProps = (state: AppStoreType): mapUsersStateToPropsType => 
     }
 }
 
-// const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
-//     return {
-//         follow: (userID) => {
-//             dispatch(followAC(userID))
-//         },
-//         unfollow: (userID) => {
-//             dispatch(unfollowAC(userID))
-//         },
-//         setUser: (users) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         setCurrentPage: (page) => {
-//             dispatch(setCurrentPageAC(page))
-//         },
-//         setTotalUsersCount: (totalUsers) => {
-//             dispatch(setTotalUsersCountAC(totalUsers))
-//         },
-//         toggleInProgress: (inProgress) => {
-//             dispatch(toggleInProgressAC(inProgress))
-//         }
-//     }
-// }
 
 export const UsersContainer = connect(mapUsersStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleInProgress})(UsersApiComponent)

@@ -1,7 +1,9 @@
 import {combineReducers, createStore, Store} from "redux";
 import dialogsReducer from "./dialogsReducer";
 import profileReducer from "./profileReducer";
-import {UsersReducer} from "./UsersReducer";
+import { usersReducer } from "./UsersReducer";
+import {authReducer} from "./authReducer";
+
 
 
 
@@ -11,7 +13,8 @@ let rootReducer = combineReducers(
     {
        dialogsPage: dialogsReducer,
        profilePage: profileReducer,
-        usersPage: UsersReducer
+        usersPage: usersReducer,
+        auth: authReducer
     }
 )
 

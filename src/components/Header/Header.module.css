@@ -1,12 +1,18 @@
 .header {
+    font-size: small;
     grid-area: header;
     background-color: #D1BECF;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
+    padding: 5px;
     margin-top: 5px;
     margin-bottom: 10px;
-    padding: 10px;
     font-family: DPix_8pt;
 
 }
 
+.login {
+    font-size: small;
+    display: flex;
+    justify-content: flex-end;
+}

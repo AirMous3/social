@@ -2,6 +2,7 @@ import React from "react";
 import s from "./ProfileInfo.module.css"
 import {ProfileType} from "../../../redux/profileReducer";
 import {Preloader} from "../../common/Preloader/Preloader";
+import userPhoto from "./../../../images/user.png"
 
 type ProfileInfoType = {
     profile: ProfileType
@@ -16,7 +17,7 @@ function ProfileInfo(props: ProfileInfoType) {
     let contact = props.profile.contacts
     return <div className={s.container}>
 
-        <img className={s.image} src={props.profile.photos.large}/>
+        <img className={s.image} src={props.profile.photos.large === null ? userPhoto : props.profile.photos.large }/>
         <div className={s.text}>
             <div>status: {props.profile.aboutMe} </div>
             <div>fullName: {props.profile.fullName} </div>
@@ -25,7 +26,6 @@ function ProfileInfo(props: ProfileInfoType) {
             <div>twitter: {contact.twitter}</div>
             <div>mainLink: {contact.mainLink}</div>
             <div>github: {contact.github}</div>
-
         </div>
 
 

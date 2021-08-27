@@ -45,7 +45,7 @@ let initialState = {
 }
 
 
-export const UsersReducer = (state: initialStateType = initialState, action: ActionsUsersReducerType): initialStateType => {
+export const usersReducer = (state: initialStateType = initialState, action: ActionsUsersReducerType): initialStateType => {
     switch (action.type) {
         case "FOLLOW":
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, follow: true} : u)}
