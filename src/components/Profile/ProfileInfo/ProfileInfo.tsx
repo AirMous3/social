@@ -8,18 +8,24 @@ type ProfileInfoType = {
 }
 
 function ProfileInfo(props: ProfileInfoType) {
-    if(!Object.keys(props.profile).length){
+    if (!Object.keys(props.profile).length) {
         return <div>
             <Preloader/>
         </div>
     }
+    let contact = props.profile.contacts
     return <div className={s.container}>
 
-        <img className={s.image} src={props.profile.photos.small}/>
+        <img className={s.image} src={props.profile.photos.large}/>
         <div className={s.text}>
-            <div>about me: </div>
-            <div>country: </div>
-            <div>what i love: </div>
+            <div>status: {props.profile.aboutMe} </div>
+            <div>fullName: {props.profile.fullName} </div>
+            <div>vk: {contact.vk} </div>
+            <div>website: {contact.website}</div>
+            <div>twitter: {contact.twitter}</div>
+            <div>mainLink: {contact.mainLink}</div>
+            <div>github: {contact.github}</div>
+
         </div>
 
 

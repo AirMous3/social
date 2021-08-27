@@ -33,7 +33,7 @@ export const Users = (props: UsersPropsType) => {
             {props.users.map(u => <div key={u.id}> {/*Отрисовываем пришедших нам с сервера юзеров*/}
                 <span>
                     <div>
-                        <NavLink to={"/profile/" + u.id}>
+                        <NavLink to={"/profile/" + u.id}> {/* Навлинк на юзера при нажатии на картинку */}
                         <img className={s.avatar} src={u.photos.small == null ? userPhoto : u.photos.small}/>
                             </NavLink>
                     </div>
