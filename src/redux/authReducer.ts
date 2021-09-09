@@ -4,8 +4,7 @@ export type ActionsAuthReducerType = ReturnType<typeof setAuthUserData>
 
 
 export type initialStateType = {
-    // resultCode: number,
-    // messages: [],
+
     data: {
         id: number,
         email: string,

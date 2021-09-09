@@ -36,10 +36,12 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
 
     componentDidMount() {
         this.props.toggleInProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {  /* делаем get запрос на сервак по url*/
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        }).then(response => {  /* делаем get запрос на сервак по url*/
             this.props.toggleInProgress(false)
             this.props.setUsers(response.data.items) /*Сетаем юзерсвов которые нам приходят на отрисовку */
-            this.props.setTotalUsersCount(response.data.totalCount) // обновляем количество totalUsers
+             this.props.setTotalUsersCount(response.data.totalCount) // обновляем количество totalUsers
 
         })
     }
@@ -47,7 +49,9 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
     onPageChanged = (page: number) => {
         this.props.toggleInProgress(true) // Меняем false на true перед запросом, чтобы показывался прелоадер
         this.props.setCurrentPage(page)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        }).then(response => {
             this.props.toggleInProgress(false) // После запроса меняем на false, чтобы когда отрисуются Юзерсы, прелоадер спрятался
             this.props.setUsers(response.data.items)
         })

@@ -20,31 +20,31 @@ class HeaderContainerC extends React.Component<PropsType> {
 
     componentDidMount() {
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,{
+        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
             withCredentials: true
         })
             .then(response => {
-                debugger
-                if(response.data.resultCode === 0){
+
+                if (response.data.resultCode === 0) {
                     let {id, email, login} = response.data.data
-                    this.props.setAuthUserData(id, email , login)
+                    this.props.setAuthUserData(id, email, login)
                 }
 
-        })
+            })
     }
 
     render() {
-        return(
+        return (
             <Header {...this.props} />
         )
     }
 }
 
-const mapStateToProps = (state: AppStoreType):MapStateToPropsType => {
+const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     return {
         login: state.auth.data.login,
         isAuth: state.auth.isAuth
     }
 }
 
-export const HeaderContainer =  connect(mapStateToProps, {setAuthUserData})(HeaderContainerC)
+export const HeaderContainer = connect(mapStateToProps, {setAuthUserData})(HeaderContainerC)
