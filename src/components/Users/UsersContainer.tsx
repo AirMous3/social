@@ -11,8 +11,8 @@ import {
 } from "../../redux/UsersReducer";
 import {AppStoreType} from "../../redux/reduxStore";
 import {Users} from "./Users";
-import axios from "axios";
 import {Preloader} from "../common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 
 export type mapUsersStateToPropsType = {
@@ -36,25 +36,23 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
 
     componentDidMount() {
         this.props.toggleInProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        }).then(response => {  /* делаем get запрос на сервак по url*/
-            this.props.toggleInProgress(false)
-            this.props.setUsers(response.data.items) /*Сетаем юзерсвов которые нам приходят на отрисовку */
-             this.props.setTotalUsersCount(response.data.totalCount) // обновляем количество totalUsers
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize) //запрос на сервер
+            .then(data => {  /* делаем get запрос на сервак по url*/
+                this.props.toggleInProgress(false)
+                this.props.setUsers(data.items) /*Сетаем юзерсвов которые нам приходят на отрисовку */
+                this.props.setTotalUsersCount(data.totalCount) // обновляем количество totalUsers
 
-        })
+            })
     }
 
     onPageChanged = (page: number) => {
         this.props.toggleInProgress(true) // Меняем false на true перед запросом, чтобы показывался прелоадер
         this.props.setCurrentPage(page)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        }).then(response => {
-            this.props.toggleInProgress(false) // После запроса меняем на false, чтобы когда отрисуются Юзерсы, прелоадер спрятался
-            this.props.setUsers(response.data.items)
-        })
+        usersAPI.getUsers(page, this.props.pageSize)
+            .then(data => {
+                this.props.toggleInProgress(false) // После запроса меняем на false, чтобы когда отрисуются Юзерсы, прелоадер спрятался
+                this.props.setUsers(data.items)
+            })
     }
 
     render() {
@@ -83,4 +81,11 @@ const mapUsersStateToProps = (state: AppStoreType): mapUsersStateToPropsType => 
 }
 
 
-export const UsersContainer = connect(mapUsersStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleInProgress})(UsersApiComponent)
+export const UsersContainer = connect(mapUsersStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleInProgress
+})(UsersApiComponent)
