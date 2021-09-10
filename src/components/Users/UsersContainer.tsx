@@ -5,7 +5,7 @@ import {
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
-    toggleInProgress,
+    toggleInProgress, toggleIsFollowingProgress,
     unfollow,
     UserType
 } from "../../redux/UsersReducer";
@@ -21,6 +21,8 @@ export type mapUsersStateToPropsType = {
     totalUsersCount: number
     currentPage: number
     isInProgress: boolean
+    isFollowingProgress: string[]
+
 }
 type mapDispatchToPropsType = {
     follow: (UserID: string) => void
@@ -29,6 +31,7 @@ type mapDispatchToPropsType = {
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalUsers: number) => void
     toggleInProgress: (inProgress: boolean) => void
+    toggleIsFollowingProgress: (inProgress: boolean, userId: string) => void
 }
 
 
@@ -62,7 +65,8 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
                 {this.props.isInProgress ? <Preloader/> : null} {/*Показываем прелоадер, если InProgress = true*/}
                 <Users users={this.props.users} totalUsersCount={this.props.totalUsersCount}
                        onPageChanged={this.onPageChanged} currentPage={this.props.currentPage}
-                       follow={this.props.follow} pageSize={this.props.pageSize} unfollow={this.props.unfollow}/>
+                       follow={this.props.follow} pageSize={this.props.pageSize} unfollow={this.props.unfollow}
+                       toggleIsFollowingProgress={this.props.toggleIsFollowingProgress} isFollowingProgress={this.props.isFollowingProgress}/>
 
             </>
         )
@@ -70,12 +74,14 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
 }
 
 const mapUsersStateToProps = (state: AppStoreType): mapUsersStateToPropsType => {
+
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isInProgress: state.usersPage.isInProgress
+        isInProgress: state.usersPage.isInProgress,
+        isFollowingProgress: state.usersPage.isFollowingProgress
 
     }
 }
@@ -87,5 +93,6 @@ export const UsersContainer = connect(mapUsersStateToProps, {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    toggleInProgress
+    toggleInProgress,
+    toggleIsFollowingProgress
 })(UsersApiComponent)

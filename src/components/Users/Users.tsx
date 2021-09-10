@@ -14,6 +14,9 @@ type UsersPropsType = {
     onPageChanged: (page: number) => void
     follow: (UserID: string) => void
     unfollow: (UserID: string) => void
+    toggleIsFollowingProgress: (inProgress: boolean, userId: string) => void
+    isFollowingProgress: string[]
+
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -23,6 +26,7 @@ export const Users = (props: UsersPropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     } // Пушим количество страниц в массив чтобы потом отрисоввать
+
 
 
     return (
@@ -39,18 +43,22 @@ export const Users = (props: UsersPropsType) => {
                             </NavLink>
                     </div>
                     <div>
-                        {u.follow ? <button onClick={() => {
+                        {u.follow ? <button disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
+                                props.toggleIsFollowingProgress(true, u.id) // диспатчим чтобы задизейблить кнопку
                                 usersAPI.unFollowUser(u.id).then(data => {      //api запрос unFollow (delete)
                                     if (data.resultCode === 0) {
                                         props.unfollow(u.id) // диспатчим анфолов, только после ответа от сервера
                                     }
+                                    props.toggleIsFollowingProgress(false, u.id) //диспатчим чтобы раздизейблить кнопку после асинхронного запроса
                                 });
-                            }}>unfollow</button> :
-                            <button onClick={() => {
+                            }}>unfollow</button> : //дизейблим отдельную кнопку методом some
+                            <button disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
+                                props.toggleIsFollowingProgress(true, u.id)
                                 usersAPI.followUser(u.id).then(data => {  // api запрос follow (post)
                                     if (data.resultCode === 0) {
                                         props.follow(u.id)
                                     }
+                                    props.toggleIsFollowingProgress(false, u.id)
                                 }) // диспатчим фоллов только после ответа от сервера
 
                             }}> follow</button>}
