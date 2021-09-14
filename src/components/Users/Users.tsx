@@ -43,7 +43,7 @@ export const Users = (props: UsersPropsType) => {
                             </NavLink>
                     </div>
                     <div>
-                        {u.follow ? <button disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
+                        {u.followed ? <button disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
                                 props.toggleIsFollowingProgress(true, u.id) // диспатчим чтобы задизейблить кнопку
                                 usersAPI.unFollowUser(u.id).then(data => {      //api запрос unFollow (delete)
                                     if (data.resultCode === 0) {

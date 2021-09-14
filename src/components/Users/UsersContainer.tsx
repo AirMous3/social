@@ -1,18 +1,21 @@
 import React from 'react'
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
+    changePageThunk,
     follow,
+    getUsersThunkCreator,
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
-    toggleInProgress, toggleIsFollowingProgress,
+    toggleInProgress,
+    toggleIsFollowingProgress,
     unfollow,
     UserType
 } from "../../redux/UsersReducer";
-import {AppStoreType} from "../../redux/reduxStore";
-import {Users} from "./Users";
-import {Preloader} from "../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
+import { AppStoreType } from "../../redux/reduxStore";
+import { Users } from "./Users";
+import { Preloader } from "../common/Preloader/Preloader";
+import { usersAPI } from "../../api/api";
 
 
 export type mapUsersStateToPropsType = {
@@ -32,43 +35,32 @@ type mapDispatchToPropsType = {
     setTotalUsersCount: (totalUsers: number) => void
     toggleInProgress: (inProgress: boolean) => void
     toggleIsFollowingProgress: (inProgress: boolean, userId: string) => void
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
+    changePageThunk: (page:number, pageSize: number) => void
 }
 
 
 class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDispatchToPropsType> {
 
     componentDidMount() {
-        this.props.toggleInProgress(true)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize) //запрос на сервер
-            .then(data => {  /* делаем get запрос на сервак по url*/
-                this.props.toggleInProgress(false)
-                this.props.setUsers(data.items) /*Сетаем юзерсвов которые нам приходят на отрисовку */
-                this.props.setTotalUsersCount(data.totalCount) // обновляем количество totalUsers
-
-            })
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (page: number) => {
-        this.props.toggleInProgress(true) // Меняем false на true перед запросом, чтобы показывался прелоадер
-        this.props.setCurrentPage(page)
-        usersAPI.getUsers(page, this.props.pageSize)
-            .then(data => {
-                this.props.toggleInProgress(false) // После запроса меняем на false, чтобы когда отрисуются Юзерсы, прелоадер спрятался
-                this.props.setUsers(data.items)
-            })
+        this.props.changePageThunk(page,this.props.pageSize)
     }
 
     render() {
 
 
         return (<>
-                {this.props.isInProgress ? <Preloader/> : null} {/*Показываем прелоадер, если InProgress = true*/}
-                <Users users={this.props.users} totalUsersCount={this.props.totalUsersCount}
-                       onPageChanged={this.onPageChanged} currentPage={this.props.currentPage}
-                       follow={this.props.follow} pageSize={this.props.pageSize} unfollow={this.props.unfollow}
-                       toggleIsFollowingProgress={this.props.toggleIsFollowingProgress} isFollowingProgress={this.props.isFollowingProgress}/>
+            {this.props.isInProgress ? <Preloader /> : null} {/*Показываем прелоадер, если InProgress = true*/}
+            <Users users={this.props.users} totalUsersCount={this.props.totalUsersCount}
+                onPageChanged={this.onPageChanged} currentPage={this.props.currentPage}
+                follow={this.props.follow} pageSize={this.props.pageSize} unfollow={this.props.unfollow}
+                toggleIsFollowingProgress={this.props.toggleIsFollowingProgress} isFollowingProgress={this.props.isFollowingProgress} />
 
-            </>
+        </>
         )
     }
 }
@@ -94,5 +86,7 @@ export const UsersContainer = connect(mapUsersStateToProps, {
     setCurrentPage,
     setTotalUsersCount,
     toggleInProgress,
-    toggleIsFollowingProgress
+    toggleIsFollowingProgress,
+    getUsersThunkCreator,
+    changePageThunk,
 })(UsersApiComponent)
