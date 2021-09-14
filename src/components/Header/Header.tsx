@@ -1,20 +1,20 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import s from './Header.module.css'
 
 type PropsType = {
     login: string
     isAuth: boolean
-    setAuthUserData: (userId: number, email: string, login: string) => void
+    authThunk: () => void
 }
 
-function Header(props: PropsType) {
+function Header({ login, isAuth }: PropsType) {
     return (
         <header className={s.header}>
             <div>I SOCIAL</div>
             <div className={s.login}>
 
-                {props.isAuth ? props.login : <NavLink to={'/login'}> Login</NavLink> }
+                {isAuth ? login : <NavLink to={'/login'}> Login</NavLink>}
             </div>
         </header>
     )

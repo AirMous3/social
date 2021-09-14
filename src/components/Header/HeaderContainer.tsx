@@ -1,9 +1,8 @@
 import React from 'react';
 import Header from "./Header";
-import {connect} from "react-redux";
-import {AppStoreType} from "../../redux/reduxStore";
-import {setAuthUserData} from "../../redux/authReducer";
-import {usersAPI} from "../../api/api";
+import { connect } from "react-redux";
+import { AppStoreType } from "../../redux/reduxStore";
+import { authThunk } from '../../redux/authReducer';
 
 type MapStateToPropsType = {
     login: string
@@ -11,7 +10,7 @@ type MapStateToPropsType = {
 
 }
 type MapDispatchToProps = {
-    setAuthUserData: (userId: number, email: string, login: string) => void
+    authThunk: () => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToProps
@@ -19,15 +18,7 @@ type PropsType = MapStateToPropsType & MapDispatchToProps
 class HeaderContainerC extends React.Component<PropsType> {
 
     componentDidMount() {
-
-        usersAPI.authMe()
-            .then(data => {
-                if (data.resultCode === 0) {
-                    let {id, email, login} = data.data
-                    this.props.setAuthUserData(id, email, login)
-                }
-
-            })
+        this.props.authThunk()
     }
 
     render() {
@@ -44,4 +35,4 @@ const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     }
 }
 
-export const HeaderContainer = connect(mapStateToProps, {setAuthUserData})(HeaderContainerC)
+export const HeaderContainer = connect(mapStateToProps, { authThunk })(HeaderContainerC)
