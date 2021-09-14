@@ -1,10 +1,9 @@
 import Profile from "./Profile";
 import React from "react";
-import {connect} from "react-redux";
-import {ProfileType, setUserProfile} from "../../redux/profileReducer";
-import {AppStoreType} from "../../redux/reduxStore";
-import {RouteComponentProps, withRouter} from "react-router-dom";
-import {usersAPI} from "../../api/api";
+import { connect } from "react-redux";
+import { AppStoreType } from "../../redux/reduxStore";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { goingToProfileThunk, ProfileType } from "../../redux/profileReducer";
 
 
 type PathParamsType = {
@@ -17,7 +16,7 @@ type mapStateToPropsType = {
 }
 
 type MapDispatchPropsType = {
-    setUserProfile: (profile: ProfileType) => void
+    goingToProfileThunk: (userId: string) => void
 }
 
 type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
@@ -27,26 +26,24 @@ class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if(!userId) {
+        if (!userId) {
             userId = "2"
         }
-        usersAPI.userProfile(userId).then(data => {
-            this.props.setUserProfile(data)
-        })
+        this.props.goingToProfileThunk(userId)
     }
 
     render() {
 
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props} profile={this.props.profile} />
         )
     }
 }
 
-let mapStateToProps = (state: AppStoreType):mapStateToPropsType => ({
+let mapStateToProps = (state: AppStoreType): mapStateToPropsType => ({
     profile: state.profilePage.profile
 })
 
 let WithUrlDataContainer = withRouter(ProfileContainer)
 
-export default  connect(mapStateToProps, {setUserProfile})(WithUrlDataContainer)
+export default connect(mapStateToProps, {goingToProfileThunk })(WithUrlDataContainer)
