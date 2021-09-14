@@ -1,7 +1,6 @@
 import { Dispatch } from 'redux';
 import { AppStoreType } from './reduxStore';
 import { usersAPI } from '../api/api';
-import { ThunkAction } from "redux-thunk";
 export type ActionsUsersReducerType =
     ReturnType<typeof follow>
     | ReturnType<typeof unfollow>
@@ -87,7 +86,7 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
 
 export type GetStateType = () => AppStoreType
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+export const getUsersThunk = (currentPage: number, pageSize: number) => {
     return (dispatch: Dispatch<ActionsUsersReducerType>, getState: GetStateType) => {
         dispatch(toggleInProgress(true))
         usersAPI.getUsers(currentPage, pageSize) //запрос на сервер
@@ -99,7 +98,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
             })
     }
 }
-export const changePageThunk = (page:number, pageSize: number) => {
+export const changePageThunk = (page: number, pageSize: number) => {
     return (dispatch: Dispatch<ActionsUsersReducerType>) => {
         dispatch(toggleInProgress(true)) // Меняем false на true перед запросом, чтобы показывался прелоадер
         dispatch(setCurrentPage(page))
@@ -108,5 +107,30 @@ export const changePageThunk = (page:number, pageSize: number) => {
                 dispatch(toggleInProgress(false)) // После запроса меняем на false, чтобы когда отрисуются Юзерсы, прелоадер спрятался
                 dispatch(setUsers(data.items))
             })
+    }
+}
+
+export const unfollowUserThunk = (userId: string) => {
+    return (dispatch: Dispatch<ActionsUsersReducerType>) => {
+        dispatch(toggleIsFollowingProgress(true, userId)) // диспатчим чтобы задизейблить кнопку
+        usersAPI.unFollowUser(userId).then(data => {      //api запрос unFollow (delete)
+            if (data.resultCode === 0) {
+                dispatch(unfollow(userId)) // диспатчим анфолов, только после ответа от сервера
+            }
+            dispatch(toggleIsFollowingProgress(false, userId)) //диспатчим чтобы раздизейблить кнопку после асинхронного запроса
+        })
+    }
+}
+
+export const followUserThunk = (userId: string) => {
+    return (dispatch: Dispatch<ActionsUsersReducerType>) => {
+        dispatch(toggleIsFollowingProgress(true, userId))
+        usersAPI.followUser(userId).then(data => {  // api запрос follow (post)
+            if (data.resultCode === 0) {
+                dispatch(follow(userId))
+            }
+            dispatch(toggleIsFollowingProgress(false, userId))
+
+        })
     }
 }

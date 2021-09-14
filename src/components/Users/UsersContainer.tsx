@@ -2,20 +2,15 @@ import React from 'react'
 import { connect } from "react-redux";
 import {
     changePageThunk,
-    follow,
-    getUsersThunkCreator,
-    setCurrentPage,
-    setTotalUsersCount,
-    setUsers,
-    toggleInProgress,
+    followUserThunk,
+    getUsersThunk,
     toggleIsFollowingProgress,
-    unfollow,
+    unfollowUserThunk,
     UserType
 } from "../../redux/UsersReducer";
 import { AppStoreType } from "../../redux/reduxStore";
 import { Users } from "./Users";
 import { Preloader } from "../common/Preloader/Preloader";
-import { usersAPI } from "../../api/api";
 
 
 export type mapUsersStateToPropsType = {
@@ -28,26 +23,21 @@ export type mapUsersStateToPropsType = {
 
 }
 type mapDispatchToPropsType = {
-    follow: (UserID: string) => void
-    unfollow: (UserID: string) => void
-    setUsers: (users: Array<UserType>) => void
-    setCurrentPage: (page: number) => void
-    setTotalUsersCount: (totalUsers: number) => void
-    toggleInProgress: (inProgress: boolean) => void
-    toggleIsFollowingProgress: (inProgress: boolean, userId: string) => void
-    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
-    changePageThunk: (page:number, pageSize: number) => void
+    getUsersThunk: (currentPage: number, pageSize: number) => void
+    changePageThunk: (page: number, pageSize: number) => void
+    unfollowUserThunk: (userId: string) => void
+    followUserThunk: (userId: string) => void
 }
 
 
 class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDispatchToPropsType> {
 
     componentDidMount() {
-        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
+        this.props.getUsersThunk(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (page: number) => {
-        this.props.changePageThunk(page,this.props.pageSize)
+        this.props.changePageThunk(page, this.props.pageSize)
     }
 
     render() {
@@ -57,8 +47,8 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
             {this.props.isInProgress ? <Preloader /> : null} {/*Показываем прелоадер, если InProgress = true*/}
             <Users users={this.props.users} totalUsersCount={this.props.totalUsersCount}
                 onPageChanged={this.onPageChanged} currentPage={this.props.currentPage}
-                follow={this.props.follow} pageSize={this.props.pageSize} unfollow={this.props.unfollow}
-                toggleIsFollowingProgress={this.props.toggleIsFollowingProgress} isFollowingProgress={this.props.isFollowingProgress} />
+                pageSize={this.props.pageSize} followUserThunk={this.props.followUserThunk} unfollowUserThunk={this.props.unfollowUserThunk}
+                isFollowingProgress={this.props.isFollowingProgress} />
 
         </>
         )
@@ -80,13 +70,8 @@ const mapUsersStateToProps = (state: AppStoreType): mapUsersStateToPropsType => 
 
 
 export const UsersContainer = connect(mapUsersStateToProps, {
-    follow,
-    unfollow,
-    setUsers,
-    setCurrentPage,
-    setTotalUsersCount,
-    toggleInProgress,
-    toggleIsFollowingProgress,
-    getUsersThunkCreator,
+    getUsersThunk,
     changePageThunk,
+    followUserThunk,
+    unfollowUserThunk,
 })(UsersApiComponent)
