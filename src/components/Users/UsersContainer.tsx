@@ -10,6 +10,7 @@ import {
 } from "../../redux/UsersReducer";
 import { Preloader } from "../common/Preloader/Preloader";
 import { Users } from "./Users";
+import { AuthRedirect } from "../../hoc/AuthRedirect";
 
 
 export type mapUsersStateToPropsType = {
@@ -19,7 +20,7 @@ export type mapUsersStateToPropsType = {
     currentPage: number
     isInProgress: boolean
     isFollowingProgress: string[]
-    isAuth: boolean
+
 
 }
 type mapDispatchToPropsType = {
@@ -42,7 +43,7 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
 
     render() {
 
-        if (!this.props.isAuth ) return <Redirect to="/login" />
+
         return (<>
             {this.props.isInProgress ? <Preloader /> : null} {/*Показываем прелоадер, если InProgress = true*/}
             <Users users={this.props.users} totalUsersCount={this.props.totalUsersCount}
@@ -64,15 +65,14 @@ const mapUsersStateToProps = (state: AppStoreType): mapUsersStateToPropsType => 
         currentPage: state.usersPage.currentPage,
         isInProgress: state.usersPage.isInProgress,
         isFollowingProgress: state.usersPage.isFollowingProgress,
-        isAuth: state.auth.isAuth,
 
     }
 }
 
 
-export const UsersContainer = connect(mapUsersStateToProps, {
+export const UsersContainer = AuthRedirect(connect(mapUsersStateToProps, {
     getUsersThunk,
     changePageThunk,
     followUserThunk,
     unfollowUserThunk,
-})(UsersApiComponent)
+})(UsersApiComponent))

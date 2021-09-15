@@ -1,13 +1,14 @@
-import {addNewMessageActionCreator, DialogsPageType, newMessageTextActionCreator} from "../../redux/dialogsReducer";
+import { addNewMessageActionCreator, DialogsPageType, newMessageTextActionCreator } from "../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
-import {connect} from "react-redux";
-import {AppStoreType} from "../../redux/reduxStore";
-import {Dispatch} from "redux";
+import { connect } from "react-redux";
+import { AppStoreType } from "../../redux/reduxStore";
+import { Dispatch } from "redux";
+import { AuthRedirect } from "../../hoc/AuthRedirect";
 
 
- type mapDialogsStateType = {
+type mapDialogsStateType = {
     dialogsPage: DialogsPageType
-    isAuth: boolean
+
 }
 
 type mapDialogsDispatchType = {
@@ -15,16 +16,14 @@ type mapDialogsDispatchType = {
     onNewMessageText: (text: string) => void
 }
 
-export type DialogsPropsType = mapDialogsStateType &  mapDialogsDispatchType
+export type DialogsPropsType = mapDialogsStateType & mapDialogsDispatchType
 
 const mapStateToProps = (state: AppStoreType): mapDialogsStateType => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
-
     }
 }
-const mapDispatchToProps = ( dispatch: Dispatch): mapDialogsDispatchType => {
+const mapDispatchToProps = (dispatch: Dispatch): mapDialogsDispatchType => {
     return {
         sendNewDialogMessage: (text: string) => {
             dispatch(addNewMessageActionCreator(text))
@@ -37,5 +36,5 @@ const mapDispatchToProps = ( dispatch: Dispatch): mapDialogsDispatchType => {
     }
 }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps )(Dialogs)
+export const DialogsContainer = AuthRedirect(connect(mapStateToProps, mapDispatchToProps)(Dialogs))
 
