@@ -11,6 +11,7 @@ import {
 import { Preloader } from "../common/Preloader/Preloader";
 import { Users } from "./Users";
 import { AuthRedirect } from "../../hoc/AuthRedirect";
+import { compose } from 'redux';
 
 
 export type mapUsersStateToPropsType = {
@@ -70,9 +71,15 @@ const mapUsersStateToProps = (state: AppStoreType): mapUsersStateToPropsType => 
 }
 
 
-export const UsersContainer = AuthRedirect(connect(mapUsersStateToProps, {
-    getUsersThunk,
-    changePageThunk,
-    followUserThunk,
-    unfollowUserThunk,
-})(UsersApiComponent))
+
+
+export default compose<React.ComponentType>(
+    AuthRedirect,
+    connect(mapUsersStateToProps, {
+        getUsersThunk,
+        changePageThunk,
+        followUserThunk,
+        unfollowUserThunk,
+    })
+)(UsersApiComponent)
+

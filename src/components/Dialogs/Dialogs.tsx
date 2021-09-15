@@ -1,9 +1,8 @@
 import React, { ChangeEvent } from "react";
 import DialogItem from "./DialogItem/DialogItem";
-import s from "./Dialogs.module.css"
-import Message from "./Messages/Message";
+import s from "./Dialogs.module.css";
 import { DialogsPropsType } from "./DialogsContainer";
-import { Redirect } from "react-router-dom";
+import Message from "./Messages/Message";
 
 
 

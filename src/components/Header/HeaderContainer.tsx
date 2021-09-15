@@ -1,8 +1,9 @@
 import React from 'react';
-import Header from "./Header";
 import { connect } from "react-redux";
-import { AppStoreType } from "../../redux/reduxStore";
+import { compose } from 'redux';
 import { authThunk } from '../../redux/authReducer';
+import { AppStoreType } from "../../redux/reduxStore";
+import Header from "./Header";
 
 type MapStateToPropsType = {
     login: string
@@ -15,7 +16,7 @@ type MapDispatchToProps = {
 
 type PropsType = MapStateToPropsType & MapDispatchToProps
 
-class HeaderContainerC extends React.Component<PropsType> {
+class HeaderContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         this.props.authThunk()
@@ -34,5 +35,6 @@ const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
         isAuth: state.auth.isAuth
     }
 }
-
-export const HeaderContainer = connect(mapStateToProps, { authThunk })(HeaderContainerC)
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, { authThunk })
+)(HeaderContainer)
