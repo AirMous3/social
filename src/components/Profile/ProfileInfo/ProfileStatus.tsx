@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 type PropsType = {
@@ -11,6 +11,9 @@ export const ProfileStatus = (props: PropsType) => {
 
     const [editMode, setEditMode] = useState<Boolean>(false)
     const [status, setStatus] = useState<string>(props.status)
+    useEffect(() => {
+        setStatus(props.status)
+    }, [])
 
     const activateEditmode = () => setEditMode(true)
     const deactivateEditMode = (status: string) => {
