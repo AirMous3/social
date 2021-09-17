@@ -3,16 +3,20 @@ import React, { useState } from 'react'
 
 type PropsType = {
     status: string
+    updateStatus: (status: string) => void
 }
 
 export const ProfileStatus = (props: PropsType) => {
 
 
     const [editMode, setEditMode] = useState<Boolean>(false)
+    const [status, setStatus] = useState<string>(props.status)
 
-    const deactivateEditMode = () => setEditMode(false)
     const activateEditmode = () => setEditMode(true)
-
+    const deactivateEditMode = (status: string) => {
+        props.updateStatus(status)
+        setEditMode(false)
+    }
 
 
     return (
@@ -31,7 +35,7 @@ export const ProfileStatus = (props: PropsType) => {
             {
                 editMode &&
                 <div>
-                    <input onBlur={deactivateEditMode} autoFocus defaultValue={props.status} />
+                    <input onBlur={() => deactivateEditMode(status)} onChange={(e) => setStatus(e.currentTarget.value)} autoFocus value={status} />
                 </div>
             }
 

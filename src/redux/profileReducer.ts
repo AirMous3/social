@@ -100,3 +100,13 @@ export const getUsersStatusThunk = (userId: string) => {
             dispatch(setStatus(res.data)))
     }
 }
+export const updateUserStatusThunk = (status: string) => {
+    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
+        profileAPI.updateStatus(status).then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
+        }
+        )
+    }
+}
