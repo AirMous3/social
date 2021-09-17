@@ -22,13 +22,32 @@ export const usersAPI = {
             .then(response => response.data)
     },
     authMe() {
-        return instance.get(`auth/me`,)
-            .then(response => response.data)
+        return authAPI.authMe()
     },
     userProfile(userId: string) {
-        return instance.get(`profile/` + userId)
-            .then(response => response.data)
-
+        return profileAPI.userProfile(userId)
     }
 } //  создали единый объект  usersAPI у которого будем дёрагть методы
 
+
+
+export const profileAPI = {
+    userProfile(userId: string) {
+        return instance.get(`profile/${userId}`)
+
+    },
+    getStatus(userId: string) {
+        return instance.get(`profile/status/${userId}`)
+
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status`, { status })
+    }
+}
+
+export const authAPI = {
+    authMe() {
+        return instance.get(`auth/me`,)
+            .then(response => response.data)
+    },
+}

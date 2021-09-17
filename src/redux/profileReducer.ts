@@ -4,12 +4,13 @@ import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
 import { v1 } from "uuid";
 import { Dispatch } from "redux";
-import { usersAPI } from "../api/api";
+import { profileAPI, usersAPI } from "../api/api";
 
 type ActionsProfileReducerType =
     | ReturnType<typeof addPost>
     | ReturnType<typeof newPostText>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatus>
 
 
 export type PostDataType = {
@@ -24,6 +25,7 @@ type initialStateType = {
     postData: Array<PostDataType>
     newPostText: string
     profile: ProfileType
+    status: string
 }
 
 let initialState: initialStateType = {
@@ -34,7 +36,8 @@ let initialState: initialStateType = {
         { id: v1(), post: "zzzzz", likeCounts: 36, avatar: Avatar4 },
     ],
     newPostText: "",
-    profile: {} as ProfileType
+    profile: {} as ProfileType,
+    status: ""
 }
 
 export type ProfileType = {
@@ -69,6 +72,8 @@ export const profileReducer = (state: initialStateType = initialState, action: A
             return { ...state, newPostText: action.newText }
         case "SET-USER-PROFILE":
             return { ...state, profile: action.profile }
+        case "SET-STATUS":
+            return { ...state, status: action.status }
         default:
             return state
 
@@ -79,12 +84,19 @@ export const profileReducer = (state: initialStateType = initialState, action: A
 export const addPost = (postText: string) => ({ type: "ADD-POST", postText: postText }) as const
 export const newPostText = (newText: string) => ({ type: "NEW-POST-TEXT", newText: newText }) as const
 export const setUserProfile = (profile: ProfileType) => ({ type: "SET-USER-PROFILE", profile }) as const
+export const setStatus = (status: string) => ({ type: "SET-STATUS", status }) as const
 
 
-export const goingToProfileThunk = (userId: string) => {
+export const getUserProfileThunk = (userId: string) => {
     return (dispatch: Dispatch<ActionsProfileReducerType>) => {
-        usersAPI.userProfile(userId).then(data => {
-            dispatch(setUserProfile(data))
+        usersAPI.userProfile(userId).then(res => {
+            dispatch(setUserProfile(res.data))
         })
+    }
+}
+export const getUsersStatusThunk = (userId: string) => {
+    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
+        profileAPI.getStatus(userId).then(res =>
+            dispatch(setStatus(res.data)))
     }
 }

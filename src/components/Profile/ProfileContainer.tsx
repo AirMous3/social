@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { AuthRedirect } from "../../hoc/AuthRedirect";
-import { goingToProfileThunk, ProfileType } from "../../redux/profileReducer";
+import { getUserProfileThunk, getUsersStatusThunk, ProfileType } from "../../redux/profileReducer";
 import { AppStoreType } from "../../redux/reduxStore";
 import Profile from "./Profile";
 
@@ -15,11 +15,13 @@ type PathParamsType = {
 
 type mapStateToPropsType = {
     profile: ProfileType
+    status: string
 
 }
 
 type MapDispatchPropsType = {
-    goingToProfileThunk: (userId: string) => void
+    getUserProfileThunk: (userId: string) => void
+    getUsersStatusThunk: (userId: string) => void
 }
 
 type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
@@ -32,7 +34,8 @@ class ProfileContainer extends React.Component<PropsType> {
         if (!userId) {
             userId = "2"
         }
-        this.props.goingToProfileThunk(userId)
+        this.props.getUserProfileThunk(userId)
+        this.props.getUsersStatusThunk(userId)
     }
 
     render() {
@@ -45,10 +48,11 @@ class ProfileContainer extends React.Component<PropsType> {
 
 let mapStateToProps = (state: AppStoreType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.status
 })
 
 
 export default compose<React.ComponentType>(AuthRedirect,
-    connect(mapStateToProps, { goingToProfileThunk }),
+    connect(mapStateToProps, { getUserProfileThunk, getUsersStatusThunk }),
     withRouter
 )(ProfileContainer)

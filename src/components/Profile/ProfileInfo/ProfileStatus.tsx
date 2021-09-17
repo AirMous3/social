@@ -31,7 +31,7 @@ export const ProfileStatus = (props: PropsType) => {
             {
                 editMode &&
                 <div>
-                    <input onBlur={deactivateEditMode} autoFocus value={props.status} />
+                    <input onBlur={deactivateEditMode} autoFocus defaultValue={props.status} />
                 </div>
             }
 
