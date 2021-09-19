@@ -13,7 +13,7 @@ export const ProfileStatus = (props: PropsType) => {
     const [status, setStatus] = useState<string>(props.status)
     useEffect(() => {
         setStatus(props.status)
-    }, [])
+    }, [props.status])
 
     const activateEditmode = () => setEditMode(true)
     const deactivateEditMode = (status: string) => {
