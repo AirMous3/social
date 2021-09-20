@@ -2,6 +2,7 @@ import React, { ChangeEvent } from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import s from "./Dialogs.module.css";
 import { DialogsPropsType } from "./DialogsContainer";
+import { AddMessageForm } from "./Messages/AddMessageForm";
 import Message from "./Messages/Message";
 
 
@@ -14,15 +15,7 @@ function Dialogs(props: DialogsPropsType) {
 
     let dialogsElements = state.dialogsData.map((d) => <DialogItem key={d.id} id={d.id} name={d.name} />)
     let messagesElements = state.messagesData.map((message) => <Message key={message.id} message={message.message} />)
-    let newMessageText = state.newDialogMessage
 
-    let sendNewDialogMessage = () => {
-        props.sendNewDialogMessage(newMessageText)
-    }
-
-    let onMessageTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onNewMessageText(e.currentTarget.value)
-    }
 
 
     return (<div className={s.dialogs}>
@@ -36,14 +29,7 @@ function Dialogs(props: DialogsPropsType) {
             <div>{messagesElements}</div>
 
             <div>
-                <div>
-                    <textarea onChange={onMessageTextHandler}
-                        value={newMessageText}
-                        placeholder={"Напиши своё сообщение"} />
-                </div>
-                <div>
-                    <button onClick={sendNewDialogMessage}>Send</button>
-                </div>
+                <AddMessageForm sendNewDialogMessage={props.sendNewDialogMessage} />
             </div>
 
 
