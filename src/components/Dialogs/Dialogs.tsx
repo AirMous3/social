@@ -1,8 +1,8 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
+import { AddMessageForm } from "./AddMessageForm";
 import DialogItem from "./DialogItem/DialogItem";
 import s from "./Dialogs.module.css";
 import { DialogsPropsType } from "./DialogsContainer";
-import { AddMessageForm } from "./Messages/AddMessageForm";
 import Message from "./Messages/Message";
 
 

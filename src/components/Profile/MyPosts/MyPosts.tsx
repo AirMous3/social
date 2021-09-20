@@ -1,7 +1,8 @@
-import s from "./MyPosts.module.css"
-import React, {ChangeEvent} from "react";
+import React from "react";
+import { AddPostForm } from "./AddPostForm";
+import s from "./MyPosts.module.css";
+import { MyPostsPropsType } from "./MyPostsContainer";
 import Post from "./Post/Post";
-import {MyPostsPropsType} from "./MyPostsContainer";
 
 
 
@@ -10,31 +11,16 @@ import {MyPostsPropsType} from "./MyPostsContainer";
 function MyPosts(props: MyPostsPropsType) {
 
     let state = props.profilePage
-    let newPostText = state.newPostText
 
-    let postsElements = state.postData.map(post => <Post key={post.id} message={post.post} likeCounts={post.likeCounts}
-                                                                     avatar={post.avatar}/>)
+    let postsElements = state.postData.map(post => <Post key={post.id} message={post.post}
+        likeCounts={post.likeCounts} avatar={post.avatar} />)
 
-
-    let addPost = () => {
-        props.addPost(newPostText)
-    }
-
-    let onPostTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.newPostText(e.currentTarget.value)
-    }
 
     return (
         <div className={s.container}>
             <h3> My Posts </h3>
             <div>
-                <div >
-                    <textarea className={s.textarea} onChange={onPostTextChangeHandler} value={state.newPostText}
-                              placeholder={"Что нового ?"}/>
-                </div>
-                <div>
-                    <button onClick={addPost}>add post</button>
-                </div>
+                <AddPostForm addPost={props.addPost} />
             </div>
             <div className={s.posts}>
                 {postsElements}

@@ -1,7 +1,7 @@
-import {addPost, newPostText, PostDataType} from "../../../redux/profileReducer";
+import { connect } from "react-redux";
+import { addPost, PostDataType } from "../../../redux/profileReducer";
+import { AppStoreType } from "../../../redux/reduxStore";
 import MyPosts from "./MyPosts";
-import {connect} from "react-redux";
-import {AppStoreType} from "../../../redux/reduxStore";
 
 
 type mapStateType = {
@@ -10,13 +10,11 @@ type mapStateType = {
 
 type MyPostsType = {
     postData: Array<PostDataType>
-    newPostText: string
 }
 
 
 type mapDispatchType = {
     addPost: (text: string) => void
-    newPostText: (text: string) => void
 }
 export type MyPostsPropsType = mapStateType & mapDispatchType
 
@@ -27,6 +25,6 @@ const mapStateToProps = (state: AppStoreType): mapStateType => {
 }
 
 
-export const MyPostsContainer = connect(mapStateToProps, {addPost, newPostText})(MyPosts)
+export const MyPostsContainer = connect(mapStateToProps, { addPost })(MyPosts)
 
 
