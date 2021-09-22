@@ -25,11 +25,11 @@ export const AddPostForm = (props: PropsType) => {
         <form onSubmit={handleSubmit(onSubmit)}>
 
             <textarea {...register('message', {
-                required: true, minLength: 1, 
+                required: true, minLength: 1, maxLength: { value: 300, message: 'max length 300' }
             })}
                 placeholder={"Напиши своё сообщение"} />
             <span>
-
+                {errors.message?.message}
             </span>
 
             <div>

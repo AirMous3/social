@@ -26,27 +26,39 @@ const LoginForm = () => {
     const dispatch = useDispatch()
     const { register, handleSubmit, formState: { errors } } = useForm<FormType>({ mode: 'onChange' })
     const onSubmit: SubmitHandler<FormType> = (data) => dispatch(login(data.login, data.password, data.rememberMe))
+    console.log(errors);
+
 
     return (
         <form className={s.form} onSubmit={handleSubmit(onSubmit)} >
             <div>
-                <input className={s.input} {...register('login', { required: true, maxLength: { value: 30, message: 'max length 30' } })}
+                <input className={s.input} {...register('login', {
+                    required: { value: true, message: 'required field' },
+                    maxLength: { value: 30, message: 'max length 30' }
+                })}
                     type="text" placeholder={"your login"} />
 
-                {errors.login?.type === 'required' && <div className={s.errorMessage} >required field</div>}
-                {errors.login?.type === 'maxLength' && <div className={s.errorMessage}>max length 30</div>}
+                <div className={s.errorMessage}>
+                    {errors.login?.message}
+                </div>
             </div>
             <div>
-                <input className={s.input} {...register('password', { required: true, maxLength: { value: 100, message: 'max length 100' } })}
+                <input className={s.input} {...register('password', {
+                    required: { value: true, message: 'required field' },
+                    maxLength: { value: 100, message: 'max length 100' }
+                })}
                     type="password" placeholder={'your password'} />
 
-                {errors.password?.type === 'required' && <div className={s.errorMessage}>required field</div>}
-                {errors.password?.type === 'maxLength' && <div className={s.errorMessage}>max length 100</div>}
+                <div className={s.errorMessage}>
+                    {errors.password?.message}
+                </div>
             </div>
+
             <div>
                 <button className={s.button}>Login</button>
                 <input {...register('rememberMe')} type="checkBox" /> remember me
             </div>
+
             <div>
 
             </div>
