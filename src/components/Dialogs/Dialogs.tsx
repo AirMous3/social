@@ -1,5 +1,5 @@
 import React from "react";
-import { AddMessageForm } from "./AddMessageForm";
+import { AddPostForm } from "../Forms/AddPostOrMessageForm";
 import DialogItem from "./DialogItem/DialogItem";
 import s from "./Dialogs.module.css";
 import { DialogsPropsType } from "./DialogsContainer";
@@ -29,7 +29,7 @@ function Dialogs(props: DialogsPropsType) {
             <div>{messagesElements}</div>
 
             <div>
-                <AddMessageForm sendNewDialogMessage={props.sendNewDialogMessage} />
+                <AddPostForm callBack={props.sendNewDialogMessage} />
             </div>
 
 

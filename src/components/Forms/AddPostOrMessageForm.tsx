@@ -1,20 +1,24 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+
 type FormType = {
     message: string
 }
+
 type PropsType = {
-    sendNewDialogMessage: (message: string) => void
+    callBack: (text: string) => void
 }
-export const AddMessageForm = (props: PropsType) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormType>({ mode: 'onChange' })
+export const AddPostForm = (props: PropsType) => {
+
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormType>({ mode: 'onChange' })
     const onSubmit: SubmitHandler<FormType> = (data) => {
-        props.sendNewDialogMessage(data.message)
+        props.callBack(data.message)
+        setValue("message", "")
     }
 
-    return (
 
+    return (
         <form onSubmit={handleSubmit(onSubmit)}>
 
             <textarea {...register('message', { required: false, maxLength: { value: 300, message: 'max length 300' } })}
