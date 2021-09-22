@@ -1,0 +1,21 @@
+.input {
+    padding: 10px;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    margin-top: 10px;
+    outline: none;
+}
+
+.button {
+    padding: 10px 40px;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.form {
+    padding: 10px;
+}
+
+.errorMessage {
+    color: red;
+}

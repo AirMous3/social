@@ -2,6 +2,7 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/loginReducer";
+import s from "./Login.module.css"
 
 export const Login = () => {
     return (
@@ -27,26 +28,27 @@ const LoginForm = () => {
     const onSubmit: SubmitHandler<FormType> = (data) => dispatch(login(data.login, data.password, data.rememberMe))
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} >
+        <form className={s.form} onSubmit={handleSubmit(onSubmit)} >
             <div>
-                <input {...register('login', { required: true, maxLength: { value: 30, message: 'max length 30' } })}
+                <input className={s.input} {...register('login', { required: true, maxLength: { value: 30, message: 'max length 30' } })}
                     type="text" placeholder={"your login"} />
 
-                {errors.login?.type === 'required' && <span>required field</span>}
-                {errors.login?.type === 'maxLength' && <span>max length 30</span>}
+                {errors.login?.type === 'required' && <div className={s.errorMessage} >required field</div>}
+                {errors.login?.type === 'maxLength' && <div className={s.errorMessage}>max length 30</div>}
             </div>
             <div>
-                <input {...register('password', { required: true, maxLength: { value: 100, message: 'max length 100' } })}
-                    type="text" placeholder={'your password'} />
+                <input className={s.input} {...register('password', { required: true, maxLength: { value: 100, message: 'max length 100' } })}
+                    type="password" placeholder={'your password'} />
 
-                {errors.password?.type === 'required' && <span>required field</span>}
-                {errors.password?.type === 'maxLength' && <span>max length 100</span>}
+                {errors.password?.type === 'required' && <div className={s.errorMessage}>required field</div>}
+                {errors.password?.type === 'maxLength' && <div className={s.errorMessage}>max length 100</div>}
             </div>
             <div>
+                <button className={s.button}>Login</button>
                 <input {...register('rememberMe')} type="checkBox" /> remember me
             </div>
             <div>
-                <button>Login</button>
+
             </div>
 
         </form>
