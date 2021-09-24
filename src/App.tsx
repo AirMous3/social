@@ -9,7 +9,8 @@ import NavBar from "./components/NavBar/NavBar";
 import News from "./components/News/News";
 import ProfileContainer from './components/Profile/ProfileContainer';
 import Settings from "./components/Settings/Settings";
-import UsersApiComponent from "./components/Users/UsersContainer"
+import UsersApiComponent from "./components/Users/UsersContainer";
+
 
 
 

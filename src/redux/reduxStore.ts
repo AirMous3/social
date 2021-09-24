@@ -2,7 +2,6 @@ import { applyMiddleware, combineReducers, createStore, Store } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { authReducer } from "./authReducer";
 import dialogsReducer from "./dialogsReducer";
-import { loginReducer } from "./loginReducer";
 import { profileReducer } from "./profileReducer";
 import { usersReducer } from "./UsersReducer";
 
@@ -17,7 +16,6 @@ let rootReducer = combineReducers(
         profilePage: profileReducer,
         usersPage: usersReducer,
         auth: authReducer,
-        login: loginReducer
     }
 )
 

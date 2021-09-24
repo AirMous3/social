@@ -1,8 +1,7 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/loginReducer";
-import s from "./Login.module.css"
+import s from "./Login.module.css";
 
 export const Login = () => {
     return (
@@ -24,15 +23,17 @@ type FormType = {
 
 const LoginForm = () => {
     const dispatch = useDispatch()
-    const { register, handleSubmit, formState: { errors } } = useForm<FormType>({ mode: 'onChange' })
-    const onSubmit: SubmitHandler<FormType> = (data) => dispatch(login(data.login, data.password, data.rememberMe))
-    console.log(errors);
+    const { register, handleSubmit, formState: { errors } } = useForm<FormType>({ mode: 'onTouched' })
+    const onSubmit: SubmitHandler<FormType> = (data) => console.log(data);
+
+
 
 
     return (
         <form className={s.form} onSubmit={handleSubmit(onSubmit)} >
+
             <div>
-                <input className={s.input} {...register('login', {
+                <input className={`${s.input} ${errors.login ? s.inputError : ""} `} {...register('login', {
                     required: { value: true, message: 'required field' },
                     maxLength: { value: 30, message: 'max length 30' }
                 })}
@@ -43,7 +44,7 @@ const LoginForm = () => {
                 </div>
             </div>
             <div>
-                <input className={s.input} {...register('password', {
+                <input className={`${s.input} ${errors.password ? s.inputError : ""} `} {...register('password', {
                     required: { value: true, message: 'required field' },
                     maxLength: { value: 100, message: 'max length 100' }
                 })}
@@ -56,12 +57,9 @@ const LoginForm = () => {
 
             <div>
                 <button className={s.button}>Login</button>
-                <input {...register('rememberMe')} type="checkBox" /> remember me
+                <input className={s.checkBox} {...register('rememberMe')} type="checkBox" /> remember me
             </div>
 
-            <div>
-
-            </div>
 
         </form>
     )
