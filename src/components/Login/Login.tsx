@@ -1,6 +1,9 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router";
+import { loginThunk } from "../../redux/authReducer";
+import { AppStoreType } from "../../redux/reduxStore";
 import s from "./Login.module.css";
 
 export const Login = () => {
@@ -24,9 +27,12 @@ type FormType = {
 const LoginForm = () => {
     const dispatch = useDispatch()
     const { register, handleSubmit, formState: { errors } } = useForm<FormType>({ mode: 'onTouched' })
-    const onSubmit: SubmitHandler<FormType> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<FormType> = (data) => dispatch(loginThunk(data.login, data.password, data.rememberMe))
+    const isAuth = useSelector((state: AppStoreType) => state.auth.isAuth)
 
-
+    if (isAuth) {
+        return <Redirect to={'/profile'} />
+    }
 
 
     return (

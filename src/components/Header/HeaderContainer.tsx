@@ -1,17 +1,18 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { compose } from 'redux';
-import { authThunk } from '../../redux/authReducer';
+import { authThunk, logoutThunk } from '../../redux/authReducer';
 import { AppStoreType } from "../../redux/reduxStore";
 import Header from "./Header";
 
 type MapStateToPropsType = {
-    login: string
+    login: string | null
     isAuth: boolean
 
 }
 type MapDispatchToProps = {
     authThunk: () => void
+    logoutThunk: ()=> void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToProps
@@ -36,5 +37,5 @@ const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     }
 }
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, { authThunk })
+    connect(mapStateToProps, { authThunk , logoutThunk })
 )(HeaderContainer)

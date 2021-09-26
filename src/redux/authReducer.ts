@@ -1,6 +1,8 @@
 import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { usersAPI } from '../api/api';
 import { authAPI } from './../api/api';
+import { AppStoreType } from './reduxStore';
 
 export type ActionsAuthReducerType = ReturnType<typeof setAuthUserData>
 
@@ -10,9 +12,9 @@ export type ActionsAuthReducerType = ReturnType<typeof setAuthUserData>
 export type initialStateType = {
 
     data: {
-        id: number,
-        email: string,
-        login: string
+        id: number | null,
+        email: string | null,
+        login: string | null
     },
     isAuth: boolean
 }
@@ -20,9 +22,9 @@ export type initialStateType = {
 
 let initialState = {
     data: {
-        id: null as number | null,
-        email: null as string | null,
-        login: null as string | null
+        id: null,
+        email: null,
+        login: null,
     },
     isAuth: false
 } as initialStateType
@@ -42,7 +44,8 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
 
 }
 
-export const setAuthUserData = (id: number, email: string, login: string, isAuth: boolean) => ({ type: "SET-AUTH-USER-DATA", data: { id, email, login }, isAuth }) as const
+export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) =>
+    ({ type: "SET-AUTH-USER-DATA", data: { id, email, login }, isAuth }) as const
 
 export const authThunk = () => {
     return (dispatch: Dispatch<ActionsAuthReducerType>) => {
@@ -60,7 +63,10 @@ export const authThunk = () => {
     }
 }
 
-export const loginThunk = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+type ThunkType = ThunkAction<void, AppStoreType, unknown, ActionsAuthReducerType>
+
+export const loginThunk = (email: string, password: string, rememberMe: boolean): ThunkType => (dispatch) => {
+
     authAPI.loginMe(email, password, rememberMe)
         .then((res) => {
             if (res.data.resultCode === 0) {
@@ -71,11 +77,10 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
 }
 
 
-export const logout = () => (dispatch: any) => {
+export const logoutThunk = () => (dispatch: Dispatch) => {
     authAPI.logout()
         .then((res) => {
             if (res.data.resultCode === 0) {
-                // @ts-ignore
                 dispatch(setAuthUserData(null, null, null, false))
             }
         })
