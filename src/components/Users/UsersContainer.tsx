@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Redirect } from 'react-router-dom';
+import { compose } from 'redux';
+import { AuthRedirect } from "../../hoc/AuthRedirect";
 import { AppStoreType } from "../../redux/reduxStore";
 import {
     changePageThunk,
@@ -10,8 +11,6 @@ import {
 } from "../../redux/UsersReducer";
 import { Preloader } from "../common/Preloader/Preloader";
 import { Users } from "./Users";
-import { AuthRedirect } from "../../hoc/AuthRedirect";
-import { compose } from 'redux';
 
 
 export type mapUsersStateToPropsType = {

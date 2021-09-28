@@ -16,7 +16,7 @@ export type initialStateType = {
         email: string | null,
         login: string | null
     },
-    isAuth: boolean
+    isAuth: boolean,
 }
 
 
@@ -26,7 +26,7 @@ let initialState = {
         email: null,
         login: null,
     },
-    isAuth: false
+    isAuth: false,
 } as initialStateType
 
 
@@ -43,24 +43,29 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
     }
 
 }
+/////////////////////////////////// AC
+
 
 export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) =>
     ({ type: "SET-AUTH-USER-DATA", data: { id, email, login }, isAuth }) as const
 
-export const authThunk = () => {
-    return (dispatch: Dispatch<ActionsAuthReducerType>) => {
 
-        usersAPI.authMe()
-            .then(data => {
+/////////////////////////////////// THUNKS 
 
-                if (data.resultCode === 0) {
 
-                    let { id, email, login } = data.data
-                    dispatch(setAuthUserData(id, email, login, true))
-                }
+export const authThunk = () => (dispatch: Dispatch<ActionsAuthReducerType>) => {
 
-            })
-    }
+    return usersAPI.authMe()
+        .then(data => {
+
+            if (data.resultCode === 0) {
+
+                let { id, email, login } = data.data
+                dispatch(setAuthUserData(id, email, login, true))
+            }
+
+        })
+
 }
 
 type ThunkType = ThunkAction<void, AppStoreType, unknown, ActionsAuthReducerType>
@@ -71,6 +76,9 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(authThunk())
+            }
+            else {
+                alert(res.data.messages.length > 0 ? res.data.messages : 'some error')
             }
         })
 

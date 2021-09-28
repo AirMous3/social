@@ -15,7 +15,8 @@ type PathParamsType = {
 
 type mapStateToPropsType = {
     profile: ProfileType
-    status: string
+    status: string,
+    autorizedUserId: number | null
 
 }
 
@@ -33,7 +34,7 @@ class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = "18949"
+            userId = this.props.autorizedUserId?.toString()!
         }
         this.props.getUserProfileThunk(userId)
         this.props.getUsersStatusThunk(userId)
@@ -49,7 +50,8 @@ class ProfileContainer extends React.Component<PropsType> {
 
 let mapStateToProps = (state: AppStoreType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    autorizedUserId: state.auth.data.id,
 })
 
 

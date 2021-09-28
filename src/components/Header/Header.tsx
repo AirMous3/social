@@ -5,7 +5,6 @@ import s from './Header.module.css';
 type PropsType = {
     login: string | null
     isAuth: boolean
-    authThunk: () => void
     logoutThunk: () => void
 }
 
