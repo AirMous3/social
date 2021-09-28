@@ -1,8 +1,8 @@
-import Spinner from "../../../images/tail-spin.svg";
 import React from "react";
+import Spinner from "../../../images/tail-spin.svg";
 
 export const Preloader = () => {
     return (
-        <img src={Spinner}/>
+        <img alt={'Preloader'} src={Spinner} />
     )
 }

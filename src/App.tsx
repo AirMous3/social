@@ -27,7 +27,7 @@ type MapDispatchToPropsType = {
 class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
 
     componentDidMount() {
-        debugger
+    
         this.props.initializeApp()
     }
 

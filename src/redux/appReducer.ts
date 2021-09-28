@@ -36,7 +36,7 @@ type ThunkType = ThunkAction<void, AppStoreType, unknown, AppReducerActionsType>
 
 
 export const initializeApp = (): ThunkType => (dispatch) => {
-    debugger
+
     let promise = dispatch(authThunk())
     promise.then(() => {
         dispatch(initializedSuccess())

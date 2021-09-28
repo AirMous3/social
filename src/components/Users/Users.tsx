@@ -36,7 +36,7 @@ export const Users = (props: UsersPropsType) => {
                 <span>
                     <div>
                         <NavLink to={"/profile/" + u.id}> {/* Навлинк на юзера при нажатии на картинку */}
-                            <img className={s.avatar} src={u.photos.small == null ? userPhoto : u.photos.small} />
+                            <img alt={'userPhoto'} className={s.avatar} src={u.photos.small == null ? userPhoto : u.photos.small} />
                         </NavLink>
                     </div>
                     <div>

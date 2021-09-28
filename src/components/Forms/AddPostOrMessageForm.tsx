@@ -18,7 +18,7 @@ export const AddPostForm = (props: PropsType) => {
         props.callBack(data.message)
         setValue("message", "")
     }
-    console.log(errors);
+    
 
 
     return (

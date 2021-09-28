@@ -1,8 +1,8 @@
 import React from "react";
-import s from "./ProfileInfo.module.css"
 import { ProfileType } from "../../../redux/profileReducer";
 import { Preloader } from "../../common/Preloader/Preloader";
-import userPhoto from "./../../../images/user.png"
+import userPhoto from "./../../../images/user.png";
+import s from "./ProfileInfo.module.css";
 import { ProfileStatus } from "./ProfileStatus";
 
 type ProfileInfoType = {
@@ -20,9 +20,9 @@ function ProfileInfo(props: ProfileInfoType) {
     let contact = props.profile.contacts
     return <div className={s.container}>
 
-        <img className={s.image} src={props.profile.photos.large === null ? userPhoto : props.profile.photos.large} />
+        <img alt={'profileImage'} className={s.image} src={props.profile.photos.large === null ? userPhoto : props.profile.photos.large} />
         <div className={s.text}>
-            <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
             <div>fullName: {props.profile.fullName} </div>
             <div>vk: {contact.vk} </div>
             <div>website: {contact.website}</div>

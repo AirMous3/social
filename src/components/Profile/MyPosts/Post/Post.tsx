@@ -1,5 +1,5 @@
-import s from "./Post.module.css"
-import React, {useState} from "react";
+import React, { useState } from "react";
+import s from "./Post.module.css";
 
 
 
@@ -18,12 +18,12 @@ function Post(props: PropsPostType) {
     return (
 
         <div className={s.item}>
-            <img src={props.avatar}/>
+            <img alt={'postImage'} src={props.avatar} />
 
             <div className={s.text} >{props.message}</div>
 
             <div>
-                <button className={s.button} onClick={() => setCount( count + 1)}> {count} like </button>
+                <button className={s.button} onClick={() => setCount(count + 1)}> {count} like </button>
             </div>
         </div>
 
