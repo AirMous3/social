@@ -4,7 +4,7 @@ import { usersAPI } from '../api/api';
 import { authAPI } from './../api/api';
 import { AppStoreType } from './reduxStore';
 
-export type ActionsAuthReducerType = ReturnType<typeof setAuthUserData>
+export type ActionsAuthReducerType = ReturnType<typeof setAuthUserData> | ReturnType<typeof setInvalidCreds>
 
 
 
@@ -17,6 +17,7 @@ export type initialStateType = {
         login: string | null
     },
     isAuth: boolean,
+    invalidCredentials: boolean
 }
 
 
@@ -27,6 +28,7 @@ let initialState = {
         login: null,
     },
     isAuth: false,
+    invalidCredentials: false,
 } as initialStateType
 
 
@@ -38,6 +40,11 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
                 data: { ...action.data },
                 isAuth: action.isAuth
             }
+        case "SET-INVALID-CREDS":
+            return {
+                ...state,
+                invalidCredentials: action.arg
+            }
         default:
             return state
     }
@@ -48,6 +55,9 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
 
 export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) =>
     ({ type: "SET-AUTH-USER-DATA", data: { id, email, login }, isAuth }) as const
+
+export const setInvalidCreds = (arg: boolean) =>
+    ({ type: "SET-INVALID-CREDS", arg }) as const
 
 
 /////////////////////////////////// THUNKS 
@@ -64,6 +74,7 @@ export const authThunk = () => (dispatch: Dispatch<ActionsAuthReducerType>) => {
                 dispatch(setAuthUserData(id, email, login, true))
             }
 
+
         })
 
 }
@@ -71,14 +82,13 @@ export const authThunk = () => (dispatch: Dispatch<ActionsAuthReducerType>) => {
 type ThunkType = ThunkAction<void, AppStoreType, unknown, ActionsAuthReducerType>
 
 export const loginThunk = (email: string, password: string, rememberMe: boolean): ThunkType => (dispatch) => {
-
-    authAPI.loginMe(email, password, rememberMe)
+    return authAPI.loginMe(email, password, rememberMe)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(authThunk())
-            }
-            else {
-                alert(res.data.messages.length > 0 ? res.data.messages : 'some error')
+
+            } else {
+                dispatch(setInvalidCreds(true))
             }
         })
 

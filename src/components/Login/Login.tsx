@@ -2,7 +2,7 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
-import { loginThunk } from "../../redux/authReducer";
+import { loginThunk, setInvalidCreds } from "../../redux/authReducer";
 import { AppStoreType } from "../../redux/reduxStore";
 import s from "./Login.module.css";
 
@@ -28,7 +28,9 @@ const LoginForm = () => {
     const dispatch = useDispatch()
     const { register, handleSubmit, formState: { errors } } = useForm<FormType>({ mode: 'onTouched' })
     const onSubmit: SubmitHandler<FormType> = (data) => dispatch(loginThunk(data.login, data.password, data.rememberMe))
+    const onChange = () => dispatch(setInvalidCreds(false))
     const isAuth = useSelector((state: AppStoreType) => state.auth.isAuth)
+    const invalidCredentials = useSelector((state: AppStoreType) => state.auth.invalidCredentials)
 
     if (isAuth) {
         return <Redirect to={'/profile'} />
@@ -36,7 +38,7 @@ const LoginForm = () => {
 
 
     return (
-        <form className={s.form} onSubmit={handleSubmit(onSubmit)} >
+        <form className={s.form} onSubmit={handleSubmit(onSubmit)} onChange={onChange} >
 
             <div>
                 <input className={`${s.input} ${errors.login ? s.inputError : ""} `} {...register('login', {
@@ -59,6 +61,12 @@ const LoginForm = () => {
                 <div className={s.errorMessage}>
                     {errors.password?.message}
                 </div>
+
+                {invalidCredentials && (
+                    <div className={s.errorMessage}>
+                        Неправильный логин или пароль
+                    </div>
+                )}
             </div>
 
             <div>
