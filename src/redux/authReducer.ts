@@ -65,7 +65,7 @@ export const setInvalidCreds = (arg: boolean) =>
 
 export const authThunk = () => (dispatch: Dispatch<ActionsAuthReducerType>) => {
 
-    return usersAPI.authMe()
+    return authAPI.authMe()
         .then(data => {
 
             if (data.resultCode === 0) {

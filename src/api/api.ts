@@ -30,12 +30,6 @@ export const usersAPI = {
         return instance.post(`follow/${id}`, {},)
             .then(response => response.data)
     },
-    authMe() {
-        return authAPI.authMe()
-    },
-    userProfile(userId: string) {
-        return profileAPI.userProfile(userId)
-    }
 } //  создали единый объект  usersAPI у которого будем дёрагть методы
 
 

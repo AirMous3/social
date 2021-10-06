@@ -83,7 +83,7 @@ export const setStatus = (status: string) => ({ type: "SET-STATUS", status }) as
 
 export const getUserProfileThunk = (userId: string) => {
     return (dispatch: Dispatch<ActionsProfileReducerType>) => {
-        usersAPI.userProfile(userId).then(res => {
+        profileAPI.userProfile(userId).then(res => {
             dispatch(setUserProfile(res.data))
         })
     }
