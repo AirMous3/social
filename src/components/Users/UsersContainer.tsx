@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { compose } from 'redux';
 import { AuthRedirect } from "../../hoc/AuthRedirect";
 import { AppStoreType } from "../../redux/reduxStore";
+import { getCurrentPage, getIsFollowingProgress, getIsProgress, getPageSize, getTotalUsersCount, getUsers } from '../../redux/selectors/users-selectors';
 import {
     changePageThunk,
     followUserThunk,
@@ -59,12 +60,12 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
 const mapUsersStateToProps = (state: AppStoreType): mapUsersStateToPropsType => {
 
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isInProgress: state.usersPage.isInProgress,
-        isFollowingProgress: state.usersPage.isFollowingProgress,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isInProgress: getIsProgress(state),
+        isFollowingProgress: getIsFollowingProgress(state),
 
     }
 }
