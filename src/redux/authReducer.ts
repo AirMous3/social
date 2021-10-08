@@ -1,8 +1,7 @@
-import { Dispatch } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { usersAPI } from '../api/api';
-import { authAPI } from './../api/api';
-import { AppStoreType } from './reduxStore';
+import {Dispatch} from 'redux';
+import {ThunkAction} from 'redux-thunk';
+import {authAPI} from './../api/api';
+import {AppStoreType} from './reduxStore';
 
 export type ActionsAuthReducerType = ReturnType<typeof setAuthUserData> | ReturnType<typeof setInvalidCreds>
 

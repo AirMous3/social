@@ -1,4 +1,6 @@
 import React from "react";
+import {compose} from "redux";
+import {AuthRedirect} from "../../hoc/AuthRedirect";
 
 
 function News () {
@@ -9,4 +11,4 @@ function News () {
     )
 }
 
-export default News
+export default compose(AuthRedirect)(News)

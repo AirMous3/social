@@ -1,4 +1,6 @@
 import React from "react";
+import {compose} from "redux";
+import {AuthRedirect} from "../../hoc/AuthRedirect";
 
 
 function Settings () {
@@ -9,4 +11,4 @@ function Settings () {
     )
 }
 
-export default Settings
+export default compose(AuthRedirect)(Settings)
