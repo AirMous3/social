@@ -27,12 +27,11 @@ type MapDispatchToPropsType = {
 class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
 
     componentDidMount() {
-    
         this.props.initializeApp()
     }
 
     render() {
-        if (this.props.initialize === false) {
+        if (!this.props.initialize) {
             return <Preloader />
         }
         return (

@@ -1,48 +1,7 @@
-import { Dispatch } from 'redux';
-import { AppStoreType } from './reduxStore';
-import { usersAPI } from '../api/api';
-export type ActionsUsersReducerType =
-    ReturnType<typeof follow>
-    | ReturnType<typeof unfollow>
-    | ReturnType<typeof setUsers>
-    | ReturnType<typeof setCurrentPage>
-    | ReturnType<typeof setTotalUsersCount>
-    | ReturnType<typeof toggleInProgress>
-    | ReturnType<typeof toggleIsFollowingProgress>
+import {Dispatch} from 'redux';
+import {AppStoreType} from './reduxStore';
+import {usersAPI} from '../api/api';
 
-
-export const follow = (userID: string) => ({ type: "FOLLOW", userID }) as const
-export const unfollow = (userID: string) => ({ type: "UNFOLLOW", userID }) as const
-export const setUsers = (users: Array<UserType>) => ({ type: "SET-USERS", users }) as const
-export const setCurrentPage = (currentPage: number) => ({ type: "SET-CURRENT-PAGE", currentPage }) as const
-export const setTotalUsersCount = (totalUsers: number) => ({ type: "SET-TOTAL-USERS-COUNT", totalUsers }) as const
-export const toggleInProgress = (progress: boolean) => ({ type: "TOGGLE-IS-IN-PROGRESS", progress }) as const
-export const toggleIsFollowingProgress = (progress: boolean, userId: string) => ({
-    type: "TOGGLE-IS-FOLLOWING-PROGRESS",
-    progress,
-    userId
-}) as const
-
-
-export type initialStateType = typeof initialState
-
-export type UserType = {
-    id: string
-    photos: PhotosType
-    followed: boolean
-    name: string
-    status: string
-    location: LocationType
-
-}
-export type PhotosType = {
-    small: string
-    large: string
-}
-export type LocationType = {
-    city: string
-    country: string
-}
 
 let initialState = {
     users: [] as Array<UserType>,
@@ -51,25 +10,24 @@ let initialState = {
     currentPage: 1,
     isInProgress: false,
     isFollowingProgress: [] as string[]
-
 }
 
 
 export const usersReducer = (state: initialStateType = initialState, action: ActionsUsersReducerType): initialStateType => {
     switch (action.type) {
-        case "FOLLOW":
-            return { ...state, users: state.users.map(u => u.id === action.userID ? { ...u, followed: true } : u) }
-        case "UNFOLLOW":
-            return { ...state, users: state.users.map(u => u.id === action.userID ? { ...u, followed: false } : u) }
-        case "SET-USERS":
-            return { ...state, users: [...action.users] }
-        case "SET-CURRENT-PAGE":
-            return { ...state, currentPage: action.currentPage }
-        case "SET-TOTAL-USERS-COUNT":
-            return { ...state, totalUsersCount: action.totalUsers }
-        case "TOGGLE-IS-IN-PROGRESS":
-            return { ...state, isInProgress: action.progress }
-        case "TOGGLE-IS-FOLLOWING-PROGRESS":
+        case "USERS/FOLLOW":
+            return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: true} : u)}
+        case "USERS/UNFOLLOW":
+            return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: false} : u)}
+        case "USERS/SET-USERS":
+            return {...state, users: [...action.users]}
+        case "USERS/SET-CURRENT-PAGE":
+            return {...state, currentPage: action.currentPage}
+        case "USERS/SET-TOTAL-USERS-COUNT":
+            return {...state, totalUsersCount: action.totalUsers}
+        case "USERS/TOGGLE-IS-IN-PROGRESS":
+            return {...state, isInProgress: action.progress}
+        case "USERS/TOGGLE-IS-FOLLOWING-PROGRESS":
             return {
                 ...state,
                 isFollowingProgress: action.progress ?
@@ -82,10 +40,23 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
 
 }
 
-export type GetStateType = () => AppStoreType
+/////////////////////////////// AC
+export const follow = (userID: string) => ({type: "USERS/FOLLOW", userID}) as const
+export const unfollow = (userID: string) => ({type: "USERS/UNFOLLOW", userID}) as const
+export const setUsers = (users: Array<UserType>) => ({type: "USERS/SET-USERS", users}) as const
+export const setCurrentPage = (currentPage: number) => ({type: "USERS/SET-CURRENT-PAGE", currentPage}) as const
+export const setTotalUsersCount = (totalUsers: number) => ({type: "USERS/SET-TOTAL-USERS-COUNT", totalUsers}) as const
+export const toggleInProgress = (progress: boolean) => ({type: "USERS/TOGGLE-IS-IN-PROGRESS", progress}) as const
+export const toggleIsFollowingProgress = (progress: boolean, userId: string) => ({
+    type: "USERS/TOGGLE-IS-FOLLOWING-PROGRESS",
+    progress,
+    userId
+}) as const
 
+
+////////////////////////////// THUNK
 export const getUsersThunk = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch<ActionsUsersReducerType>, getState: GetStateType) => {
+    return (dispatch: Dispatch<ActionsUsersReducerType>, getState: () => AppStoreType) => {
         dispatch(toggleInProgress(true))
         usersAPI.getUsers(currentPage, pageSize) //запрос на сервер
             .then(data => {  /* делаем get запрос на сервак по url*/
@@ -107,7 +78,6 @@ export const changePageThunk = (page: number, pageSize: number) => {
             })
     }
 }
-
 export const unfollowUserThunk = (userId: string) => {
     return (dispatch: Dispatch<ActionsUsersReducerType>) => {
         dispatch(toggleIsFollowingProgress(true, userId)) // диспатчим чтобы задизейблить кнопку
@@ -119,7 +89,6 @@ export const unfollowUserThunk = (userId: string) => {
         })
     }
 }
-
 export const followUserThunk = (userId: string) => {
     return (dispatch: Dispatch<ActionsUsersReducerType>) => {
         dispatch(toggleIsFollowingProgress(true, userId))
@@ -131,4 +100,36 @@ export const followUserThunk = (userId: string) => {
 
         })
     }
+}
+
+
+////////////////////////////////// TYPE
+
+export type ActionsUsersReducerType =
+    ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleInProgress>
+    | ReturnType<typeof toggleIsFollowingProgress>
+
+
+export type initialStateType = typeof initialState
+export type UserType = {
+    id: string
+    photos: PhotosType
+    followed: boolean
+    name: string
+    status: string
+    location: LocationType
+
+}
+export type PhotosType = {
+    small: string
+    large: string
+}
+export type LocationType = {
+    city: string
+    country: string
 }

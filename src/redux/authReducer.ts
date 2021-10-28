@@ -33,13 +33,13 @@ let initialState = {
 
 export const authReducer = (state: initialStateType = initialState, action: ActionsAuthReducerType): initialStateType => {
     switch (action.type) {
-        case "SET-AUTH-USER-DATA":
+        case "AUTH/SET-AUTH-USER-DATA":
             return {
                 ...state,
                 data: { ...action.data },
                 isAuth: action.isAuth
             }
-        case "SET-INVALID-CREDS":
+        case "AUTH/SET-INVALID-CREDS":
             return {
                 ...state,
                 invalidCredentials: action.arg
@@ -53,10 +53,10 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
 
 
 export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) =>
-    ({ type: "SET-AUTH-USER-DATA", data: { id, email, login }, isAuth }) as const
+    ({ type: "AUTH/SET-AUTH-USER-DATA", data: { id, email, login }, isAuth }) as const
 
 export const setInvalidCreds = (arg: boolean) =>
-    ({ type: "SET-INVALID-CREDS", arg }) as const
+    ({ type: "AUTH/SET-INVALID-CREDS", arg }) as const
 
 
 /////////////////////////////////// THUNKS 

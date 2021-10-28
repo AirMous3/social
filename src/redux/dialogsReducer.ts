@@ -1,33 +1,6 @@
 import {v1} from "uuid";
 
 
-type ActionsDialogsReducerType =
-    | ReturnType<typeof addNewMessageActionCreator>
-
-export const addNewMessageActionCreator = (messageText: string) => ({
-    type: "ADD-NEW-MESSAGE",
-    newMessage: messageText
-}) as const
-
-
-export type DialogsDataType = {
-    name: string
-    id: string
-}
-export type MessageDataType = {
-    message: string
-    id: string
-}
-export type DialogsPageType = {
-    messagesData: Array<MessageDataType>
-    dialogsData: Array<DialogsDataType>
-}
-
-type initialStateType = {
-    messagesData: Array<MessageDataType>
-    dialogsData: Array<DialogsDataType>
-}
-
 let initialState: initialStateType = {
 
     messagesData: [
@@ -48,11 +21,11 @@ let initialState: initialStateType = {
     ],
 }
 
-const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsDialogsReducerType): initialStateType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsDialogsReducerType): initialStateType => {
 
 
     switch (action.type) {
-        case "ADD-NEW-MESSAGE":
+        case "DIALOGS/ADD-NEW-MESSAGE":
             const newMessage: MessageDataType = {id: v1(), message: action.newMessage}
             return {...state, messagesData: [...state.messagesData, newMessage]}
         default:
@@ -61,4 +34,35 @@ const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsDi
 
 }
 
-export default dialogsReducer
+
+//////// AC
+export const addNewMessageActionCreator = (messageText: string) => ({
+    type: "DIALOGS/ADD-NEW-MESSAGE",
+    newMessage: messageText
+}) as const
+
+
+///////// TYPES
+type ActionsDialogsReducerType =
+    | ReturnType<typeof addNewMessageActionCreator>
+
+
+export type DialogsDataType = {
+    name: string
+    id: string
+}
+export type MessageDataType = {
+    message: string
+    id: string
+}
+export type DialogsPageType = {
+    messagesData: Array<MessageDataType>
+    dialogsData: Array<DialogsDataType>
+}
+
+type initialStateType = {
+    messagesData: Array<MessageDataType>
+    dialogsData: Array<DialogsDataType>
+}
+
+

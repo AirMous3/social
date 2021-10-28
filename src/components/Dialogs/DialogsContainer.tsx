@@ -1,9 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
-import { compose, Dispatch } from "redux";
-import { AuthRedirect } from "../../hoc/AuthRedirect";
-import { addNewMessageActionCreator, DialogsPageType } from "../../redux/dialogsReducer";
-import { AppStoreType } from "../../redux/reduxStore";
+import {connect} from "react-redux";
+import {compose, Dispatch} from "redux";
+import {AuthRedirect} from "../../hoc/AuthRedirect";
+import {addNewMessageActionCreator, DialogsPageType} from "../../redux/dialogsReducer";
+import {AppStoreType} from "../../redux/reduxStore";
 import Dialogs from "./Dialogs";
 
 

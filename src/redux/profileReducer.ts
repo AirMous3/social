@@ -2,9 +2,71 @@ import Avatar1 from "../components/Profile/MyPosts/AvatarImg/Avatar1.jpg";
 import Avatar2 from "../components/Profile/MyPosts/AvatarImg/Avatar2.jpg";
 import Avatar3 from "../components/Profile/MyPosts/AvatarImg/Avatar3.png";
 import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
-import { v1 } from "uuid";
-import { Dispatch } from "redux";
-import { profileAPI, usersAPI } from "../api/api";
+import {v1} from "uuid";
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
+
+
+let initialState: initialStateType = {
+    postData: [
+        {id: v1(), post: "today i'l gonna be billionare", likeCounts: 12, avatar: Avatar1},
+        {id: v1(), post: "lmao, nice ", likeCounts: 24, avatar: Avatar2},
+        {id: v1(), post: "me too", likeCounts: 8, avatar: Avatar3},
+        {id: v1(), post: "zzzzz", likeCounts: 36, avatar: Avatar4},
+    ],
+    profile: {} as ProfileType,
+    status: ""
+}
+
+
+export const profileReducer = (state: initialStateType = initialState, action: ActionsProfileReducerType): initialStateType => {
+
+    switch (action.type) {
+        case "PROFILE/ADD-POST":
+            const newPost: PostDataType = {id: v1(), post: action.postText, likeCounts: 0, avatar: Avatar1}
+            return {...state, postData: [...state.postData, newPost]}
+        case "PROFILE/SET-USER-PROFILE":
+            return {...state, profile: action.profile}
+        case "PROFILE/SET-STATUS":
+            return {...state, status: action.status}
+        default:
+            return state
+
+    }
+
+}
+
+//////////////////////////// AC
+export const addPost = (postText: string) => ({type: "PROFILE/ADD-POST", postText: postText}) as const
+export const setUserProfile = (profile: ProfileType) => ({type: "PROFILE/SET-USER-PROFILE", profile}) as const
+export const setStatus = (status: string) => ({type: "PROFILE/SET-STATUS", status}) as const
+
+//////////////////////////// THUNK
+export const getUserProfileThunk = (userId: string) => {
+    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
+        profileAPI.userProfile(userId).then(res => {
+            dispatch(setUserProfile(res.data))
+        })
+    }
+}
+export const getUsersStatusThunk = (userId: string) => {
+    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
+        profileAPI.getStatus(userId).then(res =>
+            dispatch(setStatus(res.data)))
+    }
+}
+export const updateUserStatusThunk = (status: string) => {
+    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
+        profileAPI.updateStatus(status).then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
+            }
+        )
+    }
+}
+
+//////////////////// TYPE
 
 type ActionsProfileReducerType =
     | ReturnType<typeof addPost>
@@ -12,30 +74,6 @@ type ActionsProfileReducerType =
     | ReturnType<typeof setStatus>
 
 
-export type PostDataType = {
-    id: string
-    post: string
-    likeCounts: number
-    avatar: string
-
-}
-
-type initialStateType = {
-    postData: Array<PostDataType>
-    profile: ProfileType
-    status: string
-}
-
-let initialState: initialStateType = {
-    postData: [
-        { id: v1(), post: "today i'l gonna be billionare", likeCounts: 12, avatar: Avatar1 },
-        { id: v1(), post: "lmao, nice ", likeCounts: 24, avatar: Avatar2 },
-        { id: v1(), post: "me too", likeCounts: 8, avatar: Avatar3 },
-        { id: v1(), post: "zzzzz", likeCounts: 36, avatar: Avatar4 },
-    ],
-    profile: {} as ProfileType,
-    status: ""
-}
 
 export type ProfileType = {
     aboutMe: string
@@ -58,49 +96,15 @@ export type ProfileType = {
         large: string
     }
 }
-
-export const profileReducer = (state: initialStateType = initialState, action: ActionsProfileReducerType): initialStateType => {
-
-    switch (action.type) {
-        case "ADD-POST":
-            const newPost: PostDataType = { id: v1(), post: action.postText, likeCounts: 0, avatar: Avatar1 }
-            return { ...state, postData: [...state.postData, newPost] }
-        case "SET-USER-PROFILE":
-            return { ...state, profile: action.profile }
-        case "SET-STATUS":
-            return { ...state, status: action.status }
-        default:
-            return state
-
-    }
+export type PostDataType = {
+    id: string
+    post: string
+    likeCounts: number
+    avatar: string
 
 }
-
-export const addPost = (postText: string) => ({ type: "ADD-POST", postText: postText }) as const
-export const setUserProfile = (profile: ProfileType) => ({ type: "SET-USER-PROFILE", profile }) as const
-export const setStatus = (status: string) => ({ type: "SET-STATUS", status }) as const
-
-
-export const getUserProfileThunk = (userId: string) => {
-    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
-        profileAPI.userProfile(userId).then(res => {
-            dispatch(setUserProfile(res.data))
-        })
-    }
-}
-export const getUsersStatusThunk = (userId: string) => {
-    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
-        profileAPI.getStatus(userId).then(res =>
-            dispatch(setStatus(res.data)))
-    }
-}
-export const updateUserStatusThunk = (status: string) => {
-    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
-        profileAPI.updateStatus(status).then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setStatus(status))
-            }
-        }
-        )
-    }
+type initialStateType = {
+    postData: Array<PostDataType>
+    profile: ProfileType
+    status: string
 }
