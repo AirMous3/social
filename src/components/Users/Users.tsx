@@ -29,12 +29,16 @@ export const Users = ({
 
     return (
         <div>
-            <div>
-                <Paginator currentPage={currentPage} onPageChanged={onPageChanged} pageSize={pageSize}
-                           totalUsersCount={totalUsersCount}/>
-            </div>
-            <User users={users} isFollowingProgress={isFollowingProgress} unfollowUserThunk={unfollowUserThunk}
-                  followUserThunk={followUserThunk}/>
+
+            <Paginator currentPage={currentPage} onPageChanged={onPageChanged} pageSize={pageSize}
+                       totalUsersCount={totalUsersCount}/>
+            {
+                users.map((u) => <User user={u} isFollowingProgress={isFollowingProgress}
+                                       unfollowUserThunk={unfollowUserThunk} followUserThunk={followUserThunk}/>)
+
+
+            }
+
         </div>
     )
 }

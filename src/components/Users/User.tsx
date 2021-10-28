@@ -5,7 +5,7 @@ import s from "./Users.module.css";
 
 
 type UsersPropsType = {
-    users: Array<UserType>
+    user: UserType
     isFollowingProgress: string[],
     unfollowUserThunk: (userId: string) => void
     followUserThunk: (userId: string) => void
@@ -13,46 +13,44 @@ type UsersPropsType = {
 }
 
 export const User = ({
-                          users,
-                          unfollowUserThunk,
-                          followUserThunk,
-                          isFollowingProgress
-                      }: UsersPropsType) => {
+                         user,
+                         unfollowUserThunk,
+                         followUserThunk,
+                         isFollowingProgress
+                     }: UsersPropsType) => {
 
 
     return (
         <div>
-            {users.map(u => <div key={u.id}> {/*Отрисовываем пришедших нам с сервера юзеров*/}
-                    <span>
+            <span>
                     <div>
-                        <NavLink to={"/profile/" + u.id}> {/* Навлинк на юзера при нажатии на картинку */}
+                        <NavLink to={"/profile/" + user.id}> {/* Навлинк на юзера при нажатии на картинку */}
                             <img alt={'userPhoto'} className={s.avatar}
-                                 src={u.photos.small == null ? userPhoto : u.photos.small}/>
+                                 src={user.photos.small == null ? userPhoto : user.photos.small}/>
                         </NavLink>
                     </div>
                     <div>
-                        {u.followed ?
-                            <button disabled={isFollowingProgress.some(id => id === u.id)} onClick={() => {
-                                unfollowUserThunk(u.id)
+                        {user.followed ?
+                            <button disabled={isFollowingProgress.some(id => id === user.id)} onClick={() => {
+                                unfollowUserThunk(user.id)
                             }}>unfollow</button> : //дизейблим отдельную кнопку методом some
-                            <button disabled={isFollowingProgress.some(id => id === u.id)} onClick={() => {
-                                followUserThunk(u.id)
+                            <button disabled={isFollowingProgress.some(id => id === user.id)} onClick={() => {
+                                followUserThunk(user.id)
                             }}> follow</button>}
                     </div>
-                        {/*если u.follow = true, тогда рисуем кнопку с анфоллов иначе кнопку с фоллов*/}
+                {/*если user.follow = true, тогда рисуем кнопку с анфоллов иначе кнопку с фоллов*/}
                 </span>
+            <span>
                     <span>
-                    <span>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
+                        <div>{user.name}</div>
+                        <div>{user.status}</div>
                     </span>
                     <span>
-                        <div>{"u.location.country"}</div>
-                        <div>{"u.location.city"}</div>
+                        <div>{"user.location.country"}</div>
+                        <div>{"user.location.city"}</div>
                     </span>
                 </span>
-                </div>
-            )}
+
         </div>
     )
 }
