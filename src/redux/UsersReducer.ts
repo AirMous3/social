@@ -55,51 +55,38 @@ export const toggleIsFollowingProgress = (progress: boolean, userId: string) => 
 
 
 ////////////////////////////// THUNK
-export const getUsersThunk = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch<ActionsUsersReducerType>, getState: () => AppStoreType) => {
-        dispatch(toggleInProgress(true))
-        usersAPI.getUsers(currentPage, pageSize) //запрос на сервер
-            .then(data => {  /* делаем get запрос на сервак по url*/
-                dispatch(toggleInProgress(false))
-                dispatch(setUsers(data.items)) /*Сетаем юзерсвов которые нам приходят на отрисовку */
-                dispatch(setTotalUsersCount(data.totalCount)) // обновляем количество totalUsers
+export const getUsersThunk = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<ActionsUsersReducerType>, getState: () => AppStoreType) => {
+    dispatch(toggleInProgress(true))
+    let data = await usersAPI.getUsers(currentPage, pageSize) //запрос на сервер
+    dispatch(toggleInProgress(false)) // Меняем false на true перед запросом, чтобы показывался прелоадер
+    dispatch(setUsers(data.items)) /*Сетаем юзерсвов которые нам приходят на отрисовку */
+    dispatch(setTotalUsersCount(data.totalCount)) // обновляем количество totalUsers
 
-            })
-    }
-}
-export const changePageThunk = (page: number, pageSize: number) => {
-    return (dispatch: Dispatch<ActionsUsersReducerType>) => {
-        dispatch(toggleInProgress(true)) // Меняем false на true перед запросом, чтобы показывался прелоадер
-        dispatch(setCurrentPage(page))
-        usersAPI.getUsers(page, pageSize)
-            .then(data => {
-                dispatch(toggleInProgress(false)) // После запроса меняем на false, чтобы когда отрисуются Юзерсы, прелоадер спрятался
-                dispatch(setUsers(data.items))
-            })
-    }
-}
-export const unfollowUserThunk = (userId: string) => {
-    return (dispatch: Dispatch<ActionsUsersReducerType>) => {
-        dispatch(toggleIsFollowingProgress(true, userId)) // диспатчим чтобы задизейблить кнопку
-        usersAPI.unFollowUser(userId).then(data => {      //api запрос unFollow (delete)
-            if (data.resultCode === 0) {
-                dispatch(unfollow(userId)) // диспатчим анфолов, только после ответа от сервера
-            }
-            dispatch(toggleIsFollowingProgress(false, userId)) //диспатчим чтобы раздизейблить кнопку после асинхронного запроса
-        })
-    }
-}
-export const followUserThunk = (userId: string) => {
-    return (dispatch: Dispatch<ActionsUsersReducerType>) => {
-        dispatch(toggleIsFollowingProgress(true, userId))
-        usersAPI.followUser(userId).then(data => {  // api запрос follow (post)
-            if (data.resultCode === 0) {
-                dispatch(follow(userId))
-            }
-            dispatch(toggleIsFollowingProgress(false, userId))
 
-        })
+}
+export const changePageThunk = (page: number, pageSize: number) => async (dispatch: Dispatch<ActionsUsersReducerType>) => {
+    dispatch(toggleInProgress(true)) // Меняем false на true перед запросом, чтобы показывался прелоадер
+    dispatch(setCurrentPage(page))
+    let data = await usersAPI.getUsers(page, pageSize)
+    dispatch(toggleInProgress(false)) // После запроса меняем на false, чтобы когда отрисуются Юзерсы, прелоадер спрятался
+    dispatch(setUsers(data.items))
+}
+export const unfollowUserThunk = (userId: string) => async (dispatch: Dispatch<ActionsUsersReducerType>) => {
+    dispatch(toggleIsFollowingProgress(true, userId)) // диспатчим чтобы задизейблить кнопку
+    let data = await usersAPI.unFollowUser(userId)    //api запрос unFollow (delete)
+    if (data.resultCode === 0) {
+        dispatch(unfollow(userId)) // диспатчим анфолов, только после ответа от сервера
     }
+    dispatch(toggleIsFollowingProgress(false, userId)) //диспатчим чтобы раздизейблить кнопку после асинхронного запроса
+
+}
+export const followUserThunk = (userId: string) => async (dispatch: Dispatch<ActionsUsersReducerType>) => {
+    dispatch(toggleIsFollowingProgress(true, userId))
+    let data = await usersAPI.followUser(userId) // api запрос follow
+    if (data.resultCode === 0) {
+        dispatch(follow(userId))
+    }
+    dispatch(toggleIsFollowingProgress(false, userId))
 }
 
 

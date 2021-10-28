@@ -42,27 +42,18 @@ export const setUserProfile = (profile: ProfileType) => ({type: "PROFILE/SET-USE
 export const setStatus = (status: string) => ({type: "PROFILE/SET-STATUS", status}) as const
 
 //////////////////////////// THUNK
-export const getUserProfileThunk = (userId: string) => {
-    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
-        profileAPI.userProfile(userId).then(res => {
-            dispatch(setUserProfile(res.data))
-        })
-    }
+export const getUserProfileThunk = (userId: string) => async (dispatch: Dispatch<ActionsProfileReducerType>) => {
+    let res = await profileAPI.userProfile(userId)
+    dispatch(setUserProfile(res.data))
 }
-export const getUsersStatusThunk = (userId: string) => {
-    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
-        profileAPI.getStatus(userId).then(res =>
-            dispatch(setStatus(res.data)))
-    }
+export const getUsersStatusThunk = (userId: string) => async (dispatch: Dispatch<ActionsProfileReducerType>) => {
+    let res = await profileAPI.getStatus(userId)
+    dispatch(setStatus(res.data))
 }
-export const updateUserStatusThunk = (status: string) => {
-    return (dispatch: Dispatch<ActionsProfileReducerType>) => {
-        profileAPI.updateStatus(status).then(res => {
-                if (res.data.resultCode === 0) {
-                    dispatch(setStatus(status))
-                }
-            }
-        )
+export const updateUserStatusThunk = (status: string) => async (dispatch: Dispatch<ActionsProfileReducerType>) => {
+    let res = await profileAPI.updateStatus(status)
+    if (res.data.resultCode === 0) {
+        dispatch(setStatus(status))
     }
 }
 
@@ -72,7 +63,6 @@ type ActionsProfileReducerType =
     | ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
-
 
 
 export type ProfileType = {
