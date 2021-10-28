@@ -73,9 +73,9 @@ export const changePageThunk = (page: number, pageSize: number) => async (dispat
 }
 export const unfollowUserThunk = (userId: string) => async (dispatch: Dispatch<ActionsUsersReducerType>) => {
     dispatch(toggleIsFollowingProgress(true, userId)) // диспатчим чтобы задизейблить кнопку
-    let data = await usersAPI.unFollowUser(userId)    //api запрос unFollow (delete)
+    let data = await usersAPI.unFollowUser(userId)
     if (data.resultCode === 0) {
-        dispatch(unfollow(userId)) // диспатчим анфолов, только после ответа от сервера
+        dispatch(unfollow(userId))
     }
     dispatch(toggleIsFollowingProgress(false, userId)) //диспатчим чтобы раздизейблить кнопку после асинхронного запроса
 
