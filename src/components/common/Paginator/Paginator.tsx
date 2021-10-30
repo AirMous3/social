@@ -1,4 +1,5 @@
 import s from "./Paginator.module.css"
+import {createPages} from "./PagesCreator";
 
 type PropsType = {
     currentPage: number
@@ -9,11 +10,8 @@ type PropsType = {
 export const Paginator = ({totalUsersCount, pageSize,currentPage, onPageChanged}: PropsType) => {
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize) // Делим Количество юзеров на количество юзеров доступных на странице
-    let pages = [] // Создали пустой массив
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    } // Пушим количество страниц в массив чтобы потом отрисоввать
-
+    let pages: number[] = [] // Создали пустой массив
+    createPages(pages,pagesCount, currentPage)
 
     return <div>
         {pages.map(p => <span className={currentPage === p ? s.selectedPage : ""}
