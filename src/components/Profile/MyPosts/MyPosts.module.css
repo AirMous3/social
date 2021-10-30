@@ -8,9 +8,11 @@
 
 
 .textarea{
-
+    background: #eaf2f1;
+    border: none;
+    padding: 5px;
     resize: none;
     width: 400px;
-    height: 70px;
+    height: 120px;
 
 }

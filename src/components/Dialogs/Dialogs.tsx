@@ -29,7 +29,7 @@ function Dialogs(props: DialogsPropsType) {
             <div>{messagesElements}</div>
 
             <div>
-                <AddPostForm callBack={props.sendNewDialogMessage} />
+                <AddPostForm  classNameTextArea={s.textArea} callBack={props.sendNewDialogMessage} />
             </div>
 
 

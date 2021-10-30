@@ -8,24 +8,26 @@ type FormType = {
 
 type PropsType = {
     callBack: (text: string) => void
+    classNameTextArea?: string
+    classNameButton?: string
 }
 
 
 
-export const AddPostForm = (props: PropsType) => {
+export const AddPostForm = ({callBack,classNameTextArea,classNameButton}:PropsType) => {
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormType>({ mode: 'onChange', })
     const onSubmit: SubmitHandler<FormType> = (data) => {
-        props.callBack(data.message)
+        callBack(data.message)
         setValue("message", "")
     }
-    
+
 
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
 
-            <textarea {...register('message', {
+            <textarea  className={classNameTextArea} {...register('message', {
                 required: true, minLength: 1, maxLength: { value: 300, message: 'max length 300' }
             })}
                 placeholder={"Напиши своё сообщение"} />
@@ -34,7 +36,7 @@ export const AddPostForm = (props: PropsType) => {
             </span>
 
             <div>
-                <SuperButton >Send</SuperButton>
+                <SuperButton className={classNameButton} >Send</SuperButton>
             </div>
         </form>
 

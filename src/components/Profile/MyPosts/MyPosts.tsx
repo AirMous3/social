@@ -20,7 +20,7 @@ function MyPosts(props: MyPostsPropsType) {
         <div className={s.container}>
             <h3> My Posts </h3>
             <div>
-                <AddPostForm callBack={props.addPost} />
+                <AddPostForm classNameTextArea={s.textarea} callBack={props.addPost} />
             </div>
             <div className={s.posts}>
                 {postsElements}
