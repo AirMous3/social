@@ -2,6 +2,7 @@ import {NavLink} from "react-router-dom";
 import userPhoto from "../../images/user.png";
 import {UserType} from "../../redux/UsersReducer";
 import s from "./Users.module.css";
+import SuperButton from "../common/SuperButton/SuperButton";
 
 
 type UsersPropsType = {
@@ -31,12 +32,12 @@ export const User = ({
                     </div>
                     <div>
                         {user.followed ?
-                            <button disabled={isFollowingProgress.some(id => id === user.id)} onClick={() => {
+                            <SuperButton disabled={isFollowingProgress.some(id => id === user.id)} onClick={() => {
                                 unfollowUserThunk(user.id)
-                            }}>unfollow</button> : //дизейблим отдельную кнопку методом some
-                            <button disabled={isFollowingProgress.some(id => id === user.id)} onClick={() => {
+                            }}>unfollow</SuperButton> : //дизейблим отдельную кнопку методом some
+                            <SuperButton disabled={isFollowingProgress.some(id => id === user.id)} onClick={() => {
                                 followUserThunk(user.id)
-                            }}> follow</button>}
+                            }}> follow</SuperButton>}
                     </div>
                 {/*если user.follow = true, тогда рисуем кнопку с анфоллов иначе кнопку с фоллов*/}
                 </span>

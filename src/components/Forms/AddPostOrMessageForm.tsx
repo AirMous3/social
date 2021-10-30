@@ -1,5 +1,6 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import SuperButton from "../common/SuperButton/SuperButton";
 
 type FormType = {
     message: string
@@ -33,7 +34,7 @@ export const AddPostForm = (props: PropsType) => {
             </span>
 
             <div>
-                <button >Send</button>
+                <SuperButton >Send</SuperButton>
             </div>
         </form>
 
