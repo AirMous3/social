@@ -1,4 +1,13 @@
+.page {
+    margin: 5px;
+    cursor: pointer;
+}
+
 .selectedPage {
     font-weight: bold;
-    margin: 10px;
+    border: 1px solid lightgray;
+    border-radius: 100%;
+    padding: 5px 10px;
+    margin: 0 10px;
+
 }

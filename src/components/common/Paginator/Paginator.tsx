@@ -11,10 +11,10 @@ export const Paginator = ({totalUsersCount, pageSize,currentPage, onPageChanged}
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize) // Делим Количество юзеров на количество юзеров доступных на странице
     let pages: number[] = [] // Создали пустой массив
-    createPages(pages,pagesCount, currentPage)
+    createPages(pages,pagesCount, currentPage) // Вспомогающая функция,  для пагинатора
 
     return <div>
-        {pages.map(p => <span className={currentPage === p ? s.selectedPage : ""}
-                              onClick={() => onPageChanged(p)}>{p},</span>)} {/*Мапим Массив страниц */}
+        {pages.map((p, index) => <span key={index} className={`${s.page} ${currentPage === p? s.selectedPage : ''}`}
+                              onClick={() => onPageChanged(p)}>{p}</span>)} {/*Мапим Массив страниц */}
     </div>
 }
