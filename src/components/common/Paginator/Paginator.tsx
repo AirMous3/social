@@ -14,6 +14,7 @@ export const Paginator = ({totalUsersCount, pageSize,currentPage, onPageChanged}
     createPages(pages,pagesCount, currentPage) // Вспомогающая функция,  для пагинатора
 
     return <div>
+        {currentPage > 6 && <span className={s.page} onClick={()=> onPageChanged(1)}>1...</span>}
         {pages.map((p, index) => <span key={index} className={`${s.page} ${currentPage === p? s.selectedPage : ''}`}
                               onClick={() => onPageChanged(p)}>{p}</span>)} {/*Мапим Массив страниц */}
     </div>
