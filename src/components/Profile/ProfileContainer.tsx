@@ -3,7 +3,13 @@ import {connect} from "react-redux";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {AuthRedirect} from "../../hoc/AuthRedirect";
-import {getUserProfileThunk, getUsersStatusThunk, ProfileType, updateUserStatusThunk} from "../../redux/profileReducer";
+import {
+    getUserProfileThunk,
+    getUsersStatusThunk,
+    ProfileType,
+    updatePhotoThunk,
+    updateUserStatusThunk
+} from "../../redux/profileReducer";
 import {AppStoreType} from "../../redux/reduxStore";
 import Profile from "./Profile";
 
@@ -24,12 +30,17 @@ type MapDispatchPropsType = {
     getUserProfileThunk: (userId: string) => void
     getUsersStatusThunk: (userId: string) => void
     updateUserStatusThunk: (status: string) => void
+    updatePhotoThunk: (photo: string) => void
 }
 
 type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
 type ProfileContainerType = mapStateToPropsType & MapDispatchPropsType
 
 class ProfileContainer extends React.Component<PropsType> {
+
+    savePhoto(){
+
+    }
 
     refreshProfile() {
         let userId = this.props.match.params.userId
@@ -58,7 +69,7 @@ class ProfileContainer extends React.Component<PropsType> {
     render() {
 
         return (
-            <Profile {...this.props} />
+            <Profile isOwner={!this.props.match.params.userId} {...this.props} />
         )
     }
 }
@@ -71,6 +82,6 @@ let mapStateToProps = (state: AppStoreType): mapStateToPropsType => ({
 
 
 export default compose<React.ComponentType>(AuthRedirect,
-    connect(mapStateToProps, {getUserProfileThunk, getUsersStatusThunk, updateUserStatusThunk}),
+    connect(mapStateToProps, {getUserProfileThunk, getUsersStatusThunk, updateUserStatusThunk, updatePhotoThunk}),
     withRouter
 )(ProfileContainer)

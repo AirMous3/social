@@ -1,36 +1,49 @@
-import React from "react";
-import { ProfileType } from "../../../redux/profileReducer";
-import { Preloader } from "../../common/Preloader/Preloader";
+import React, {ChangeEvent} from "react";
+import {ProfileType} from "../../../redux/profileReducer";
+import {Preloader} from "../../common/Preloader/Preloader";
 import userPhoto from "./../../../images/user.png";
 import s from "./ProfileInfo.module.css";
-import { ProfileStatus } from "./ProfileStatus";
+import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoType = {
     profile: ProfileType
     status: string
     updateStatus: (status: string) => void
+    isOwner: boolean
+    updatePhoto: (photo: string) => void
+
 }
 
-function ProfileInfo(props: ProfileInfoType) {
-    if (!Object.keys(props.profile).length) {
+function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: ProfileInfoType) {
+    if (!Object.keys(profile).length) {
         return <div>
-            <Preloader />
+            <Preloader/>
         </div>
     }
-    let contact = props.profile.contacts
+    let contact = profile.contacts
+
+    const savePhotoHandler = (e:any) => {
+        if(e.target.files){
+            updatePhoto(e.target.files[0])
+        }
+    }
+
     return <div className={s.container}>
 
-        <img alt={'profileImage'} className={s.image} src={props.profile.photos.large || userPhoto} />
-        <div className={s.text}>
-            <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
-            <div>fullName: {props.profile.fullName} </div>
-            <div>vk: {contact.vk} </div>
-            <div>website: {contact.website}</div>
-            <div>twitter: {contact.twitter}</div>
-            <div>mainLink: {contact.mainLink}</div>
-            <div>github: {contact.github}</div>
-        </div>
+        <div className={s.wrapper}>
+            <img alt={'profileImage'} className={s.image} src={profile.photos.large || userPhoto}/>
+            <div className={s.text}>
+                <ProfileStatus status={status} updateStatus={updateStatus}/>
+                <div>fullName: {profile.fullName} </div>
+                <div>vk: {contact.vk} </div>
+                <div>website: {contact.website}</div>
+                <div>twitter: {contact.twitter}</div>
+                <div>mainLink: {contact.mainLink}</div>
+                <div>github: {contact.github}</div>
+            </div>
 
+        </div>
+        {isOwner && <input onChange={savePhotoHandler} style={{marginLeft: '50px'}} type="file"/>}
 
     </div>
 

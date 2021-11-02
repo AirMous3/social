@@ -29,6 +29,8 @@ export const profileReducer = (state: initialStateType = initialState, action: A
             return {...state, profile: action.profile}
         case "PROFILE/SET-STATUS":
             return {...state, status: action.status}
+        case "PROFILE/UPDATE-PHOTO":
+            return {...state, profile: {...state.profile, photos: {...action.photo}}}
         default:
             return state
 
@@ -40,6 +42,7 @@ export const profileReducer = (state: initialStateType = initialState, action: A
 export const addPost = (postText: string) => ({type: "PROFILE/ADD-POST", postText: postText}) as const
 export const setUserProfile = (profile: ProfileType) => ({type: "PROFILE/SET-USER-PROFILE", profile}) as const
 export const setStatus = (status: string) => ({type: "PROFILE/SET-STATUS", status}) as const
+export const updatePhotoSuccess = (photo: {small: string, large: string}) => ({type: "PROFILE/UPDATE-PHOTO", photo}) as const
 
 //////////////////////////// THUNK
 export const getUserProfileThunk = (userId: string) => async (dispatch: Dispatch<ActionsProfileReducerType>) => {
@@ -56,6 +59,13 @@ export const updateUserStatusThunk = (status: string) => async (dispatch: Dispat
         dispatch(setStatus(status))
     }
 }
+export const updatePhotoThunk = (photo: string) => async (dispatch: Dispatch<ActionsProfileReducerType>) => {
+    let res = await profileAPI.updatePhoto(photo)
+    let updatedPhoto = res.data.data.photos
+    if (res.data.resultCode === 0) {
+      dispatch(updatePhotoSuccess(updatedPhoto))
+    }
+}
 
 //////////////////// TYPE
 
@@ -63,6 +73,7 @@ type ActionsProfileReducerType =
     | ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
+    | ReturnType<typeof updatePhotoSuccess>
 
 
 export type ProfileType = {

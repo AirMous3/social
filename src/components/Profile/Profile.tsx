@@ -1,19 +1,21 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import { MyPostsContainer } from "./MyPosts/MyPostsContainer";
-import { ProfileType } from "../../redux/profileReducer";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {ProfileType, updatePhotoThunk} from "../../redux/profileReducer";
 
 type ProfilePropsType = {
     profile: ProfileType
     status: string
     updateUserStatusThunk: (status: string) => void
+    isOwner: boolean
+    updatePhotoThunk: (photo: string) => void
 }
 
-function Profile(props: ProfilePropsType) {
+function Profile({profile, status, updateUserStatusThunk, isOwner,updatePhotoThunk}: ProfilePropsType) {
 
     return <div>
-        <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateUserStatusThunk} />
-        <MyPostsContainer />
+        <ProfileInfo updatePhoto={updatePhotoThunk}  isOwner={isOwner} profile={profile} status={status} updateStatus={updateUserStatusThunk}/>
+        <MyPostsContainer/>
 
     </div>
 
