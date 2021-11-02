@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Route} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import './App.css';
 import {Preloader} from './components/common/Preloader/Preloader';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -12,6 +12,7 @@ import Settings from "./components/Settings/Settings";
 import {initializeApp} from './redux/appReducer';
 import {AppStoreType} from './redux/reduxStore';
 import {ReactSuspense} from "./hoc/ReactSuspense";
+import {Error} from "./components/ErrorPage/ErrorPage";
 
 const Dialogs = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
@@ -42,20 +43,25 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
                 <HeaderContainer/>
                 <NavBar/>
                 <div className={'app-wrapper-content'}>
-                    <Route path={"/dialogs"}
-                           render={ReactSuspense(Dialogs)}/>
+                    <Switch>
 
-                    <Route path={"/profile/:userId?"}
-                           render={ReactSuspense(ProfileContainer)}/>
+                        <Route path={"/profile/:userId?"}
+                               render={ReactSuspense(ProfileContainer)}/>
+                        <Route path={"/dialogs"}
+                               render={ReactSuspense(Dialogs)}/>
 
-                    <Route path={"/news"} render={() => <News/>}/>
-                    <Route path={"/music"} render={() => <Music/>}/>
-                    <Route path={"/settings"} render={() => <Settings/>}/>
+                        <Route path={"/news"} render={() => <News/>}/>
+                        <Route path={"/music"} render={() => <Music/>}/>
+                        <Route path={"/settings"} render={() => <Settings/>}/>
 
-                    <Route path={"/users"}
-                           render={ReactSuspense(UsersApiComponent)}/>
+                        <Route path={"/users"}
+                               render={ReactSuspense(UsersApiComponent)}/>
 
-                    <Route path={"/login"} render={() => <Login/>}/>
+                        <Route path={"/login"} render={() => <Login/>}/>
+                        <Route path={'/404'} render={() => <Error/>}/>
+                        <Redirect from={'*'} to={'/404'}/>
+
+                    </Switch>
                 </div>
 
 

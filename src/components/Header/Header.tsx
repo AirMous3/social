@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import s from './Header.module.css';
 
 type PropsType = {
@@ -8,13 +8,15 @@ type PropsType = {
     logoutThunk: () => void
 }
 
-function Header({ login, isAuth, logoutThunk }: PropsType) {
+function Header({login, isAuth, logoutThunk}: PropsType) {
     return (
         <header className={s.header}>
-            <div>I SOCIAL</div>
+            <div style={{textAlign: 'center'}}>I SOCIAL</div>
             <div className={s.login}>
 
-                {isAuth ? <div> {login}  <button onClick={() => logoutThunk()}> logout</button> </div> : <NavLink to={'/login'}> Login</NavLink>}
+                {isAuth ? <div> {login}
+                    <button onClick={() => logoutThunk()}> logout</button>
+                </div> : <NavLink to={'/login'}> Login</NavLink>}
             </div>
         </header>
     )
