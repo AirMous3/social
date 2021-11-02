@@ -20,7 +20,7 @@ function ProfileInfo(props: ProfileInfoType) {
     let contact = props.profile.contacts
     return <div className={s.container}>
 
-        <img alt={'profileImage'} className={s.image} src={props.profile.photos.large === null ? userPhoto : props.profile.photos.large} />
+        <img alt={'profileImage'} className={s.image} src={props.profile.photos.large || userPhoto} />
         <div className={s.text}>
             <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
             <div>fullName: {props.profile.fullName} </div>

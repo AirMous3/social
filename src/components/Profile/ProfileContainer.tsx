@@ -1,10 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import { compose } from "redux";
-import { AuthRedirect } from "../../hoc/AuthRedirect";
-import { getUserProfileThunk, getUsersStatusThunk, ProfileType, updateUserStatusThunk } from "../../redux/profileReducer";
-import { AppStoreType } from "../../redux/reduxStore";
+import {connect} from "react-redux";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {compose} from "redux";
+import {AuthRedirect} from "../../hoc/AuthRedirect";
+import {getUserProfileThunk, getUsersStatusThunk, ProfileType, updateUserStatusThunk} from "../../redux/profileReducer";
+import {AppStoreType} from "../../redux/reduxStore";
 import Profile from "./Profile";
 
 
@@ -31,7 +31,7 @@ type ProfileContainerType = mapStateToPropsType & MapDispatchPropsType
 
 class ProfileContainer extends React.Component<PropsType> {
 
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.match.params.userId
 
         if (userId || this.props.autorizedUserId) {
@@ -40,11 +40,19 @@ class ProfileContainer extends React.Component<PropsType> {
 
             this.props.getUserProfileThunk(userId)
             this.props.getUsersStatusThunk(userId)
-        
+
         } else {
             this.props.history.push('/login')
         }
+    }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId)
+        this.refreshProfile()
     }
 
     render() {
@@ -63,6 +71,6 @@ let mapStateToProps = (state: AppStoreType): mapStateToPropsType => ({
 
 
 export default compose<React.ComponentType>(AuthRedirect,
-    connect(mapStateToProps, { getUserProfileThunk, getUsersStatusThunk, updateUserStatusThunk }),
+    connect(mapStateToProps, {getUserProfileThunk, getUsersStatusThunk, updateUserStatusThunk}),
     withRouter
 )(ProfileContainer)
