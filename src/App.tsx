@@ -47,6 +47,8 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
 
                         <Route path={"/profile/:userId?"}
                                render={ReactSuspense(ProfileContainer)}/>
+                        <Route exact path={"/"}
+                               render={() => <Redirect from={'/'} to={'/profile'}/>}/>
                         <Route path={"/dialogs"}
                                render={ReactSuspense(Dialogs)}/>
 
@@ -60,6 +62,7 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
                         <Route path={"/login"} render={() => <Login/>}/>
                         <Route path={'/404'} render={() => <Error/>}/>
                         <Redirect from={'*'} to={'/404'}/>
+
 
                     </Switch>
                 </div>
