@@ -17,10 +17,17 @@
 }
 
 .text {
-
     margin-top: 50px;
     padding: 10px;
     font-size: large;
     margin-left: 20px;
+}
 
+label {
+    background-Color: #fff;
+    border-Radius: 5px;
+    margin-Left: 35px;
+    width: 150px;
+    display: inline-block;
+    text-Align: center;
 }

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 
 
 type PropsType = {
     status: string
     updateStatus: (status: string) => void
+    isOwner: boolean
 }
 
 export const ProfileStatus = (props: PropsType) => {
@@ -13,9 +14,14 @@ export const ProfileStatus = (props: PropsType) => {
     const [status, setStatus] = useState<string>(props.status)
     useEffect(() => {
         setStatus(props.status)
-    }, [props.status]) // сетаем значение в локал стейт 
+    }, [props.status]) // сетаем значение в локал стейт
 
-    const activateEditmode = () => setEditMode(true)
+    const activateEditmode = () => {
+        if (!props.isOwner) {
+            return
+        }
+        setEditMode(true)
+    }
     const deactivateEditMode = (status: string) => {
         props.updateStatus(status)
         setEditMode(false)
@@ -29,7 +35,7 @@ export const ProfileStatus = (props: PropsType) => {
             {
                 !editMode &&
                 <div>
-                    <span onDoubleClick={activateEditmode} >
+                    <span onDoubleClick={activateEditmode}>
                         status:{props.status}
                     </span>
                 </div>
@@ -38,7 +44,8 @@ export const ProfileStatus = (props: PropsType) => {
             {
                 editMode &&
                 <div>
-                    <input onBlur={() => deactivateEditMode(status)} onChange={(e) => setStatus(e.currentTarget.value)} autoFocus value={status} />
+                    <input  onBlur={() => deactivateEditMode(status)}
+                           onChange={(e) => setStatus(e.currentTarget.value)} autoFocus value={status}/>
                 </div>
             }
 

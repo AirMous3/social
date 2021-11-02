@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {ProfileType} from "../../../redux/profileReducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import userPhoto from "./../../../images/user.png";
@@ -22,8 +22,8 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
     }
     let contact = profile.contacts
 
-    const savePhotoHandler = (e:any) => {
-        if(e.target.files){
+    const savePhotoHandler = (e: any) => {
+        if (e.target.files) {
             updatePhoto(e.target.files[0])
         }
     }
@@ -33,7 +33,7 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
         <div className={s.wrapper}>
             <img alt={'profileImage'} className={s.image} src={profile.photos.large || userPhoto}/>
             <div className={s.text}>
-                <ProfileStatus status={status} updateStatus={updateStatus}/>
+                <ProfileStatus isOwner={isOwner} status={status} updateStatus={updateStatus}/>
                 <div>fullName: {profile.fullName} </div>
                 <div>vk: {contact.vk} </div>
                 <div>website: {contact.website}</div>
@@ -43,7 +43,13 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
             </div>
 
         </div>
-        {isOwner && <input onChange={savePhotoHandler} style={{marginLeft: '50px'}} type="file"/>}
+        {
+            isOwner
+            && <div style={{padding: '10px'}}>
+                <input onChange={savePhotoHandler} id={'img'} style={{marginLeft: '50px', display: 'none'}} type="file"/>
+                <label  htmlFor='img'> update photo</label>
+            </div>
+        }
 
     </div>
 
