@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/social/static/css/main.d1f6c099.chunk.css",
+    "main.js": "/social/static/js/main.dfacbe6c.chunk.js",
+    "main.js.map": "/social/static/js/main.dfacbe6c.chunk.js.map",
+    "runtime-main.js": "/social/static/js/runtime-main.b71161e7.js",
+    "runtime-main.js.map": "/social/static/js/runtime-main.b71161e7.js.map",
+    "static/js/2.be102e92.chunk.js": "/social/static/js/2.be102e92.chunk.js",
+    "static/js/2.be102e92.chunk.js.map": "/social/static/js/2.be102e92.chunk.js.map",
+    "static/css/3.8534ea48.chunk.css": "/social/static/css/3.8534ea48.chunk.css",
+    "static/js/3.bdb8a696.chunk.js": "/social/static/js/3.bdb8a696.chunk.js",
+    "static/js/3.bdb8a696.chunk.js.map": "/social/static/js/3.bdb8a696.chunk.js.map",
+    "static/css/4.c2628109.chunk.css": "/social/static/css/4.c2628109.chunk.css",
+    "static/js/4.a75885d4.chunk.js": "/social/static/js/4.a75885d4.chunk.js",
+    "static/js/4.a75885d4.chunk.js.map": "/social/static/js/4.a75885d4.chunk.js.map",
+    "static/css/5.66757aa9.chunk.css": "/social/static/css/5.66757aa9.chunk.css",
+    "static/js/5.e65b201b.chunk.js": "/social/static/js/5.e65b201b.chunk.js",
+    "static/js/5.e65b201b.chunk.js.map": "/social/static/js/5.e65b201b.chunk.js.map",
+    "static/js/6.1a08e450.chunk.js": "/social/static/js/6.1a08e450.chunk.js",
+    "static/js/6.1a08e450.chunk.js.map": "/social/static/js/6.1a08e450.chunk.js.map",
+    "index.html": "/social/index.html",
+    "static/css/3.8534ea48.chunk.css.map": "/social/static/css/3.8534ea48.chunk.css.map",
+    "static/css/4.c2628109.chunk.css.map": "/social/static/css/4.c2628109.chunk.css.map",
+    "static/css/5.66757aa9.chunk.css.map": "/social/static/css/5.66757aa9.chunk.css.map",
+    "static/css/main.d1f6c099.chunk.css.map": "/social/static/css/main.d1f6c099.chunk.css.map",
+    "static/js/2.be102e92.chunk.js.LICENSE.txt": "/social/static/js/2.be102e92.chunk.js.LICENSE.txt",
+    "static/media/Avatar2.57048de4.jpg": "/social/static/media/Avatar2.57048de4.jpg",
+    "static/media/Avatar3.8bcc7270.png": "/social/static/media/Avatar3.8bcc7270.png",
+    "static/media/tail-spin.2ec882bf.svg": "/social/static/media/tail-spin.2ec882bf.svg",
+    "static/media/user.png": "/social/static/media/user.40a377fa.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b71161e7.js",
+    "static/js/2.be102e92.chunk.js",
+    "static/css/main.d1f6c099.chunk.css",
+    "static/js/main.dfacbe6c.chunk.js"
+  ]
+}
