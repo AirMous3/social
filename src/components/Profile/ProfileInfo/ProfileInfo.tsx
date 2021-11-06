@@ -4,6 +4,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import userPhoto from "./../../../images/user.png";
 import s from "./ProfileInfo.module.css";
 import {ProfileStatus} from "./ProfileStatus";
+import {Contact} from "./Contact/Contact";
 
 type ProfileInfoType = {
     profile: ProfileType
@@ -31,9 +32,19 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
     return <div className={s.container}>
 
         <div className={s.wrapper}>
-            <img alt={'profileImage'} className={s.image} src={profile.photos.large || userPhoto}/>
-            <div className={s.text}>
+            <div>
+                <img alt={'profileImage'} className={s.image} src={profile.photos.large || userPhoto}/>
+                {
+                    isOwner
+                    && <div style={{padding: '10px'}}>
+                        <input onChange={savePhotoHandler} id={'img'} style={{marginLeft: '50px', display: 'none'}}
+                               type="file"/>
+                        <label htmlFor='img'> update photo</label>
+                    </div>
+                }
+            </div>
 
+            <div className={s.text}>
                 <div>
 
                     <div>
@@ -51,40 +62,18 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
                     {profile.lookingForAJob &&
                     <div>
                         <b>My professional skills</b>: {profile.lookingForAJobDescription}
-                    </div>}
+                    </div>
+                    }
 
-
                     <div>
-                        <b>Contacts</b>
-                    </div>
-                    <div>
-                        <b>Vk</b>: {contact.vk}
-                    </div>
-                    <div>
-                        <b>Website</b>: {contact.website}
-                    </div>
-                    <div>
-                        <b>Twitter</b>: {contact.twitter}
-                    </div>
-                    <div>
-                        <b>MainLink</b>: {contact.mainLink}
-                    </div>
-                    <div>
-                        <b>Github</b>: {contact.github}
+                        <b>Contacts</b>:{Object.entries(contact).map(([key, value],index) => <Contact key={index} contact={key} contactValue={value}/>)}
                     </div>
 
                 </div>
             </div>
 
         </div>
-        {
-            isOwner
-            && <div style={{padding: '10px'}}>
-                <input onChange={savePhotoHandler} id={'img'} style={{marginLeft: '50px', display: 'none'}}
-                       type="file"/>
-                <label htmlFor='img'> update photo</label>
-            </div>
-        }
+
 
     </div>
 

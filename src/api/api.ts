@@ -2,17 +2,9 @@ import axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,  //Запрос на сервер с withCredentials, чтобы к серваку с куки пришла наша айди
-    headers: { "API-KEY": "1dbc4cf7-1f30-4d66-936b-be5fca3239ce" }, //api key
+    headers: {"API-KEY": "1dbc4cf7-1f30-4d66-936b-be5fca3239ce"}, //api key
     baseURL: "https://social-network.samuraijs.com/api/1.0/"
 })
-
-
-
-type ResponseAuthType<T = {}> = {
-    resultCode: number
-    messages: []
-    data: T
-}
 
 
 
@@ -33,10 +25,9 @@ export const usersAPI = {
 } //  создали единый объект  usersAPI у которого будем дёрагть методы
 
 
-
 export const profileAPI = {
     userProfile(userId: string) {
-        return instance.get(`profile/${userId}`)
+        return instance.get<UserProfileResponse>(`profile/${userId}`)
 
     },
     getStatus(userId: string) {
@@ -44,19 +35,18 @@ export const profileAPI = {
 
     },
     updateStatus(status: string) {
-        return instance.put(`profile/status`, { status })
+        return instance.put(`profile/status`, {status})
     },
-    updatePhoto(photo: string){
+    updatePhoto(photo: string) {
         let formData = new FormData()
         formData.append('image', photo)
-        return instance.put(`profile/photo`,formData , {
+        return instance.put(`profile/photo`, formData, {
             headers: {
-            'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data'
             }
         })
     }
 }
-
 
 
 export const authAPI = {
@@ -65,9 +55,42 @@ export const authAPI = {
             .then(response => response.data)
     },
     loginMe(email: string, password: string, rememberMe: boolean) {
-        return instance.post<ResponseAuthType<{ iserId: number }>>(`auth/login`, { email, password, rememberMe })
+        return instance.post<ResponseAuthType<{ iserId: number }>>(`auth/login`, {email, password, rememberMe})
     },
     logout() {
         return instance.delete<ResponseAuthType>(`auth/login`)
     }
 }
+
+///////// TYPE
+
+type UserProfileResponse = {
+    aboutMe: string
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+
+    photos: {
+        small: string
+        large: string
+    }
+
+}
+
+type ResponseAuthType<T = {}> = {
+    resultCode: number
+    messages: []
+    data: T
+}
+
