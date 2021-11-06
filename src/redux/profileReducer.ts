@@ -66,7 +66,12 @@ export const updatePhotoThunk = (photo: string) => async (dispatch: Dispatch<Act
       dispatch(updatePhotoSuccess(updatedPhoto))
     }
 }
-
+export const updateProfileThunk = (profileData: any) => async (dispatch: any) => {
+    let res = await profileAPI.updateProfile(profileData)
+    if (res.data.resultCode === 0) {
+        dispatch(getUserProfileThunk('18949'))
+    }
+}
 //////////////////// TYPE
 
 type ActionsProfileReducerType =
