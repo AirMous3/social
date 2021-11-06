@@ -36,7 +36,7 @@ export const ProfileStatus = (props: PropsType) => {
                 !editMode &&
                 <div>
                     <span onDoubleClick={activateEditmode}>
-                        status:{props.status}
+                        <b>Status</b>: {props.status}
                     </span>
                 </div>
             }

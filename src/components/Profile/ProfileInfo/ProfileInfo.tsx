@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {ProfileType} from "../../../redux/profileReducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import userPhoto from "./../../../images/user.png";
@@ -22,9 +22,9 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
     }
     let contact = profile.contacts
 
-    const savePhotoHandler = (e: any) => {
+    const savePhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            updatePhoto(e.target.files[0])
+            updatePhoto(e.target.files[0].name)
         }
     }
 
@@ -33,21 +33,56 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
         <div className={s.wrapper}>
             <img alt={'profileImage'} className={s.image} src={profile.photos.large || userPhoto}/>
             <div className={s.text}>
-                <ProfileStatus isOwner={isOwner} status={status} updateStatus={updateStatus}/>
-                <div>fullName: {profile.fullName} </div>
-                <div>vk: {contact.vk} </div>
-                <div>website: {contact.website}</div>
-                <div>twitter: {contact.twitter}</div>
-                <div>mainLink: {contact.mainLink}</div>
-                <div>github: {contact.github}</div>
+
+                <div>
+
+                    <div>
+                        <b>FullName</b>: {profile.fullName}
+                    </div>
+                    <ProfileStatus isOwner={isOwner} status={status} updateStatus={updateStatus}/>
+                    <div>
+                        <b>About me</b>: {contact.vk}
+                    </div>
+
+                    <div>
+                        <b>Looking for a job</b>: {profile.lookingForAJob ? 'Yes' : 'No'}
+                    </div>
+
+                    {profile.lookingForAJob &&
+                    <div>
+                        <b>My professional skills</b>: {profile.lookingForAJobDescription}
+                    </div>}
+
+
+                    <div>
+                        <b>Contacts</b>
+                    </div>
+                    <div>
+                        <b>Vk</b>: {contact.vk}
+                    </div>
+                    <div>
+                        <b>Website</b>: {contact.website}
+                    </div>
+                    <div>
+                        <b>Twitter</b>: {contact.twitter}
+                    </div>
+                    <div>
+                        <b>MainLink</b>: {contact.mainLink}
+                    </div>
+                    <div>
+                        <b>Github</b>: {contact.github}
+                    </div>
+
+                </div>
             </div>
 
         </div>
         {
             isOwner
             && <div style={{padding: '10px'}}>
-                <input onChange={savePhotoHandler} id={'img'} style={{marginLeft: '50px', display: 'none'}} type="file"/>
-                <label  htmlFor='img'> update photo</label>
+                <input onChange={savePhotoHandler} id={'img'} style={{marginLeft: '50px', display: 'none'}}
+                       type="file"/>
+                <label htmlFor='img'> update photo</label>
             </div>
         }
 
