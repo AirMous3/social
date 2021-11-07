@@ -15,12 +15,21 @@ type PropsPostType = {
 function Post(props: PropsPostType) {
 
     let [count, setCount] = useState(props.likeCounts)
+    let dateObj = new Date('December 17, 2021 03:24:00').toLocaleString()
+
 
     return (
 
         <div className={s.item}>
-            <img alt={'postImage'} src={props.avatar} />
-
+           <div  style={{display:'flex'}}>
+               <img alt={'postImage'} src={props.avatar} />
+               <div  className={s.info}>
+                   <div style={{marginBottom:'5px'}}>
+                       <b>Test User</b>
+                   </div>
+                   <div>{dateObj}</div>
+               </div>
+           </div>
             <div className={s.text} >{props.message}</div>
 
             <div>
