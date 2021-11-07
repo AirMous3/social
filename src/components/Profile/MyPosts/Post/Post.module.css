@@ -1,6 +1,8 @@
 
 .item {
-    color: green;
+    background-color: #c8bada;
+    padding: 20px;
+    margin: 0 0 30px;
 }
 
 .item img {
@@ -8,11 +10,14 @@
     height: 50px;
     border-radius: 30px;
 }
+
 .button {
-    color: black;
-    margin-left: 100px;
+
 }
 
 .text {
     color: black;
+    border-bottom: 1px solid #BBA9D1;
+    margin: 0 0 15px;
+    padding: 0 0 15px;
 }

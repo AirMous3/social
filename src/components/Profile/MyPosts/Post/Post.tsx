@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import s from "./Post.module.css";
+import SuperButton from "../../../common/SuperButton/SuperButton";
 
 
 
@@ -23,7 +24,7 @@ function Post(props: PropsPostType) {
             <div className={s.text} >{props.message}</div>
 
             <div>
-                <button className={s.button} onClick={() => setCount(count + 1)}> {count} like </button>
+                <SuperButton  onClick={() => setCount(count + 1)}> {count} like </SuperButton>
             </div>
         </div>
 

@@ -1,6 +1,6 @@
 .app-wrapper {
     display: grid;
-    width: 1200px;
+    width: 1470px;
     margin: 0 auto;
 
     grid-template-areas:
@@ -16,7 +16,7 @@
 
 .app-wrapper-content {
     grid-area: content;
-    background-color: #C9B6BE;
+    background-color: #BBA9D1;
     border-bottom-right-radius: 20px;
     padding: 10px;
 }
@@ -28,6 +28,13 @@ textarea {
 
 body {
     font-family: "Microsoft JhengHei Light";
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 

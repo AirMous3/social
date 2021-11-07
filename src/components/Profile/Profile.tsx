@@ -13,7 +13,7 @@ type ProfilePropsType = {
 
 function Profile({profile, status, updateUserStatusThunk, isOwner,updatePhotoThunk}: ProfilePropsType) {
 
-    return <div>
+    return <div className={`container`}>
         <ProfileInfo updatePhoto={updatePhotoThunk}  isOwner={isOwner} profile={profile} status={status} updateStatus={updateUserStatusThunk}/>
         <MyPostsContainer/>
 

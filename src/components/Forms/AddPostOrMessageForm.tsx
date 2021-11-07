@@ -1,6 +1,7 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import SuperButton from "../common/SuperButton/SuperButton";
+import s from './AddPostForm.module.css'
 
 type FormType = {
     message: string
@@ -25,7 +26,7 @@ export const AddPostForm = ({callBack,classNameTextArea,classNameButton}:PropsTy
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={s.container} onSubmit={handleSubmit(onSubmit)}>
 
             <textarea  className={classNameTextArea} {...register('message', {
                 required: true, minLength: 1, maxLength: { value: 300, message: 'max length 300' }

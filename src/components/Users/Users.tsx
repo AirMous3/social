@@ -1,7 +1,7 @@
 import {UserType} from "../../redux/UsersReducer";
 import {Paginator} from "../common/Paginator/Paginator";
 import {User} from "./User";
-
+import s from './Users.module.css'
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -28,7 +28,7 @@ export const Users = ({
 
 
     return (
-        <div>
+        <div className={`${s.container} container`}>
 
             <Paginator currentPage={currentPage} onPageChanged={onPageChanged} pageSize={pageSize}
                        totalUsersCount={totalUsersCount}/>
