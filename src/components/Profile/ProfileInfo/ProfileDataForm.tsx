@@ -2,7 +2,9 @@ import {useForm} from "react-hook-form";
 import React from "react";
 import {ProfileStatus} from "./ProfileStatus";
 import {ProfileType, updateProfileThunk} from "../../../redux/profileReducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "../../../redux/reduxStore";
+import SuperButton from "../../common/SuperButton/SuperButton";
 
 export type ProfileDataFormProps = {
     updateStatus: (status: string) => void
@@ -21,8 +23,23 @@ type FormInputs = {
 }
 export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMode}: ProfileDataFormProps) => {
     let contacts = profile.contacts
+
+    const fullName = useSelector<AppStoreType, string>((state) => state.profilePage.profile.fullName)
+    const aboutME = useSelector<AppStoreType, string>((state) => state.profilePage.profile.aboutMe)
+    const lookingForaJob = useSelector<AppStoreType, boolean>((state) => state.profilePage.profile.lookingForAJob)
+    const lookingForaJobDescription = useSelector<AppStoreType, string>((state) => state.profilePage.profile.lookingForAJobDescription)
+
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm<FormInputs>()
+    const {register, handleSubmit} = useForm<FormInputs>({
+        mode: 'onSubmit',
+        reValidateMode: 'onChange',
+        defaultValues: {
+            fullName: fullName,
+            aboutMe: aboutME,
+            lookingForAJob: lookingForaJob,
+            lookingForAJobDescription: lookingForaJobDescription,
+        },
+    })
     const onSubmit = (data: any) => {
         console.log(data)
         editMode(false)
@@ -47,7 +64,11 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
             <div>
                 <b>My professional skills</b>:
                 <div>
-                    <textarea style={{width: '264px', height: '100px', resize: 'none'}} {...register('lookingForAJobDescription')} />
+                    <textarea style={{
+                        width: '264px',
+                        height: '100px',
+                        resize: 'none'
+                    }} {...register('lookingForAJobDescription')} />
                 </div>
             </div>
 
@@ -57,7 +78,7 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
             {/*                                                                                    contact={key}*/}
             {/*                                                                                    contactValue={value}/>)}*/}
             {/*</div>*/}
-            <button type={'submit'}>save</button>
+            <SuperButton type={'submit'}>save</SuperButton>
         </form>
     );
 }
