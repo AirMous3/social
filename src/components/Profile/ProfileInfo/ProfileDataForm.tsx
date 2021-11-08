@@ -5,6 +5,7 @@ import {ProfileType, updateProfileThunk} from "../../../redux/profileReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../redux/reduxStore";
 import SuperButton from "../../common/SuperButton/SuperButton";
+import s from './ProfileInfo.module.css'
 
 export type ProfileDataFormProps = {
     updateStatus: (status: string) => void
@@ -47,13 +48,13 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
 
     return (
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={s.profileInfoWrapper} onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <b>FullName</b>: <input  {...register("fullName")} />
+                <b>FullName</b>: <input className={s.profileDataFormInputs} {...register("fullName")} />
             </div>
             <ProfileStatus isOwner={isOwner} status={status} updateStatus={updateStatus}/>
             <div>
-                <b>About me</b>: <input {...register("aboutMe")} />
+                <b>About me</b>: <input className={s.profileDataFormInputs} {...register("aboutMe")} />
             </div>
 
             <div>
@@ -66,7 +67,9 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
                     <textarea style={{
                         width: '264px',
                         height: '100px',
-                        resize: 'none'
+                        resize: 'none',
+                        outline: "none",
+                        border: "none"
                     }} {...register('lookingForAJobDescription')} />
                 </div>
             </div>

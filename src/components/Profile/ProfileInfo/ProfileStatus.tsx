@@ -30,7 +30,7 @@ export const ProfileStatus = (props: PropsType) => {
 
     return (
 
-        <div>
+        <>
 
             {
                 !editMode &&
@@ -50,6 +50,6 @@ export const ProfileStatus = (props: PropsType) => {
             }
 
 
-        </div>
+        </>
     )
 }

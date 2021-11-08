@@ -42,8 +42,8 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
 
     return <div className={s.container}>
 
-        <div className={s.wrapper}>
-            <div>
+        <div className={s.profileWrapper}>
+            <div className={s.profileAvatarWrapper} >
                 <img alt={'profileImage'} className={s.image} src={profile.photos.large || userPhoto}/>
                 {
                     isOwner
@@ -51,7 +51,7 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
                         <input onChange={savePhotoHandler} id={'img'} style={{marginLeft: '50px', display: 'none'}}
                                type="file"/>
                         <label htmlFor='img'> updatePhoto</label>
-                        <button className={s.changeProfile} onClick={() => activateEditMode()}>changeProfile</button>
+                        <button className={s.editProfile} onClick={() => activateEditMode()}>changeProfile</button>
                     </div>
                 }
             </div>
@@ -74,7 +74,7 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
 
 const ProfileData = ({updateStatus, status, profile, isOwner}: ProfileDataProps) => {
     let contacts = profile.contacts
-    return <div style={{maxWidth: '750px'}}>
+    return <div className={s.profileInfoWrapper}>
 
         <div>
             <b>FullName</b>: {profile.fullName}
@@ -94,10 +94,10 @@ const ProfileData = ({updateStatus, status, profile, isOwner}: ProfileDataProps)
         </div>
         }
 
-        <div>
+        <>
             <b>Contacts</b>:{Object.entries(contacts).map(([key, value], index) => <Contact key={index} contact={key}
                                                                                             contactValue={value}/>)}
-        </div>
+        </>
 
     </div>
 }
