@@ -1,15 +1,17 @@
 .container {
     max-width: 800px;
-    margin-right: auto;
-    margin-left: auto;
+
 }
 
 .posts {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .postsWrapper {
-    margin: 0 auto;
+    margin-top: 20px;
+    background-color: #c8bada;
+    width: 100%;
+    padding: 20px;
 }
 
 
