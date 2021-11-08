@@ -1,17 +1,24 @@
 import React from 'react';
-import { connect } from "react-redux";
-import { compose } from 'redux';
-import { AuthRedirect } from "../../hoc/AuthRedirect";
-import { AppStoreType } from "../../redux/reduxStore";
-import { getCurrentPage, getIsFollowingProgress, getIsProgress, getPageSize, getTotalUsersCount, getUsers } from '../../redux/selectors/users-selectors';
+import {connect} from "react-redux";
+import {compose} from 'redux';
+import {AuthRedirect} from "../../hoc/AuthRedirect";
+import {AppStoreType} from "../../redux/reduxStore";
+import {
+    getCurrentPage,
+    getIsFollowingProgress,
+    getIsProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from '../../redux/selectors/users-selectors';
 import {
     changePageThunk,
     followUserThunk,
     getUsersThunk, unfollowUserThunk,
     UserType
 } from "../../redux/UsersReducer";
-import { Preloader } from "../common/Preloader/Preloader";
-import { Users } from "./Users";
+import {Preloader} from "../common/Preloader/Preloader";
+import {Users} from "./Users";
 
 
 export type mapUsersStateToPropsType = {
@@ -46,13 +53,19 @@ class UsersApiComponent extends React.Component<mapUsersStateToPropsType & mapDi
 
 
         return (<>
-            {this.props.isInProgress ? <Preloader /> : null} {/*Показываем прелоадер, если InProgress = true*/}
-            <Users users={this.props.users} totalUsersCount={this.props.totalUsersCount}
-                onPageChanged={this.onPageChanged} currentPage={this.props.currentPage}
-                pageSize={this.props.pageSize} followUserThunk={this.props.followUserThunk} unfollowUserThunk={this.props.unfollowUserThunk}
-                isFollowingProgress={this.props.isFollowingProgress} />
+                {this.props.isInProgress ? <Preloader/> : null} {/*Показываем прелоадер, если InProgress = true*/}
+                <Users
+                    users={this.props.users}
+                    totalUsersCount={this.props.totalUsersCount}
+                    onPageChanged={this.onPageChanged}
+                    currentPage={this.props.currentPage}
+                    pageSize={this.props.pageSize}
+                    followUserThunk={this.props.followUserThunk}
+                    unfollowUserThunk={this.props.unfollowUserThunk}
+                    isFollowingProgress={this.props.isFollowingProgress}
+                />
 
-        </>
+            </>
         )
     }
 }
@@ -69,8 +82,6 @@ const mapUsersStateToProps = (state: AppStoreType): mapUsersStateToPropsType => 
 
     }
 }
-
-
 
 
 export default compose<React.ComponentType>(

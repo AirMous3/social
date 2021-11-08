@@ -41,7 +41,6 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
         },
     })
     const onSubmit = (data: any) => {
-        console.log(data)
         editMode(false)
         dispatch(updateProfileThunk(data))
     }

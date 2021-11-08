@@ -10,8 +10,8 @@ type PropsType = {
 export const Paginator = ({totalUsersCount, pageSize,currentPage, onPageChanged}: PropsType) => {
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize) // Делим Количество юзеров на количество юзеров доступных на странице
-    let pages: number[] = [] // Создали пустой массив
-    createPages(pages,pagesCount, currentPage) // Вспомогающая функция,  для пагинатора
+    let pages = createPages(pagesCount, currentPage) // createPages возвращает массив
+
 
     return <div>
         {currentPage > 6 && <span className={s.page} onClick={()=> onPageChanged(1)}>1...</span>}

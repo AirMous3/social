@@ -1,11 +1,9 @@
 .nav {
     grid-area: nav;
     background-color: #BBA9D1;
-    border-bottom-left-radius: 10px;
-    margin-right: 10px;
     padding: 20px;
     font-size: 20px;
-
+    border-right: 1px solid #c8bada;
 }
 
 .item a {
@@ -16,6 +14,11 @@
     font-family: "Microsoft JhengHei Light";
 
 }
+
+.item:hover {
+    background-color: #c8bada;
+}
+
 .item a.active {
     color: white;
     margin: 20px;

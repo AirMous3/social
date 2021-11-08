@@ -23,7 +23,7 @@ export const User = ({
 
     return (
         <div>
-            <span>
+            <div>
                     <div>
                         <NavLink to={"/profile/" + user.id}> {/* Навлинк на юзера при нажатии на картинку */}
                             <img alt={'userPhoto'} className={s.avatar}
@@ -40,17 +40,11 @@ export const User = ({
                             }}> follow</SuperButton>}
                     </div>
                 {/*если user.follow = true, тогда рисуем кнопку с анфоллов иначе кнопку с фоллов*/}
-                </span>
-            <span>
-                    <span>
-                        <div>{user.name}</div>
-                        <div>{user.status}</div>
-                    </span>
-                    <span>
-                        <div>{"user.location.country"}</div>
-                        <div>{"user.location.city"}</div>
-                    </span>
-                </span>
+                </div>
+            <div>
+                <div>{user.name}</div>
+                <div>{user.status}</div>
+            </div>
 
         </div>
     )

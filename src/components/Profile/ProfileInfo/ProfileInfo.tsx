@@ -74,7 +74,7 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
 
 const ProfileData = ({updateStatus, status, profile, isOwner}: ProfileDataProps) => {
     let contacts = profile.contacts
-    return <div>
+    return <div style={{maxWidth: '750px'}}>
 
         <div>
             <b>FullName</b>: {profile.fullName}
