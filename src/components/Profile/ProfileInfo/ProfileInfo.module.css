@@ -63,3 +63,7 @@ label {
     outline: none;
     border: none;
 }
+
+.errorMessage {
+    color: red;
+}

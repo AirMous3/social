@@ -1,7 +1,7 @@
 import {useForm} from "react-hook-form";
 import React from "react";
 import {ProfileStatus} from "./ProfileStatus";
-import {ProfileType, updateProfileThunk} from "../../../redux/profileReducer";
+import {editProfileError, ProfileType, updateProfileThunk} from "../../../redux/profileReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../redux/reduxStore";
 import SuperButton from "../../common/SuperButton/SuperButton";
@@ -41,6 +41,7 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
     const lookingForaJob = useSelector<AppStoreType, boolean>((state) => state.profilePage.profile.lookingForAJob)
     const lookingForaJobDescription = useSelector<AppStoreType, string>((state) => state.profilePage.profile.lookingForAJobDescription)
     const userContacts = useSelector((state: AppStoreType) => state.profilePage.profile.contacts)
+    const profileError = useSelector((state: AppStoreType) => state.profilePage.editProfileError)
 
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm<FormInputs>({
@@ -56,13 +57,14 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
         },
     })
     const onSubmit = (data: any) => {
-        editMode(false)
+        // editMode(false)
         dispatch(updateProfileThunk(data))
     }
 
     return (
 
-        <form className={s.profileInfoWrapper} onSubmit={handleSubmit(onSubmit)}>
+        <form className={s.profileInfoWrapper} onSubmit={handleSubmit(onSubmit)}
+              onChange={() => dispatch(editProfileError(''))}>
             <div>
                 <b>FullName</b>: <input className={s.profileDataFormInputs} {...register("fullName")} />
             </div>
@@ -92,10 +94,16 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
             <div>
                 <b>Contacts</b>:{Object.entries(contacts).map(([key, value], index) =>
                 <div>{key}:
-                    <input key={index} className={s.profileDataFormInputs} {...register('contacts.' + key  as keyof FormInputs)}
+                    <input key={index}
+                           className={s.profileDataFormInputs} {...register('contacts.' + key as keyof FormInputs)}
                            type="text"/>
                 </div>
             )}
+                {profileError && (
+                    <div className={s.errorMessage}>
+                        {profileError}
+                    </div>
+                )}
             </div>
             <SuperButton type={'submit'}>save</SuperButton>
         </form>
