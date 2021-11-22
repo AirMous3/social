@@ -23,3 +23,19 @@
 .inputError {
     border: 1px solid red;
 }
+
+.captcha {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+}
+
+.captcha input {
+    margin-top: 2px;
+}
+
+.captcha button {
+    margin-left: auto;
+    margin-right: auto;
+}

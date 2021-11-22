@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {ThunkAction} from 'redux-thunk';
-import {authAPI} from '../api/api';
+import {authAPI, securityAPI} from '../api/api';
 import {AppStoreType} from './reduxStore';
 
 
@@ -12,7 +12,8 @@ export type initialStateType = {
         login: string | null
     },
     isAuth: boolean,
-    invalidCredentials: boolean
+    invalidCredentials: boolean,
+    captcha: string | null
 }
 
 
@@ -24,6 +25,7 @@ let initialState = {
     },
     isAuth: false,
     invalidCredentials: false,
+    captcha: null
 } as initialStateType
 
 
@@ -40,6 +42,8 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
                 ...state,
                 invalidCredentials: action.arg
             }
+        case "AUTH/GET-CAPTCHA-SUCCESS":
+            return {...state, captcha: action.captcha}
         default:
             return state
     }
@@ -53,6 +57,9 @@ export const setAuthUserData = (id: number | null, email: string | null, login: 
 
 export const setInvalidCreds = (arg: boolean) =>
     ({type: "AUTH/SET-INVALID-CREDS", arg}) as const
+
+export const getCaptchaSuccess = (captcha: string) =>
+    ({type: "AUTH/GET-CAPTCHA-SUCCESS", captcha}) as const
 
 
 /////////////////////////////////// THUNKS 
@@ -68,15 +75,18 @@ export const authThunk = () => async (dispatch: Dispatch<ActionsAuthReducerType>
     }
 }
 
-export const loginThunk = (email: string, password: string, rememberMe: boolean): ThunkType =>
+export const loginThunk = (email: string, password: string, rememberMe: boolean, captcha?: string): ThunkType =>
     async (dispatch) => {
 
-        let res = await authAPI.loginMe(email, password, rememberMe)
+        let res = await authAPI.loginMe(email, password, rememberMe, captcha)
 
         if (res.data.resultCode === 0) {
             dispatch(authThunk())
 
         } else {
+            if (res.data.resultCode === 10) {
+                dispatch(getCaptchaThunk())
+            }
             dispatch(setInvalidCreds(true))
         }
     }
@@ -90,7 +100,15 @@ export const logoutThunk = () => async (dispatch: Dispatch) => {
     }
 
 }
+export const getCaptchaThunk = () => async (dispatch: Dispatch) => {
+    let res = await securityAPI.getCaptcha()
+    dispatch(getCaptchaSuccess(res.url))
+}
 ////////////////////////////// TYPE
 
-export type ActionsAuthReducerType = ReturnType<typeof setAuthUserData> | ReturnType<typeof setInvalidCreds>
+export type ActionsAuthReducerType =
+    ReturnType<typeof setAuthUserData>
+    | ReturnType<typeof setInvalidCreds>
+    | ReturnType<typeof getCaptchaSuccess>
+
 type ThunkType = ThunkAction<void, AppStoreType, unknown, ActionsAuthReducerType>

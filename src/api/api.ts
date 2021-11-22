@@ -7,7 +7,6 @@ const instance = axios.create({
 })
 
 
-
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`,)
@@ -47,7 +46,7 @@ export const profileAPI = {
         })
     },
     updateProfile(profileData: any) {
-        return instance.put(`profile`,profileData)
+        return instance.put(`profile`, profileData)
     }
 }
 
@@ -57,12 +56,19 @@ export const authAPI = {
         return instance.get<ResponseAuthType<{ id: number, email: string, login: string }>>(`auth/me`,)
             .then(response => response.data)
     },
-    loginMe(email: string, password: string, rememberMe: boolean) {
-        return instance.post<ResponseAuthType<{ iserId: number }>>(`auth/login`, {email, password, rememberMe})
+    loginMe(email: string, password: string, rememberMe: boolean, captcha?: string) {
+        return instance.post<ResponseAuthType<{ iserId: number }>>(`auth/login`, {email, password, rememberMe, captcha})
     },
     logout() {
         return instance.delete<ResponseAuthType>(`auth/login`)
     }
+}
+
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get<{ url: string }>(`security/get-captcha-url`,)
+            .then(response => response.data)
+    },
 }
 
 ///////// TYPE
