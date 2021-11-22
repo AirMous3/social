@@ -43,7 +43,7 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
     return <div className={s.container}>
 
         <div className={s.profileWrapper}>
-            <div className={s.profileAvatarWrapper} >
+            <div className={s.profileAvatarWrapper}>
                 <img alt={'profileImage'} className={s.image} src={profile.photos.large || userPhoto}/>
                 {
                     isOwner
@@ -95,8 +95,12 @@ const ProfileData = ({updateStatus, status, profile, isOwner}: ProfileDataProps)
         }
 
         <>
-            <b>Contacts</b>:{Object.entries(contacts).map(([key, value], index) => <Contact key={index} contact={key}
-                                                                                            contactValue={value}/>)}
+            <b>Contacts</b>:{Object.entries(contacts).map(
+            ([key, value], index) =>
+                <Contact
+                    key={index}
+                    contact={key}
+                    contactValue={value}/>)}
         </>
 
     </div>

@@ -5,6 +5,7 @@ import Avatar4 from "../components/Profile/MyPosts/AvatarImg/Avatar4.jpg";
 import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
+import {AppStoreType} from "./reduxStore";
 
 
 let initialState: initialStateType = {
@@ -42,7 +43,10 @@ export const profileReducer = (state: initialStateType = initialState, action: A
 export const addPost = (postText: string) => ({type: "PROFILE/ADD-POST", postText: postText}) as const
 export const setUserProfile = (profile: ProfileType) => ({type: "PROFILE/SET-USER-PROFILE", profile}) as const
 export const setStatus = (status: string) => ({type: "PROFILE/SET-STATUS", status}) as const
-export const updatePhotoSuccess = (photo: {small: string, large: string}) => ({type: "PROFILE/UPDATE-PHOTO", photo}) as const
+export const updatePhotoSuccess = (photo: { small: string, large: string }) => ({
+    type: "PROFILE/UPDATE-PHOTO",
+    photo
+}) as const
 
 //////////////////////////// THUNK
 export const getUserProfileThunk = (userId: string) => async (dispatch: Dispatch<ActionsProfileReducerType>) => {
@@ -63,13 +67,14 @@ export const updatePhotoThunk = (photo: string) => async (dispatch: Dispatch<Act
     let res = await profileAPI.updatePhoto(photo)
     let updatedPhoto = res.data.data.photos
     if (res.data.resultCode === 0) {
-      dispatch(updatePhotoSuccess(updatedPhoto))
+        dispatch(updatePhotoSuccess(updatedPhoto))
     }
 }
-export const updateProfileThunk = (profileData: any) => async (dispatch: any) => {
+export const updateProfileThunk = (profileData: any) => async (dispatch: any, getState: () => AppStoreType) => {
+    const profileId = getState().auth.data.id!.toString()
     let res = await profileAPI.updateProfile(profileData)
     if (res.data.resultCode === 0) {
-        dispatch(getUserProfileThunk('18949'))
+        dispatch(getUserProfileThunk(profileId))
     }
 }
 //////////////////// TYPE

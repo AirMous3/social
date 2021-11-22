@@ -3,6 +3,6 @@ import Spinner from "../../../images/tail-spin.svg";
 
 export const Preloader = () => {
     return (
-        <img alt={'Preloader'} src={Spinner} />
+        <img style={{position: 'absolute'}} alt={'Preloader'} src={Spinner} />
     )
 }

@@ -7,6 +7,7 @@ import {AppStoreType} from "../../../redux/reduxStore";
 import SuperButton from "../../common/SuperButton/SuperButton";
 import s from './ProfileInfo.module.css'
 
+
 export type ProfileDataFormProps = {
     updateStatus: (status: string) => void
     status: string
@@ -20,6 +21,16 @@ type FormInputs = {
     aboutMe: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
 
 }
 export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMode}: ProfileDataFormProps) => {
@@ -29,6 +40,7 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
     const aboutME = useSelector<AppStoreType, string>((state) => state.profilePage.profile.aboutMe)
     const lookingForaJob = useSelector<AppStoreType, boolean>((state) => state.profilePage.profile.lookingForAJob)
     const lookingForaJobDescription = useSelector<AppStoreType, string>((state) => state.profilePage.profile.lookingForAJobDescription)
+    const userContacts = useSelector((state: AppStoreType) => state.profilePage.profile.contacts)
 
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm<FormInputs>({
@@ -39,6 +51,8 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
             aboutMe: aboutME,
             lookingForAJob: lookingForaJob,
             lookingForAJobDescription: lookingForaJobDescription,
+            contacts: userContacts
+
         },
     })
     const onSubmit = (data: any) => {
@@ -75,11 +89,14 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
             </div>
 
 
-            {/*<div>*/}
-            {/*    <b>Contacts</b>:{Object.entries(contacts).map(([key, value], index) => <Contact key={index}*/}
-            {/*                                                                                    contact={key}*/}
-            {/*                                                                                    contactValue={value}/>)}*/}
-            {/*</div>*/}
+            <div>
+                <b>Contacts</b>:{Object.entries(contacts).map(([key, value], index) =>
+                <div>{key}:
+                    <input key={index} className={s.profileDataFormInputs} {...register('contacts.' + key  as keyof FormInputs)}
+                           type="text"/>
+                </div>
+            )}
+            </div>
             <SuperButton type={'submit'}>save</SuperButton>
         </form>
     );
