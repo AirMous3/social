@@ -17,7 +17,8 @@ let initialState: initialStateType = {
     ],
     profile: {} as ProfileType,
     status: "",
-    editProfileError: ''
+    editProfileError: '',
+    profileInfoEditMode: false,
 }
 
 
@@ -35,6 +36,8 @@ export const profileReducer = (state: initialStateType = initialState, action: A
             return {...state, profile: {...state.profile, photos: {...action.photo}}}
         case "PROFILE/EDIT-PROFILE-ERROR":
             return {...state, editProfileError: action.error}
+        case "PROFILE/EDIT-MODE-PROFILE-INFO":
+            return {...state, profileInfoEditMode: action.value}
         default:
             return state
 
@@ -51,6 +54,7 @@ export const updatePhotoSuccess = (photo: { small: string, large: string }) => (
     photo
 }) as const
 export const editProfileError = (error: string) => ({type: 'PROFILE/EDIT-PROFILE-ERROR', error}) as const
+export const editModeProfileInfo = (value: boolean) => ({type: "PROFILE/EDIT-MODE-PROFILE-INFO", value}) as const
 
 //////////////////////////// THUNK
 export const getUserProfileThunk = (userId: string) => async (dispatch: Dispatch<ActionsProfileReducerType>) => {
@@ -79,6 +83,7 @@ export const updateProfileThunk = (profileData: any) => async (dispatch: any, ge
     let res = await profileAPI.updateProfile(profileData)
     if (res.data.resultCode === 0) {
         dispatch(getUserProfileThunk(profileId))
+        dispatch(editModeProfileInfo(false))
     } else {
         dispatch(editProfileError(res.data.messages[0]))
     }
@@ -91,6 +96,7 @@ type ActionsProfileReducerType =
     | ReturnType<typeof setStatus>
     | ReturnType<typeof updatePhotoSuccess>
     | ReturnType<typeof editProfileError>
+    | ReturnType<typeof editModeProfileInfo>
 
 
 export type ProfileType = {
@@ -126,4 +132,5 @@ type initialStateType = {
     profile: ProfileType
     status: string
     editProfileError: string
+    profileInfoEditMode: boolean
 }

@@ -13,7 +13,6 @@ export type ProfileDataFormProps = {
     status: string
     profile: ProfileType
     isOwner: boolean
-    editMode: (value: boolean) => void
 
 }
 type FormInputs = {
@@ -33,7 +32,7 @@ type FormInputs = {
     }
 
 }
-export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMode}: ProfileDataFormProps) => {
+export const ProfileDataForm = ({updateStatus, status, profile, isOwner}: ProfileDataFormProps) => {
     let contacts = profile.contacts
 
     const fullName = useSelector<AppStoreType, string>((state) => state.profilePage.profile.fullName)
@@ -57,7 +56,6 @@ export const ProfileDataForm = ({updateStatus, status, profile, isOwner, editMod
         },
     })
     const onSubmit = (data: any) => {
-        // editMode(false)
         dispatch(updateProfileThunk(data))
     }
 

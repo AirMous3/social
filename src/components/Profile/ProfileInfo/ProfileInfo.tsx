@@ -1,11 +1,13 @@
-import React, {ChangeEvent, useState} from "react";
-import {ProfileType} from "../../../redux/profileReducer";
+import React, {ChangeEvent} from "react";
+import {editModeProfileInfo, ProfileType} from "../../../redux/profileReducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import userPhoto from "./../../../images/user.png";
 import s from "./ProfileInfo.module.css";
 import {ProfileStatus} from "./ProfileStatus";
 import {Contact} from "./Contact/Contact";
 import {ProfileDataForm} from "./ProfileDataForm";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "../../../redux/reduxStore";
 
 type ProfileInfoType = {
     profile: ProfileType
@@ -25,8 +27,9 @@ export type ProfileDataProps = {
 
 
 function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: ProfileInfoType) {
-    const [editMode, setEditMode] = useState(false)
-    const activateEditMode = () => setEditMode(true)
+    const dispatch = useDispatch()
+    const editMode = useSelector((state: AppStoreType) => state.profilePage.profileInfoEditMode)
+    const activateEditMode = () => dispatch(editModeProfileInfo(true))
     if (!Object.keys(profile).length) {
         return <div>
             <Preloader/>
@@ -58,8 +61,7 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
 
             <div className={s.text}>
                 {editMode ?
-                    <ProfileDataForm updateStatus={updateStatus} profile={profile} status={status} isOwner={isOwner}
-                                     editMode={setEditMode}/>
+                    <ProfileDataForm updateStatus={updateStatus} profile={profile} status={status} isOwner={isOwner}/>
                     :
                     <ProfileData updateStatus={updateStatus} status={status} profile={profile} isOwner={isOwner}/>
                 }
