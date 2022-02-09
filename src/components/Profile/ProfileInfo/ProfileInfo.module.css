@@ -1,7 +1,6 @@
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
 }
 
 .profileInfoWrapper {
@@ -22,7 +21,6 @@
 .profileAvatarWrapper {
     padding: 20px;
     background-color: #c8bada;
-    max-height: 270px;
 }
 
 .image {
@@ -57,6 +55,17 @@ label {
     border-Radius: 5px;
     border: none;
     font-family: inherit;
+}
+
+.editProfileButtons {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.editProfileButtons input {
+    display: none;
 }
 
 .profileDataFormInputs {

@@ -50,8 +50,8 @@ function ProfileInfo({profile, status, updateStatus, isOwner, updatePhoto}: Prof
                 <img alt={'profileImage'} className={s.image} src={profile.photos.large || userPhoto}/>
                 {
                     isOwner
-                    && <div style={{padding: '10px', display: "flex", flexDirection: 'column', marginLeft: '20px'}}>
-                        <input onChange={savePhotoHandler} id={'img'} style={{marginLeft: '50px', display: 'none'}}
+                    && <div className={s.editProfileButtons}>
+                        <input onChange={savePhotoHandler} id={'img'}
                                type="file"/>
                         <label htmlFor='img'> updatePhoto</label>
                         <button className={s.editProfile} onClick={() => activateEditMode()}>changeProfile</button>
