@@ -1,25 +1,29 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
-import s from './Header.module.css';
+import {Button, Col, Row} from "antd";
+import {Header} from "antd/es/layout/layout";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "../../redux/reduxStore";
+import {logoutThunk} from "../../redux/authReducer";
 
-type PropsType = {
-    login: string | null
-    isAuth: boolean
-    logoutThunk: () => void
-}
 
-function Header({login, isAuth, logoutThunk}: PropsType) {
-    return (
-        <header className={s.header}>
-            <div style={{textAlign: 'center'}}>I SOCIAL</div>
-            <div className={s.login}>
+export const AppHeader = () => {
+    const isAuth = useSelector((state: AppStoreType) => state.auth.isAuth)
 
-                {isAuth ? <div> {login}
-                    <button onClick={() => logoutThunk()}> logout</button>
-                </div> : <NavLink to={'/login'}> Login</NavLink>}
-            </div>
-        </header>
+    const dispatch = useDispatch()
+
+    return (<Header className="site-layout-sub-header-background"
+                    style={{padding: 0}}>
+            <Row>
+                <Col span={23}/>
+                <Col span={1}>
+                    {isAuth ? <div style={{color: 'white'}}>
+                        <Button size={'small'}
+                                onClick={() => dispatch(logoutThunk())}> logout</Button>
+                    </div> : null}
+
+                </Col>
+            </Row>
+        </Header>
     )
 }
 
-export default Header

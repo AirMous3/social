@@ -12,12 +12,14 @@ import {AppStoreType} from './redux/reduxStore';
 import {ReactSuspense} from "./hoc/ReactSuspense";
 import {Error} from "./components/ErrorPage/ErrorPage";
 import {Layout, Menu} from "antd";
-import {UploadOutlined, UserOutlined, VideoCameraOutlined} from "@ant-design/icons";
+import {MessageOutlined, UserOutlined, VideoCameraOutlined} from "@ant-design/icons";
+import {AppHeader} from "./components/Header/Header";
+
 
 const Dialogs = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersApiComponent = React.lazy(() => import('./components/Users/UsersContainer'));
-const {Header, Content, Footer, Sider} = Layout;
+const {Content, Footer, Sider} = Layout;
 
 export const App = () => {
     const initialize = useSelector((state: AppStoreType) => state.app.initialized)
@@ -51,7 +53,7 @@ export const App = () => {
                     <Link to="/settings"/>
                     Settings
                 </Menu.Item>
-                <Menu.Item key="dialogs" icon={<UploadOutlined/>}>
+                <Menu.Item key="dialogs" icon={<MessageOutlined/>}>
                     <Link to="/dialogs"/>
                     Dialogs
                 </Menu.Item>
@@ -62,8 +64,7 @@ export const App = () => {
             </Menu>
         </Sider>
         <Layout>
-            <Header className="site-layout-sub-header-background"
-                    style={{padding: 0}}/>
+            <AppHeader/>
             <Content style={{margin: '24px 16px 0'}}>
                 <div className="site-layout-background"
                      style={{padding: 24, minHeight: '83.1vh'}}>
