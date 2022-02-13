@@ -14,6 +14,7 @@ import {Error} from "./components/ErrorPage/ErrorPage";
 import {Layout, Menu} from "antd";
 import {MessageOutlined, UserOutlined, VideoCameraOutlined} from "@ant-design/icons";
 import {AppHeader} from "./components/Header/Header";
+import {ChatPage} from "./pages/Chat/ChatPage";
 
 
 const Dialogs = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -57,6 +58,10 @@ export const App = () => {
                     <Link to="/dialogs"/>
                     Dialogs
                 </Menu.Item>
+                <Menu.Item key="chat" icon={<MessageOutlined/>}>
+                    <Link to="/chat"/>
+                    Chat
+                </Menu.Item>
                 <Menu.Item key="users" icon={<UserOutlined/>}>
                     <Link to='/users'/>
                     Friends
@@ -86,6 +91,7 @@ export const App = () => {
                                render={ReactSuspense(UsersApiComponent)}/>
 
                         <Route path={"/login"} render={() => <Login/>}/>
+                        <Route path={"/chat"} render={() => <ChatPage/>}/>
                         <Route path={'/404'} render={() => <Error/>}/>
                         <Redirect from={'*'} to={'/404'}/>
 
