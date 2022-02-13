@@ -16,7 +16,6 @@ import {MessageOutlined, UserOutlined, VideoCameraOutlined} from "@ant-design/ic
 import {AppHeader} from "./components/Header/Header";
 import {ChatPage} from "./pages/Chat/ChatPage";
 
-
 const Dialogs = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersApiComponent = React.lazy(() => import('./components/Users/UsersContainer'));
