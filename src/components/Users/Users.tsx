@@ -28,10 +28,12 @@ export const Users = ({
 
 
     return (
-        <div className={`${s.container} container`}>
-
-            <Paginator currentPage={currentPage} onPageChanged={onPageChanged} pageSize={pageSize}
-                       totalUsersCount={totalUsersCount}/>
+        <div className={`container`}>
+            <div className={s.pagination}>
+                <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
+                           pageSize={pageSize}
+                           totalUsersCount={totalUsersCount}/>
+            </div>
             <div className={s.userWrapper}>{
 
                 users.map((u) =>
@@ -44,8 +46,11 @@ export const Users = ({
                     />)
             }
             </div>
-
-
+            <div className={s.pagination}>
+                <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
+                            pageSize={pageSize}
+                            totalUsersCount={totalUsersCount}/>
+            </div>
         </div>
     )
 }
